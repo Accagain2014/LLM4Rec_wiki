@@ -1,6 +1,6 @@
 # LLM4Rec Wiki
 
-> 一个持久化、持续累积的知识库，专注于**推荐系统中的大语言模型**，基于 Karpathy LLM Wiki 模式构建，并由阿里云百炼（Bailian）提供驱动。
+> 一个持久化、持续累积的知识库，专注于**推荐系统中的大语言模型**，基于 [karpathy/llm-wiki.md](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) 模式构建，由Qwen Code调用qwen3.6-plus实现，使用阿里百炼Code Plan.
 
 ## 概述
 
@@ -76,22 +76,23 @@ export DASHSCOPE_API_KEY="sk-your-api-key-here"
 ### 3. 使用 CLI
 
 ```bash
-# 导入新的源文档
+# 从 URL 抓取网页(Arxiv论文)并自动分析（推荐）
+python tools/llm_wiki.py fetch "https://arxiv.org/abs/2307.06435"
+
+# 导入新的源文档, 可以把网络上的碎片文档复制过来
 python tools/llm_wiki.py ingest raw/sources/my_source.md
 
-# 从 URL 抓取网页并自动分析（推荐）
-python tools/llm_wiki.py fetch "https://arxiv.org/abs/2307.06435"
 
 # 仅保存网页内容，不自动分析
 python tools/llm_wiki.py fetch "https://example.com/article" --no-ingest
 
-# 查询 wiki
-python tools/llm_wiki.py query "P5 是如何统一推荐任务的？"
+# 基于知识库，查询 wiki
+python tools/llm_wiki.py query "生成式推荐和判别式推荐的本质区别？"
 
 # 健康检查 wiki
 python tools/llm_wiki.py lint
 
-# 汇总当前 wiki 状态
+# 汇总当前 wiki 状态，并利用LLM生成Summary，并更新到README.md的Summary模块
 python tools/llm_wiki.py summarize
 ```
 
@@ -104,11 +105,11 @@ LLM4REC_wiki/
 │   ├── README.md          # Wiki 概览
 │   ├── index.md           # 内容目录
 │   ├── log.md             # 操作日志
-│   ├── concepts/          # 核心理论（6 页）
-│   ├── methods/           # 算法（5 页）
-│   ├── models/            # 模型架构（5 页）
-│   ├── entities/          # 人物、数据集、平台（3 页）
-│   ├── synthesis/         # 跨主题分析（2 页）
+│   ├── concepts/          # 核心理论
+│   ├── methods/           # 算法
+│   ├── models/            # 模型架构
+│   ├── entities/          # 人物、数据集、平台
+│   ├── synthesis/         # 跨主题分析
 │   └── sources/           # 每个来源的摘要
 ├── raw/
 │   ├── sources/           # 不可变的源文档

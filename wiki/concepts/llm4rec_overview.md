@@ -118,3 +118,9 @@ LLM 通过以下方式解决这些问题：
 
 **来源**: paper_81ec38_PLUM_Adapting_Pre-trained_Language_Models_for_Industrial-sc.md
 ：添加 PLUM 作为工业级生成式推荐的典型案例，补充生成式检索范式的工业应用信息
+
+
+## 更新于 2026-04-09
+
+**来源**: 2507_paper_25071555_RankMixer_Scaling_Up_Ranking_Models_in_Industrial_Recommend.md
+：在“工业部署挑战”部分新增延迟/QPS 约束与 MFU（模型浮点运算利用率）优化趋势，关联 RankMixer 的实证数据。

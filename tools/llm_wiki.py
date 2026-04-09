@@ -127,7 +127,7 @@ def validate_api_key():
 # ─── LLM Interface ───────────────────────────────────────────────────────────
 
 def call_llm(prompt: str, system_prompt: str = "", model: str = None,
-             temperature: float = 0.3, max_tokens: int = 4096) -> str:
+             temperature: float = 0.3, max_tokens: int = 200000) -> str:
     """调用百炼 LLM API 并返回响应文本。"""
     model = model or MODEL_DEFAULT
     client = get_client()

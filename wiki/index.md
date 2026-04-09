@@ -12,6 +12,8 @@
 
 |------|------|------|
 
+| [从关联章节中检测到的页面](concepts/model_flops_utilization_mfu.md) | --- title: "从关联章节中检测到的页面" category: "concepts" tags: ["new",... | "new", "2026-04-09" |
+
 | [Slate](concepts/slate_recommendation.md) | --- title: "Slate" category: "concepts" tags: ["new", "2026-... | "new", "2026-04-08" |
 
 | [全模态生成式推荐概念页面解释多模态内容如何映射到离散](concepts/all_modality_gr.md) | --- title: "全模态生成式推荐概念页面解释多模态内容如何映射到离散" category: "concepts"... | "new", "2026-04-09" |
@@ -19,6 +21,8 @@
 | [层次化规划在推荐中的应用两阶段生成架构](concepts/hierarchical_planning_rec.md) | --- title: "层次化规划在推荐中的应用两阶段生成架构" category: "concepts" tags:... | "new", "2026-04-08" |
 
 | [用于推荐系统的大语言模型 — 概述](concepts/llm4rec_overview.md) | --- title: "用于推荐系统的大语言模型 — 概述" category: "concepts" tags: [L... | LLM, RecSys, paradigm, overview |
+
+| [从关联章节中检测到的页面](concepts/scaling_laws_recsys.md) | --- title: "从关联章节中检测到的页面" category: "concepts" tags: ["new",... | "new", "2026-04-09" |
 
 | [从关联章节中检测到的页面](concepts/continued_pretraining.md) | --- title: "从关联章节中检测到的页面" category: "concepts" tags: ["new",... | "new", "2026-04-08" |
 
@@ -31,6 +35,10 @@
 | [从关联章节中检测到的页面](concepts/evaluation_llm4rec.md) | --- title: "从关联章节中检测到的页面" category: "concepts" tags: ["new",... | "new", "2026-04-08" |
 
 | [推荐系统中的提示词工程](concepts/prompt_engineering_rec.md) | --- title: "推荐系统中的提示词工程" category: "concepts" tags: [prompt-... | prompt-engineering, instruction, formatting, recsys |
+
+| [Multimodal Recommendation](concepts/multimodal_recommendation.md) | --- title: "Multimodal Recommendation" category: "concepts"... | "new", "2026-04-09" |
+
+| [从关联章节中检测到的页面](concepts/unified_transformer_backbone.md) | --- title: "从关联章节中检测到的页面" category: "concepts" tags: ["new",... | "new", "2026-04-09" |
 
 | [协同过滤](concepts/collaborative_filtering.md) | --- title: "协同过滤" category: "concepts" tags: [CF, traditiona... | CF, traditional, matrix-factorization, basics |
 
@@ -48,6 +56,8 @@
 
 | [从关联章节中检测到的页面](concepts/explicit_reasoning_rec.md) | --- title: "从关联章节中检测到的页面" category: "concepts" tags: ["new",... | "new", "2026-04-08" |
 
+| [阐述端到端多模态推荐训练范式对比传统两阶段预训练冻结的优劣说明其在动态数据适应目标对齐与实时参数更新上的优势](concepts/end_to_end_multimodal_training.md) | --- title: "阐述端到端多模态推荐训练范式对比传统两阶段预训练冻结的优劣说明其在动态数据适应目标对齐与实时参数... | "new", "2026-04-09" |
+
 | [语义 ID](concepts/.ipynb_checkpoints/semantic_id-checkpoint.md) | --- title: "语义 ID" category: "concepts" tags: ["new", "2026-... | "new", "2026-04-08" |
 
 | [从关联章节中检测到的页面](concepts/.ipynb_checkpoints/evaluation_llm4rec-checkpoint.md) | --- title: "从关联章节中检测到的页面" category: "concepts" tags: ["new",... | "new", "2026-04-08" |
@@ -56,7 +66,7 @@
 
 
 
-- **21 个页面**
+- **26 个页面**
 
 
 ## Methods
@@ -66,6 +76,8 @@
 |------|------|------|
 
 | [定量对齐方法涵盖表示匹配和可训练表示技术](methods/quantitative_alignment.md) | --- title: "定量对齐方法涵盖表示匹配和可训练表示技术" category: "methods" tags:... | "new", "2026-04-08" |
+
+| [Representation Alignment](methods/representation_alignment.md) | --- title: "Representation Alignment" category: "methods" ta... | "new", "2026-04-09" |
 
 | [统一广告语义](methods/ua_sid.md) | --- title: "统一广告语义" category: "methods" tags: ["new", "2026-... | "new", "2026-04-09" |
 
@@ -87,15 +99,21 @@
 
 | [LLM-as-Generator](methods/llm_as_generator.md) | --- title: "LLM-as-Generator" category: "方法" tags: [生成, 解释,... | 生成, 解释, 推荐文本, 创意 |
 
+| [详细说明](methods/memory_bank_sequential_rep.md) | --- title: "详细说明" category: "methods" tags: ["new", "2026-04... | "new", "2026-04-09" |
+
 | [懒自回归解码器方法页面说明层间依赖放松机制](methods/lazy_ar.md) | --- title: "懒自回归解码器方法页面说明层间依赖放松机制" category: "methods" tags:... | "new", "2026-04-09" |
 
+| [从关联章节中检测到的页面](methods/sparse_attention_seq_rec.md) | --- title: "从关联章节中检测到的页面" category: "methods" tags: ["new",... | "new", "2026-04-09" |
+
 | [LLM-as-Ranker](methods/llm_as_ranker.md) | --- title: "LLM-as-Ranker" category: "方法" tags: [排序, LLM, 评分... | 排序, LLM, 评分, listwise, pointwise, pairwise |
+
+| [从关联章节中检测到的页面](methods/long_context_efficiency.md) | --- title: "从关联章节中检测到的页面" category: "methods" tags: ["new",... | "new", "2026-04-09" |
 
 | [LLM-as-Generator](methods/.ipynb_checkpoints/llm_as_generator-checkpoint.md) | --- title: "LLM-as-Generator" category: "方法" tags: [生成, 解释,... | 生成, 解释, 推荐文本, 创意 |
 
 
 
-- **14 个页面**
+- **18 个页面**
 
 
 ## Models
@@ -104,13 +122,21 @@
 
 |------|------|------|
 
+| [LEMUR](models/LEMUR.md) | --- title: "LEMUR" category: "models" tags: ["new", "2026-04... | "new", "2026-04-09" |
+
 | [从关联章节中检测到的页面](models/OneRec.md) | --- title: "从关联章节中检测到的页面" category: "models" tags: ["new", "... | "new", "2026-04-08" |
 
 | [LLMRank](models/LLMRank.md) | --- title: "LLMRank" category: "models" tags: [LLMRank, list... | LLMRank, listwise, ranking, pointwise, pairwise |
 
+| [从关联章节中检测到的页面](models/RankMixer.md) | --- title: "从关联章节中检测到的页面" category: "models" tags: ["new", "... | "new", "2026-04-09" |
+
 | [P5 — 个性化提示学习](models/P5.md) | --- title: "P5 — 个性化提示学习" category: "models" tags: [P5, prom... | P5, prompt, personalization, unified, multi-task |
 
 | [InstructRec](models/InstructRec.md) | --- title: "InstructRec" category: "models" tags: [InstructR... | InstructRec, instruction-tuning, LLM, conversational |
+
+| [从关联章节中检测到的页面](models/ULTRA_HSTU.md) | --- title: "从关联章节中检测到的页面" category: "models" tags: ["new", "... | "new", "2026-04-09" |
+
+| [从关联章节中检测到的页面](models/LONGER.md) | --- title: "从关联章节中检测到的页面" category: "models" tags: ["new", "... | "new", "2026-04-09" |
 
 | [TALLRec](models/TALLRec.md) | --- title: "TALLRec" category: "models" tags: [TALLRec, effi... | TALLRec, efficient-tuning, LoRA, LLM, adaptation |
 
@@ -152,7 +178,7 @@
 
 
 
-- **23 个页面**
+- **27 个页面**
 
 
 ## Entities
@@ -177,6 +203,8 @@
 
 | [从关联章节中检测到的页面](entities/taobao.md) | --- title: "从关联章节中检测到的页面" category: "entities" tags: ["new",... | "new", "2026-04-08" |
 
+| [从关联章节中检测到的页面](entities/bytedance.md) | --- title: "从关联章节中检测到的页面" category: "entities" tags: ["new",... | "new", "2026-04-09" |
+
 | [TencentGR1M](entities/tencentgr_dataset.md) | --- title: "TencentGR1M" category: "entities" tags: ["new",... | "new", "2026-04-09" |
 
 | [从关联章节中检测到的页面](entities/.ipynb_checkpoints/taobao-checkpoint.md) | --- title: "从关联章节中检测到的页面" category: "entities" tags: ["new",... | "new", "2026-04-08" |
@@ -197,7 +225,7 @@
 
 
 
-- **17 个页面**
+- **18 个页面**
 
 
 ## Synthesis
@@ -212,13 +240,15 @@
 
 | [知识库健康检查报告 — 2026-04-08](synthesis/lint_report_2026-04-08.md) | --- title: "知识库健康检查报告 — 2026-04-08" category: "synthesis" ta... | "lint", "maintenance" |
 
+| [知识库健康检查报告 — 2026-04-08](synthesis/.ipynb_checkpoints/lint_report_2026-04-08-checkpoint.md) | --- title: "知识库健康检查报告 — 2026-04-08" category: "synthesis" ta... | "lint", "maintenance" |
+
 | [传统推荐系统与基于 LLM 的推荐系统对比](synthesis/.ipynb_checkpoints/traditional_vs_llm-checkpoint.md) | --- title: "传统推荐系统与基于 LLM 的推荐系统对比" category: "synthesis" tag... | comparison, traditional, LLM, tradeoffs, paradigm-shift |
 
 | [LLM4Rec 分类体系](synthesis/.ipynb_checkpoints/llm4rec_taxonomy-checkpoint.md) | --- title: "LLM4Rec 分类体系" category: "synthesis" tags: [taxon... | taxonomy, survey, classification, framework |
 
 
 
-- **5 个页面**
+- **6 个页面**
 
 
 ## Sources
@@ -228,6 +258,8 @@
 |------|------|------|
 
 | [2603 Paper 26031980 How Well Does Generative Recommendation Generalize](sources/2603_paper_26031980_How_Well_Does_Generative_Recommendation_Generalize.md) | --- title: "2603 Paper 26031980 How Well Does Generative Rec... | "source", "2026-04-08" |
+
+| [2510 Paper 25102610 Onetrans Unified Feature Interaction And Sequence Modeling](sources/2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md) | --- title: "2510 Paper 25102610 Onetrans Unified Feature Int... | "source", "2026-04-09" |
 
 | [2507 Paper 25072222 Generative Recommendation With Semantic Ids A Practitioner](sources/2507_paper_25072222_Generative_Recommendation_with_Semantic_IDs_A_Practitioner'.md) | --- title: "2507 Paper 25072222 Generative Recommendation Wi... | "source", "2026-04-08" |
 
@@ -245,6 +277,8 @@
 
 | [2602 Paper 26022273 Generative Recommendation For Large-Scale Advertising](sources/2602_paper_26022273_Generative_Recommendation_for_Large-Scale_Advertising.md) | --- title: "2602 Paper 26022273 Generative Recommendation Fo... | "source", "2026-04-09" |
 
+| [2511 Paper 25111096 Lemur Large Scale End-To-End Multimodal Recommendation](sources/2511_paper_25111096_LEMUR_Large_scale_End-to-end_MUltimodal_Recommendation.md) | --- title: "2511 Paper 25111096 Lemur Large Scale End-To-End... | "source", "2026-04-09" |
+
 | [2502 Paper 25021896 Onerec Unifying Retrieve And Rank With Generative Recommend](sources/2502_paper_25021896_OneRec_Unifying_Retrieve_and_Rank_with_Generative_Recommend.md) | --- title: "2502 Paper 25021896 Onerec Unifying Retrieve And... | "source", "2026-04-09" |
 
 | [2510 Paper 25101163 Onerec-Think In-Text Reasoning For Generative Recommendatio](sources/2510_paper_25101163_OneRec-Think_In-Text_Reasoning_for_Generative_Recommendatio.md) | --- title: "2510 Paper 25101163 Onerec-Think In-Text Reasoni... | "source", "2026-04-08" |
@@ -257,7 +291,15 @@
 
 | [Paper 1B102D Qarm V2 Quantitative Alignment Multi-Modal Recommendation F](sources/paper_1b102d_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation_f.md) | --- title: "Paper 1B102D Qarm V2 Quantitative Alignment Mult... | "source", "2026-04-08" |
 
+| [2511 Paper 25110607 Make It Long, Keep It Fast End-To-End 10K-Sequence Modeling](sources/2511_paper_25110607_Make_It_Long,_Keep_It_Fast_End-to-End_10k-Sequence_Modeling.md) | --- title: "2511 Paper 25110607 Make It Long, Keep It Fast E... | "source", "2026-04-09" |
+
+| [2602 Paper 26021698 Bending The Scaling Law Curve In Large-Scale Recommendation](sources/2602_paper_26021698_Bending_the_Scaling_Law_Curve_in_Large-Scale_Recommendation.md) | --- title: "2602 Paper 26021698 Bending The Scaling Law Curv... | "source", "2026-04-09" |
+
 | [Paper 81Ec38 Plum Adapting Pre-Trained Language Models For Industrial-Sc](sources/paper_81ec38_PLUM_Adapting_Pre-trained_Language_Models_for_Industrial-sc.md) | --- title: "Paper 81Ec38 Plum Adapting Pre-Trained Language... | "source", "2026-04-08" |
+
+| [2505 Paper 25050442 Longer Scaling Up Long Sequence Modeling In Industrial Reco](sources/2505_paper_25050442_LONGER_Scaling_Up_Long_Sequence_Modeling_in_Industrial_Reco.md) | --- title: "2505 Paper 25050442 Longer Scaling Up Long Seque... | "source", "2026-04-09" |
+
+| [2507 Paper 25071555 Rankmixer Scaling Up Ranking Models In Industrial Recommend](sources/2507_paper_25071555_RankMixer_Scaling_Up_Ranking_Models_in_Industrial_Recommend.md) | --- title: "2507 Paper 25071555 Rankmixer Scaling Up Ranking... | "source", "2026-04-09" |
 
 | [创建此源文档的摘要页面见下文完整内容](sources/paper_2305_05065_Generative_Retrieval_RecSys.md) | --- title: "创建此源文档的摘要页面见下文完整内容" category: "sources" tags: ["... | "new", "2026-04-08" |
 
@@ -273,11 +315,11 @@
 
 
 
-- **22 个页面**
+- **28 个页面**
 
 
 ---
 
 **统计**：
 
-- 总页面数：102
+- 总页面数：123

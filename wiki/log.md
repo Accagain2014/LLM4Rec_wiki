@@ -335,3 +335,57 @@
 - 已更新页面：6
 
 ---
+
+
+## [2026-04-09] ingest | 已处理源文件：2507_paper_25071555_RankMixer_Scaling_Up_Ranking_Models_in_Industrial_Recommend.md
+- 源文件：2507_paper_25071555_RankMixer_Scaling_Up_Ranking_Models_in_Industrial_Recommend.md
+- 已创建页面：2
+- 已更新页面：3
+
+---
+
+
+## [2026-04-09] ingest | 已处理源文件：2602_paper_26021698_Bending_the_Scaling_Law_Curve_in_Large-Scale_Recommendation.md
+- 源文件：2602_paper_26021698_Bending_the_Scaling_Law_Curve_in_Large-Scale_Recommendation.md
+- 已创建页面：3
+- 已更新页面：3
+
+---
+
+
+## 更新于 2026-04-09
+
+**来源**: 2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md
+：追加本次 ingest 操作记录（日期、操作类型、影响页面）。
+
+
+## [2026-04-09] ingest | 已处理源文件：2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md
+- 源文件：2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md
+- 已创建页面：1
+- 已更新页面：5
+
+---
+
+
+## [2026-04-09] ingest | 已处理源文件：2505_paper_25050442_LONGER_Scaling_Up_Long_Sequence_Modeling_in_Industrial_Reco.md
+- 源文件：2505_paper_25050442_LONGER_Scaling_Up_Long_Sequence_Modeling_in_Industrial_Reco.md
+- 已创建页面：3
+- 已更新页面：3
+
+---
+
+
+## [2026-04-09] ingest | 已处理源文件：2511_paper_25110607_Make_It_Long,_Keep_It_Fast_End-to-End_10k-Sequence_Modeling.md
+- 源文件：2511_paper_25110607_Make_It_Long,_Keep_It_Fast_End-to-End_10k-Sequence_Modeling.md
+- 已创建页面：0
+- 已更新页面：3
+
+---
+
+
+## [2026-04-09] ingest | 已处理源文件：2511_paper_25111096_LEMUR_Large_scale_End-to-end_MUltimodal_Recommendation.md
+- 源文件：2511_paper_25111096_LEMUR_Large_scale_End-to-end_MUltimodal_Recommendation.md
+- 已创建页面：5
+- 已更新页面：1
+
+---

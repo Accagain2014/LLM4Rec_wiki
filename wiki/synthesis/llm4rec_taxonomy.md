@@ -157,3 +157,9 @@ Deployment Pattern
 
 **来源**: 2604_paper_26040497_Tencent_Advertising_Algorithm_Challenge_2025_All-Modality_G.md
 ：在数据集分类中添加腾讯广告数据集类别
+
+
+## 更新于 2026-04-09
+
+**来源**: 2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md
+：在“工业部署架构”或“统一骨干网络”分类下补充 OneTrans 条目，强调其向 LLM 风格统一 Token 序列与推理缓存优化的靠拢趋势。

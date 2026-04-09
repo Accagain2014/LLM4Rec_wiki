@@ -30,3 +30,9 @@ status: "draft"
 
 **来源**: 2604_paper_26040497_Tencent_Advertising_Algorithm_Challenge_2025_All-Modality_G.md
 ：添加腾讯广告算法挑战赛 2025 信息，包括数据集发布、竞赛规模、与 HiGR 的关联
+
+
+## 更新于 2026-04-09
+
+**来源**: 2505_paper_25050442_LONGER_Scaling_Up_Long_Sequence_Modeling_in_Industrial_Reco.md
+& wiki/entities/kuaishou.md：在“工业部署对比”章节追加字节跳动 LONGER 的部署规模（>10 场景、十亿用户），形成多厂牌长序列/生成式推荐部署的横向对照。

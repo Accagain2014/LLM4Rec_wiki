@@ -49,3 +49,9 @@ status: "draft"
 
 **来源**: 2508_paper_25082090_OneRec-V2_Technical_Report.md
 ：追加 OneRecV2 在快手的最新工业部署数据（停留时长 +0.467%/0.741%），更新技术团队贡献记录与业务场景。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2602_paper_26021698_Bending_the_Scaling_Law_Curve_in_Large-Scale_Recommendation.md
+：追加 ULTRAHSTU 的工业部署记录（日均十亿级服务、4%~8% 业务指标提升），更新核心作者团队（Bi Xue 等）在序列推荐规模化方向的贡献。

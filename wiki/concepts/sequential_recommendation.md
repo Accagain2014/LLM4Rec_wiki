@@ -105,3 +105,21 @@ status: "stable"
 
 **来源**: paper_260110_Actions_Speak_Louder_than_Words_Trillion-Parameter_Sequenti.md
 ：添加 HSTU 作为序列推荐的最新架构进展，更新传统序列模型（RNN/Transformer）与新型转导器的对比
+
+
+## 更新于 2026-04-09
+
+**来源**: 2602_paper_26021698_Bending_the_Scaling_Law_Curve_in_Large-Scale_Recommendation.md
+：补充“长序列建模的计算瓶颈与 Scaling Law”章节，引入 ULTRAHSTU 作为突破二次方复杂度的代表性架构，并关联稀疏注意力与系统协同设计范式。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md
+：在“工业架构演进”章节增加“统一序列与特征建模”段落，引入 OneTrans 的 Token 统一策略与参数共享机制。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2505_paper_25050442_LONGER_Scaling_Up_Long_Sequence_Modeling_in_Industrial_Reco.md
+：补充“超长序列建模（Ultralong Sequence Modeling）”的技术挑战与 LONGER 的解决方案，更新工业级序列推荐的技术栈演进路径。

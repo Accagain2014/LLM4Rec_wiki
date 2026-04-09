@@ -130,3 +130,9 @@ LLM 利用多种能力进行排序：
 - Tan, W., et al. (2024). LLMRank: Large language model-based listwise ranking for recommendation.
 - Sun, Y., et al. (2023). Is chatGPT a good ranker? Evaluating LLMs for information retrieval.
 - Qin, Z., et al. (2023). Large language models are effective zero-shot rankers.
+
+
+## 更新于 2026-04-09
+
+**来源**: 2507_paper_25071555_RankMixer_Scaling_Up_Ranking_Models_in_Industrial_Recommend.md
+：补充 RankMixer 作为高效工业排序架构的最新实践，添加 Token Mixing 替代 Attention 的硬件优化策略及 MoE 扩展路径。

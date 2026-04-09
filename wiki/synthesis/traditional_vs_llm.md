@@ -181,3 +181,9 @@ Phase 4 (2027+): Convergence
 
 **来源**: 2602_paper_26022273_Generative_Recommendation_for_Large-Scale_Advertising.md
 ：添加 GR4AD vs DLRM 的对比数据（4.2% 收入提升），强化 LLM 在工业广告场景的价值论证
+
+
+## 更新于 2026-04-09
+
+**来源**: 2507_paper_25071555_RankMixer_Scaling_Up_Ranking_Models_in_Industrial_Recommend.md
+：在架构效率对比章节加入 RankMixer 的 MFU 提升数据（4.5% → 45%）与参数扩展能力，强化传统手工特征模块向硬件感知架构演进的论点。

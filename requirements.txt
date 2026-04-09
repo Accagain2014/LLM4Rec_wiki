@@ -1,0 +1,24 @@
+# requirements.txt
+# LLM4Rec Wiki — Python Dependencies
+
+# Core LLM SDK — OpenAI-compatible (works with DashScope & Coding Plan)
+openai>=1.30.0
+python-dotenv>=1.0.0
+
+# Web fetching (for fetch command)
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# Utilities
+tiktoken>=0.5.0
+PyYAML>=6.0
+rich>=13.0.0
+tqdm>=4.66.0
+
+# Optional: For reading PDF sources
+pymupdf>=1.23.0
+markdown>=3.5.0
+
+# Optional: For vector search
+faiss-cpu>=1.7.4
+sentence-transformers>=2.2.0

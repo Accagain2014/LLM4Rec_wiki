@@ -1,0 +1,39 @@
+---
+title: "懒自回归解码器方法页面说明层间依赖放松机制"
+category: "methods"
+tags: ["new", "2026-04-09"]
+created: "2026-04-09"
+updated: "2026-04-09"
+sources: ["../sources/2602_paper_26022273_Generative_Recommendation_for_Large-Scale_Advertising.md"]
+related: []
+confidence: "medium"
+status: "draft"
+---
+
+# 懒自回归解码器方法页面说明层间依赖放松机制
+
+：懒自回归解码器方法页面，说明层间依赖放松机制
+
+**来源**: 源文档：2602_paper_26022273_Generative_Recommendation_for_Large-Scale_Advertising.md
+
+---
+
+## 相关主题
+
+- [源文档]({ "../sources/" + source_path.stem + ".md" })
+
+## 扩展阅读
+
+- [知识库首页](../index.md)
+- [全部模型](../models/)
+- [全部概念](../concepts/)
+
+---
+
+*本页面由 LLM 自动生成，内容可能需要人工审查和补充。*
+
+
+## 更新于 2026-04-09
+
+**来源**: 2508_paper_25082090_OneRec-V2_Technical_Report.md
+：补充 OneRecV2 中 Lazy DecoderOnly 架构的具体实现路径与工业级收益（计算降低 94%、训练资源降 90%），作为该方法的标杆落地案例。

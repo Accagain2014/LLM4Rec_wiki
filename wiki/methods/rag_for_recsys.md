@@ -127,7 +127,7 @@ status: "稳定"
 ## 关联
 
 - [知识增强推荐](../concepts/knowledge_enhanced_rec.md) 将 RAG 作为关键技术
-- [LLM-as-Generator](../methods/llm_as_generator.md) 从有根据的生成中受益
+- [LLM-as-Generator](./llm_as_generator.md) 从有根据的生成中受益
 - [Qwen 系列](../models/qwen_series.md) 模型支持 RAG 所需的长上下文
 
 ## 开放问题

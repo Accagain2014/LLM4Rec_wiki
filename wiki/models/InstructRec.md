@@ -84,8 +84,8 @@ sci-fi elements similar to what you've enjoyed before.
 
 ## 关联
 
-- [P5](../models/P5.md) 是基于模板的前身
-- [TALLRec](../models/TALLRec.md) 专注于调优效率
+- [P5](./P5.md) 是基于模板的前身
+- [TALLRec](./TALLRec.md) 专注于调优效率
 - [LLM 作为生成器](../methods/llm_as_generator.md) 涵盖解释生成
 
 ## 开放问题

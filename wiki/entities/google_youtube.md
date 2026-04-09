@@ -30,3 +30,9 @@ status: "draft"
 
 **来源**: paper_260110_Actions_Speak_Louder_than_Words_Trillion-Parameter_Sequenti.md
 ：添加 Meta/Facebook 作为对比，说明不同公司在生成式推荐上的部署策略
+
+
+## 更新于 2026-04-09
+
+**来源**: 2311_paper_23110588_Hiformer_Heterogeneous_Feature_Interactions_Learning_with_T.md
+：添加 Hiformer 在 Google Play 的部署案例，补充 Google 推荐团队在 Transformer 架构应用方面的工业实践

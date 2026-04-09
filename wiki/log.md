@@ -389,3 +389,11 @@
 - 已更新页面：1
 
 ---
+
+
+## [2026-04-09] ingest | 已处理源文件：2311_paper_23110588_Hiformer_Heterogeneous_Feature_Interactions_Learning_with_T.md
+- 源文件：2311_paper_23110588_Hiformer_Heterogeneous_Feature_Interactions_Learning_with_T.md
+- 已创建页面：2
+- 已更新页面：4
+
+---

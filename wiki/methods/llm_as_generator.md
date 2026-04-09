@@ -95,7 +95,7 @@ LLM 可以生成合成数据来训练更小的模型：
 
 ## 关联
 
-- [LLM-as-Reasoner](../methods/llm_as_reasoner.md) 提供推理来支撑生成
+- [LLM-as-Reasoner](./llm_as_reasoner.md) 提供推理来支撑生成
 - [提示工程](../concepts/prompt_engineering_rec.md) 对生成质量至关重要
 - [InstructRec](../models/InstructRec.md) 使用指令微调进行生成任务
 

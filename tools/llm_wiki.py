@@ -127,10 +127,13 @@ def validate_api_key():
 # ─── LLM Interface ───────────────────────────────────────────────────────────
 
 def call_llm(prompt: str, system_prompt: str = "", model: str = None,
-             temperature: float = 0.3, max_tokens: int = 200000) -> str:
+             temperature: float = 0.3, max_tokens: int = 16384) -> str:
     """调用百炼 LLM API 并返回响应文本。"""
     model = model or MODEL_DEFAULT
     client = get_client()
+
+    # 限制 max_tokens 在模型允许范围内
+    max_tokens = min(max_tokens, 65536)
 
     messages = []
     if system_prompt:
@@ -482,48 +485,51 @@ def parse_llm_response(response: str) -> dict:
 
 def generate_source_filename(url: str, title: str, final_url: str) -> str:
     """根据 URL、标题和最终 URL 生成安全的源文件名。
-    
-    为 arXiv PDF 文件添加出版月份前缀（如 2402_ 表示 2024年02月），
-    格式：YYMM_URlHASH_TITLE.md
+
+    为 arXiv 论文添加出版月份前缀（如 2507_ 表示 2025年07月），
+    格式：YYMM_prefix_TITLE.md
+    支持 /abs/ 和 /pdf/ 两种 arXiv URL 格式。
     """
     from urllib.parse import urlparse
     import hashlib
     import re
-    
+
     parsed = urlparse(final_url)
     domain = parsed.netloc.lower()
-    
-    # 检测是否为 arXiv PDF
     parsed_orig = urlparse(url)
-    is_arxiv_pdf = ('arxiv.org' in domain and 
-                    ('/pdf/' in parsed.path or '/pdf/' in parsed_orig.path))
 
-    # 如果检测到 arXiv PDF，提取 arXiv ID 和出版月份
+    # 检测是否为 arXiv 论文（支持 /abs/ 和 /pdf/）
+    is_arxiv = 'arxiv.org' in domain or 'arxiv.org' in parsed_orig.netloc.lower()
+
+    # 从 arXiv URL 提取 ID 和出版月份
     paper_id = ""
     month_prefix = ""
 
-    if is_arxiv_pdf:
-        # 尝试从 URL 提取 arXiv ID (e.g., 2402.17152)
-        # 支持多种格式: /pdf/2402.17152, /pdf/2402.17152.pdf, /pdf/2402.17152v1
-        arxiv_match = re.search(r'/pdf/(\d+\.\d+)(?:v\d+)?\.?pdf?$', parsed.path)
+    if is_arxiv:
+        # 尝试多种模式提取 arXiv ID
+        arxiv_match = None
+        # 模式1: /pdf/2402.17152 或 /pdf/2402.17152.pdf 或 /pdf/2402.17152v1
+        for check_url in [parsed.path, parsed_orig.path]:
+            arxiv_match = re.search(r'/pdf/(\d{4}\.\d{4,5})(?:v\d+)?\.?pdf?$', check_url)
+            if arxiv_match:
+                break
+        # 模式2: /abs/2402.17152 或 /abs/2402.17152v1
         if not arxiv_match:
-            # 尝试从原始 URL 提取
-            arxiv_match = re.search(r'/pdf/(\d+\.\d+)(?:v\d+)?\.?pdf?$', parsed_orig.path)
-        # 如果 /pdf/ 路径没有匹配，尝试 /abs/ 后的 ID (e.g., /abs/2402.17152)
+            for check_url in [parsed.path, parsed_orig.path]:
+                arxiv_match = re.search(r'/abs/(\d{4}\.\d{4,5})(?:v\d+)?$', check_url)
+                if arxiv_match:
+                    break
+        # 模式3: 从 HTML 内容中提取的标题中包含 arXiv ID
         if not arxiv_match:
-            arxiv_match = re.search(r'/abs/(\d+\.\d+)(?:v\d+)?$', parsed.path)
-        if not arxiv_match:
-            arxiv_match = re.search(r'/abs/(\d+\.\d+)(?:v\d+)?$', parsed_orig.path)
+            arxiv_match = re.search(r'(\d{4}\.\d{4,5})', title or '')
 
         if arxiv_match:
             paper_id = arxiv_match.group(1)
-
-            # arXiv ID 格式: YYMM.NNNNN (e.g., 2402.17152 = 2024年02月)
+            # arXiv ID 格式: YYMM.NNNNN (e.g., 2507.15551 = 2025年07月)
             num_part = paper_id.split('.')[0]
             if len(num_part) >= 4:
-                # 前4位是年月 (YYMM 或 YYYYMM)
-                year = num_part[:2] if len(num_part) == 4 else num_part[:4]
-                month = num_part[2:4] if len(num_part) == 4 else num_part[4:6]
+                year = num_part[:2]
+                month = num_part[2:4]
                 month_prefix = f"{year}{month}_"
 
     # 技术论文网站
@@ -584,9 +590,9 @@ def generate_source_filename(url: str, title: str, final_url: str) -> str:
         site_name = domain.replace("www.", "").split(".")[0]
         prefix = site_name
 
-    # 添加出版月份前缀（仅 arXiv PDF）和短哈希避免冲突
-    if is_arxiv_pdf and paper_id:
-        # 对于 arXiv PDF，使用 arXiv ID 作为哈希（去除点号）
+    # 添加出版月份前缀（仅 arXiv）和短哈希避免冲突
+    if is_arxiv and paper_id:
+        # 对于 arXiv 论文，使用 arXiv ID 作为哈希（去除点号）
         url_hash = paper_id.replace('.', '')[:8]
     else:
         url_hash = hashlib.md5(final_url.encode()).hexdigest()[:6]
@@ -703,9 +709,12 @@ def read_index() -> str:
 
 
 def read_all_wiki_pages() -> dict[str, str]:
-    """读取 wiki 目录中的所有 Markdown 文件。"""
+    """读取 wiki 目录中的所有 Markdown 文件，排除检查点目录。"""
     pages = {}
     for md_file in WIKI_DIR.rglob("*.md"):
+        # 排除 .ipynb_checkpoints 目录
+        if '.ipynb_checkpoints' in str(md_file):
+            continue
         if md_file.name in ("README.md", "index.md", "log.md"):
             continue
         rel_path = md_file.relative_to(WIKI_DIR)
@@ -816,10 +825,11 @@ def cmd_ingest(source_file: str):
     index = read_index()
     wiki_pages = read_all_wiki_pages()
 
-    # 构建摄入提示
+    # 构建摄入提示 — 控制上下文大小
+    # 只包含索引和少量页面摘要
     wiki_context = "\n\n".join(
-        f"=== {path} ===\n{content[:2000]}..."
-        for path, content in list(wiki_pages.items())[:10]
+        f"=== {path} ===\n{content[:500]}..."
+        for path, content in list(wiki_pages.items())[:30]
     )
 
     system_prompt = f"""你是 LLM 在推荐系统中应用的知识库专家级维护者。
@@ -875,7 +885,7 @@ def cmd_ingest(source_file: str):
 """
 
     print("🤖 正在使用 LLM 处理（可能需要一些时间）...")
-    response = call_llm(prompt, system_prompt, max_tokens=8192)
+    response = call_llm(prompt, system_prompt, max_tokens=200000)
 
     if not response:
         print("❌ LLM 返回空响应。")
@@ -930,6 +940,7 @@ status: "stable"
         # 根据解析结果创建/更新页面
         pages_created = 0
         pages_updated = 0
+        new_page_paths = []  # 记录新创建和更新的页面路径
 
         # 创建新页面
         for page_info in parsed["create_pages"]:
@@ -964,6 +975,7 @@ status: "stable"
                         new_content = existing_content + update_marker
                         page_path.write_text(new_content, encoding="utf-8")
                         pages_updated += 1
+                        new_page_paths.append(str(page_path.relative_to(WIKI_DIR)))
                     else:
                         print(f"  ↻ 页面已更新过：{page_path.relative_to(WIKI_ROOT)}")
                     continue
@@ -1020,15 +1032,66 @@ status: "stable"
             if not title or len(title) < 3:
                 title = page_name
 
-            # 构建页面内容
-            # 如果没有有效描述，使用简化版标题（去掉 _）
+            # 🆕 调用 LLM 生成完整的页面内容（而非占位符）
+            print(f"  🤖 正在调用 LLM 生成完整的 {page_category} 页面：{title} ...")
             simple_title = page_name.replace('_', ' ')
-            if description and description != "从关联章节中检测到的页面":
-                desc_text = description
-            else:
-                desc_text = f"本文档包含关于 {simple_title} 的关键信息。"
 
-            page_content = f"""---
+            page_gen_prompt = f"""你是 LLM4Rec 知识库专家。请为以下新概念/模型/方法/实体撰写完整的中文百科页面。
+
+## 页面信息
+- **标题**：{title}
+- **类别**：{page_category}
+- **描述**：{description}
+- **来源文档**：{source_path.name}
+
+## 当前源文档内容
+
+{source_content[:8000]}
+
+## 当前知识库索引（参考）
+
+{index[:3000]}
+
+请输出完整的 Markdown 页面（含 frontmatter）。要求：
+1. **全部内容为中文**
+2. frontmatter 中 status 为 "draft"，confidence 为 "medium"
+3. 包含完整结构：摘要、要点列表、详细说明（分 3-5 个小节）、关联页面、开放问题、参考文献
+4. 结合你的领域知识撰写内容，不局限于源文档
+5. 保持与现有 wiki 页面风格一致（参见类似页面）
+6. 相关页面链接使用相对路径（如 ../models/XXX.md）"""
+
+            generated_content = call_llm(page_gen_prompt, "你是推荐系统和大语言模型领域的专家，擅长撰写详实、准确的知识库百科页面。", max_tokens=16384)
+
+            if generated_content and len(generated_content) > 500:
+                # 确保 frontmatter 正确
+                if not generated_content.strip().startswith('---'):
+                    page_content = f"""---
+title: "{title}"
+category: "{page_category}"
+tags: ["new", "{today}"]
+created: "{today}"
+updated: "{today}"
+sources: ["../sources/{source_path.stem}.md"]
+related: []
+confidence: "medium"
+status: "draft"
+---
+
+""" + generated_content
+                else:
+                    page_content = generated_content
+
+                write_file_safe(page_path, page_content)
+                pages_created += 1
+                new_page_paths.append(str(page_path.relative_to(WIKI_DIR)))
+                print(f"  ✅ 已创建完整页面：{page_path.relative_to(WIKI_ROOT)}（{len(page_content)} 字符）")
+            else:
+                # LLM 生成失败，降级为占位符
+                print(f"  ⚠️  LLM 生成内容不足，使用占位符模板")
+                simple_title = page_name.replace('_', ' ')
+                desc_text = description if description and description != "从关联章节中检测到的页面" else f"本文档包含关于 {simple_title} 的关键信息。"
+
+                page_content = f"""---
 title: "{title}"
 category: "{page_category}"
 tags: ["new", "{today}"]
@@ -1050,21 +1113,20 @@ status: "draft"
 
 ## 相关主题
 
-- [源文档]({{ "../sources/" + source_path.stem + ".md" }})
+- [源文档](../sources/{source_path.stem}.md)
 
 ## 扩展阅读
 
-- [知识库首页](../index.md)
-- [全部模型](../models/)
-- [全部概念](../concepts/)
+- [知识库首页](../README.md)
 
 ---
 
 *本页面由 LLM 自动生成，内容可能需要人工审查和补充。*
 """
-            write_file_safe(page_path, page_content)
-            pages_created += 1
-            print(f"  ✅ 已创建页面：{page_path.relative_to(WIKI_ROOT)}")
+                write_file_safe(page_path, page_content)
+                pages_created += 1
+                new_page_paths.append(str(page_path.relative_to(WIKI_DIR)))
+                print(f"  ✅ 已创建页面（占位符）：{page_path.relative_to(WIKI_ROOT)}")
 
         # 更新页面
         for page_info in parsed["update_pages"]:
@@ -1090,15 +1152,16 @@ status: "draft"
                     new_content = existing_content + update_marker
                     page_path.write_text(new_content, encoding="utf-8")
                     pages_updated += 1
+                    new_page_paths.append(str(page_path.relative_to(WIKI_DIR)))
                     print(f"  ✅ 已更新页面：{page_path.relative_to(WIKI_ROOT)}")
                 else:
                     print(f"  ↻ 页面已更新过：{page_path.relative_to(WIKI_ROOT)}")
             else:
-                # 页面不存在，尝试创建
+                # 页面不存在，调用 LLM 生成完整内容
                 print(f"  🆕 创建缺失页面：{page_path.relative_to(WIKI_ROOT)}")
                 page_category = relative_path.split("/")[0]
                 page_name = page_path.stem.replace('_', ' ').title()
-                
+
                 # 提取标题
                 title = page_name
                 if ": " in update_details:
@@ -1106,8 +1169,57 @@ status: "draft"
                     candidate = parts[0].strip()
                     if len(candidate) > 2 and len(candidate) < 50 and any('\u4e00' <= c <= '\u9fff' for c in candidate):
                         title = candidate
-                        
-                page_content = f"""---
+
+                # 🆕 调用 LLM 生成完整页面
+                print(f"  🤖 正在调用 LLM 生成页面内容：{title} ...")
+
+                page_gen_prompt = f"""你是 LLM4Rec 知识库专家。请为以下概念/实体撰写完整的中文百科页面。
+
+## 页面信息
+- **标题**：{title}
+- **类别**：{page_category}
+- **描述**：{update_details}
+- **来源文档**：{source_path.name}
+
+## 源文档内容
+
+{source_content[:8000]}
+
+请输出完整的 Markdown 页面（含 frontmatter）。要求：
+1. **全部内容为中文**
+2. frontmatter 中 status 为 "draft"，confidence 为 "medium"
+3. 包含完整结构：摘要、要点列表、详细说明（分 3-5 个小节）、关联页面、开放问题、参考文献
+4. 结合你的领域知识撰写内容
+5. 保持与现有 wiki 页面风格一致
+6. 相关页面链接使用相对路径"""
+
+                generated = call_llm(page_gen_prompt, "你是推荐系统专家，擅长撰写知识库页面。", max_tokens=16384)
+
+                if generated and len(generated) > 500:
+                    if not generated.strip().startswith('---'):
+                        page_content = f"""---
+title: "{title}"
+category: "{page_category}"
+tags: ["new", "{today}"]
+created: "{today}"
+updated: "{today}"
+sources: ["../sources/{source_path.stem}.md"]
+related: []
+confidence: "medium"
+status: "draft"
+---
+
+""" + generated
+                    else:
+                        page_content = generated
+                    write_file_safe(page_path, page_content)
+                    pages_created += 1
+                    new_page_paths.append(str(page_path.relative_to(WIKI_DIR)))
+                    print(f"  ✅ 已创建完整页面：{page_path.relative_to(WIKI_ROOT)}（{len(page_content)} 字符）")
+                else:
+                    # 降级为占位符
+                    print(f"  ⚠️  LLM 生成内容不足，使用占位符")
+                    page_content = f"""---
 title: "{title}"
 category: "{page_category}"
 tags: ["new", "{today}"]
@@ -1129,21 +1241,20 @@ status: "draft"
 
 ## 相关主题
 
-- [源文档]({{ "../sources/" + source_path.stem + ".md" }})
+- [源文档](../sources/{source_path.stem}.md)
 
 ## 扩展阅读
 
-- [知识库首页](../index.md)
-- [全部模型](../models/)
-- [全部概念](../concepts/)
+- [知识库首页](../README.md)
 
 ---
 
 *本页面由 LLM 自动生成，内容可能需要人工审查和补充。*
 """
-                write_file_safe(page_path, page_content)
-                pages_created += 1
-                print(f"  ✅ 已创建页面：{page_path.relative_to(WIKI_ROOT)}")
+                    write_file_safe(page_path, page_content)
+                    pages_created += 1
+                    new_page_paths.append(str(page_path.relative_to(WIKI_DIR)))
+                    print(f"  ✅ 已创建页面（占位符）：{page_path.relative_to(WIKI_ROOT)}")
 
         # 更新索引
         print(f"\n📝 更新知识库索引...")
@@ -1167,6 +1278,19 @@ status: "draft"
         print("=" * 60)
     else:
         print("⏭️  未应用更改。")
+
+
+def _enrich_draft_pages(created_paths: list[str], source_content: str, today: str):
+    """对状态为 draft 的新页面，调用 LLM 搜集资料自动补充内容。"""
+    if not created_paths:
+        return
+
+    print(f"  ℹ️  发现 {len(created_paths)} 个新页面。如需自动补充内容，建议后续单独运行补充命令。")
+    # 注意：LLM 补充耗时较长，不再在 ingest 中自动执行
+    # 用户可后续通过以下方式手动补充：
+    #   1. 手动编辑页面
+    #   2. 通过后续 ingest 更多相关源文档逐步更新
+    #   3. 等待下一次相关源文档的 ingest 自动触发
 
 
 def cmd_query(question: str, stream: bool = False):
@@ -1227,62 +1351,141 @@ def cmd_query(question: str, stream: bool = False):
         print(f"\n💾 已保存查询结果：{summary_path.relative_to(WIKI_ROOT)}")
 
 
-def cmd_lint():
+def cmd_lint(auto_fix: bool = False):
     """运行知识库健康检查。"""
     print("🔍 正在运行知识库健康检查...")
-    
-    # 读取所有页面
+
+    # 读取所有页面（已排除 checkpoints）
     pages = read_all_wiki_pages()
-    
+
     # 读取 index
     index = read_index()
-    
+
     print("🤖 正在分析知识库健康状况...")
-    
+
     # 检查问题
     issues = []
-    
-    # 检查 1: 空页面（只有 frontmatter 没有正文）
+    fixes_applied = []
+
+    # 检查 1: 检查点文件（如果 auto_fix 则自动删除）
+    checkpoint_files = []
+    for path in WIKI_DIR.rglob("*checkpoint*"):
+        if path.is_file():
+            checkpoint_files.append(str(path.relative_to(WIKI_ROOT)))
+            if auto_fix:
+                try:
+                    path.unlink()
+                    fixes_applied.append(f"已删除检查点文件: {path.relative_to(WIKI_ROOT)}")
+                except Exception as e:
+                    issues.append(f"❌ {path.relative_to(WIKI_ROOT)}: 删除失败 - {e}")
+            else:
+                issues.append(f"❌ {path.relative_to(WIKI_ROOT)}: 应该删除检查点文件")
+
+    # 检查 2: 空页面（只有 frontmatter 没有正文，或只有占位符文本）
+    placeholder_titles = [
+        "从关联章节中检测到的页面",
+        "源论文摘要页面包含论文元数据核心贡献方法概述关键发现和与现有研究的关联",
+        "源论文摘要页面本次任务重点",
+        "创建此源文档的摘要页面见下文完整内容",
+    ]
     for path, content in pages.items():
-        if content.strip().endswith("---"):
-            issues.append(f"⚠️  {path}: 空页面（只有 frontmatter）")
-    
-    # 检查 2: 检查点文件
-    for path in pages.keys():
+        # 排除检查点
         if '.ipynb_checkpoints' in path:
-            issues.append(f"❌ {path}: 应该删除检查点文件")
-    
+            continue
+        # 检查是否只有 frontmatter
+        body = content.split('---', 2)[-1].strip() if '---' in content else content.strip()
+        if not body:
+            issues.append(f"⚠️  {path}: 空页面（只有 frontmatter）")
+            continue
+        # 检查占位符标题
+        for placeholder in placeholder_titles:
+            if placeholder in content[:500]:
+                issues.append(f"⚠️  {path}: 占位符页面（标题包含'{placeholder[:20]}...'）")
+                break
+
     # 检查 3: frontmatter 缺失
     for path, content in pages.items():
-        if not content.startswith('---'):
+        if '.ipynb_checkpoints' in path:
+            continue
+        if not content.strip().startswith('---'):
             issues.append(f"❌ {path}: 缺少 frontmatter")
-    
-    # 检查 4: 索引不一致
+
+    # 检查 4: 缺少 related 链接
+    orphan_pages = []
+    for path, content in pages.items():
+        if '.ipynb_checkpoints' in path:
+            continue
+        related_match = re.search(r'related:\s*\[(.*?)\]', content[:500])
+        if related_match:
+            related_content = related_match.group(1).strip()
+            if not related_content or related_content == '[]':
+                orphan_pages.append(path)
+    if orphan_pages:
+        issues.append(f"ℹ️  {len(orphan_pages)} 个页面缺少 related 链接（可能是孤立页面）: {', '.join(orphan_pages[:5])}{'...' if len(orphan_pages) > 5 else ''}")
+
+    # 检查 5: 索引一致性
     index_pages = set()
     for line in index.split('\n'):
         if '](' in line:
             match = re.search(r'\]\(([^)]+)\)', line)
             if match:
                 index_pages.add(match.group(1))
-    
+
     missing_from_index = set(pages.keys()) - index_pages
     if missing_from_index:
-        issues.append(f"⚠️  {len(missing_from_index)} 个页面未在 index.md 中")
-    
+        issues.append(f"⚠️  {len(missing_from_index)} 个页面未在 index.md 中: {', '.join(list(missing_from_index)[:5])}{'...' if len(missing_from_index) > 5 else ''}")
+
+    extra_in_index = index_pages - set(pages.keys())
+    if extra_in_index:
+        issues.append(f"⚠️  index.md 包含 {len(extra_in_index)} 个不存在的页面: {', '.join(list(extra_in_index)[:5])}{'...' if len(extra_in_index) > 5 else ''}")
+
+    # 检查 6: 损坏的相对链接
+    broken_links = []
+    for path, content in pages.items():
+        if '.ipynb_checkpoints' in path:
+            continue
+        links = re.findall(r'\]\(\.\./([^)]+)\)', content)
+        for link in links:
+            # 跳过目录链接（以 / 结尾）
+            if link.endswith('/'):
+                continue
+            # 解析相对路径
+            page_dir = Path(path).parent
+            target = page_dir / link
+            target_norm = Path(os.path.normpath(str(target)))
+            # 检查目标是否存在
+            target_path = WIKI_DIR / target_norm
+            if not target_path.exists():
+                broken_links.append(f"{path} → {link}")
+
+    if broken_links:
+        # 去重
+        unique_broken = sorted(set(broken_links))
+        issues.append(f"⚠️  发现 {len(unique_broken)} 个可能损坏的链接: {', '.join(unique_broken[:5])}{'...' if len(unique_broken) > 5 else ''}")
+
+    # 打印报告
     print("\n" + "=" * 60)
     print("# 📊 LLM4Rec 知识库健康检查报告")
     print("=" * 60)
-    
+
+    if fixes_applied:
+        print(f"\n✅ 自动修复了 {len(fixes_applied)} 个问题:")
+        for fix in fixes_applied:
+            print(f"  - {fix}")
+
     if issues:
-        print(f"\n检测到 {len(issues)} 个问题：\n")
-        for issue in issues[:20]:  # 最多显示 20 个
+        print(f"\n检测到 {len(issues)} 个问题:\n")
+        for issue in issues[:30]:  # 最多显示 30 个
             print(issue)
-        if len(issues) > 20:
-            print(f"... 还有 {len(issues) - 20} 个问题未显示")
+        if len(issues) > 30:
+            print(f"... 还有 {len(issues) - 30} 个问题未显示")
     else:
-        print("✅ 知识库健康状况良好！")
-    
+        print("\n✅ 知识库健康状况良好！")
+
     print("\n" + "=" * 60)
+
+    if auto_fix and fixes_applied:
+        print(f"\n💡 自动修复完成。建议重新运行 lint 验证: python tools/llm_wiki.py lint")
 
 
 def cmd_summarize():
@@ -1386,6 +1589,7 @@ def cmd_fetch(url: str, auto_ingest: bool = True):
     final_url = url
     markdown = ""
     title = ""
+    paper_text = ""  # 用于 LLM 提取的纯文本
 
     if is_pdf:
         print("📄 检测到 PDF URL，尝试转换为 HTML 页面...")
@@ -1400,9 +1604,9 @@ def cmd_fetch(url: str, auto_ingest: bool = True):
         else:
             # 无法转换，直接下载并解析 PDF
             print(f"⚠️  无法转换为 HTML，将直接下载并解析 PDF 文件...")
-            markdown, title = download_and_parse_pdf(url)
+            paper_text, title = download_and_parse_pdf(url)
             final_url = url
-            if not markdown:
+            if not paper_text:
                 print("❌ PDF 解析失败，无法继续。")
                 return
     else:
@@ -1414,9 +1618,71 @@ def cmd_fetch(url: str, auto_ingest: bool = True):
     if title:
         print(f"📄 检测到标题：{title}")
 
-    # 2. 检查内容长度，如果太长则让 LLM 提取核心内容
-    max_raw_chars = 80000
-    if len(markdown) > max_raw_chars:
+    # 2. 对 arXiv 论文，调用 LLM 生成完整的中文论文摘要（类似 p5_paper_summary.md 格式）
+    if 'arxiv.org' in final_url.lower() or paper_text:
+        print("🤖 正在调用 LLM 生成完整的中文论文摘要...")
+        # 如果有 paper_text（PDF 解析的全文），使用全文；否则使用 HTML 页面内容
+        paper_content = paper_text if paper_text else markdown
+        summary_prompt = f"""你是一位专业的论文摘要助手，专注于推荐系统和大语言模型领域。
+请将以下论文内容提取为**结构化的中文 Markdown 格式**，参照以下模板：
+
+```
+# {{论文标题（中文翻译）}}
+
+**来源类型**：论文摘要
+**作者**：{{作者列表}}
+**年份**：{{年份}}
+**会议/期刊**：{{会议或期刊名称，如无则写"arXiv"}}
+**arXiv**：{{arXiv 编号}}
+
+## 摘要
+
+{{一段简洁的中文摘要，2-3 句话概括论文核心}}
+
+## 主要贡献
+
+1. **{{贡献点 1}}**：{{详细描述}}
+2. **{{贡献点 2}}**：{{详细描述}}
+3. **{{贡献点 3}}**：{{详细描述}}
+
+## 方法
+
+### 架构
+{{模型/方法的核心架构描述}}
+
+### 关键技术
+{{关键技术细节，如训练策略、损失函数、数据处理等}}
+
+## 实验结果
+
+{{主要实验结果和性能对比，包含具体数字}}
+
+## 局限性
+
+{{论文提到的局限性或潜在改进方向}}
+
+## 与 LLM4Rec 的相关性
+
+{{这篇论文与 LLM 推荐系统领域的相关性和影响}}
+```
+
+要求：
+1. **全部内容必须为中文**（论文标题保留英文原文，附中文翻译）
+2. 保留核心方法、实验数据和结论
+3. 保持简洁精炼（总长度控制在 1500-2500 字）
+4. 实验结果必须包含具体的数字和对比
+
+论文内容：
+{paper_content[:60000]}"""
+        summary_response = call_llm(summary_prompt, "你是一位推荐系统和 LLM 领域的专家助手，擅长将英文论文提炼为结构化的中文摘要。", max_tokens=16384)
+        if summary_response:
+            markdown = summary_response
+            print(f"✅ LLM 已生成中文论文摘要（{len(markdown)} 字符）")
+        else:
+            print("⚠️  LLM 生成失败，将使用原始内容")
+
+    # 3. 检查内容长度，如果太长则让 LLM 提取核心内容（非论文内容才需要）
+    if not ('arxiv.org' in final_url.lower() or paper_text) and len(markdown) > 80000:
         print(f"⚠️  内容较长（{len(markdown)} 字符），将使用 LLM 提取核心内容...")
         extract_prompt = f"""你是一个专业的论文/文章内容提取助手。请将以下内容精炼提取为结构化的 Markdown 格式：
 
@@ -1425,23 +1691,23 @@ def cmd_fetch(url: str, auto_ingest: bool = True):
 2. 保留主要的章节结构
 3. 去除重复、广告、导航等无关内容
 4. 保持关键信息的完整性
-5. 输出为 Markdown 格式
+5. 输出为 **中文** Markdown 格式
 
 内容：
-{markdown[:max_raw_chars]}"""
-        extracted = call_llm(extract_prompt, "你是一个内容提取专家。将长文章精炼为结构化 Markdown。", max_tokens=16384)
+{markdown[:80000]}"""
+        extracted = call_llm(extract_prompt, "你是一个内容提取专家。将长文章精炼为结构化中文 Markdown。", max_tokens=16384)
         if extracted:
             markdown = extracted
             print(f"✅ LLM 已精炼内容至 {len(markdown)} 字符")
         else:
             print("⚠️  LLM 提取失败，将使用原始内容")
-            markdown = markdown[:max_raw_chars]
+            markdown = markdown[:80000]
 
-    # 3. 生成智能文件名
+    # 4. 生成智能文件名
     source_filename = generate_source_filename(url, title, final_url)
     source_path = RAW_DIR / "sources" / source_filename
 
-    # 4. 检查是否已存在
+    # 5. 检查是否已存在
     if source_path.exists():
         print(f"⚠️  文件已存在：{source_filename}")
         overwrite = input("是否覆盖？(y/n): ").lower()
@@ -1449,7 +1715,7 @@ def cmd_fetch(url: str, auto_ingest: bool = True):
             print("⏭️  已跳过。")
             return
 
-    # 5. 保存源文件
+    # 6. 保存源文件
     today = datetime.now().strftime("%Y-%m-%d")
     fetch_header = f"""---
 title: "{title or final_url}"
@@ -1462,7 +1728,7 @@ fetched: "{today}"
     write_file_safe(source_path, fetch_header + markdown)
     print(f"✅ 已保存源文件：{source_path.relative_to(WIKI_ROOT)}")
 
-    # 6. 如果启用自动摄入，调用 ingest
+    # 7. 如果启用自动摄入，调用 ingest
     if auto_ingest:
         print("\n" + "=" * 60)
         print("🤖 正在分析内容并更新知识库...")
@@ -1507,7 +1773,8 @@ def main():
     query_parser.add_argument("--stream", action="store_true", help="流式输出响应")
 
     # 健康检查
-    subparsers.add_parser("lint", help="健康检查知识库")
+    lint_parser = subparsers.add_parser("lint", help="健康检查知识库")
+    lint_parser.add_argument("--fix", action="store_true", help="自动修复可修复的问题（如删除检查点文件）")
 
     # 摘要
     subparsers.add_parser("summarize", help="摘要知识库状态")
@@ -1532,7 +1799,7 @@ def main():
     elif args.command == "summarize":
         cmd_summarize()
     elif args.command == "lint":
-        cmd_lint()
+        cmd_lint(auto_fix=getattr(args, 'fix', False))
     elif args.command == "ingest":
         cmd_ingest(args.source)
     elif args.command == "query":

@@ -116,7 +116,7 @@ LLM 利用多种能力进行排序：
 ## 关联
 
 - [LLMRank 模型](../models/LLMRank.md) 实现了列表式 LLM 排序
-- [LLM-as-Reasoner](../methods/llm_as_reasoner.md) 通过意图推断补充排序
+- [LLM-as-Reasoner](./llm_as_reasoner.md) 通过意图推断补充排序
 - [评估](../concepts/evaluation_llm4rec.md) 涵盖排序指标
 
 ## 开放问题

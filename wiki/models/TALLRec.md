@@ -94,8 +94,8 @@ Base LLM (shared)
 ## 关联
 
 - [基于提示的微调](../methods/prompt_finetuning.md) 涵盖 LoRA 细节
-- [P5](../models/P5.md) 不使用微调
-- [InstructRec](../models/InstructRec.md) 使用全量微调
+- [P5](./P5.md) 不使用微调
+- [InstructRec](./InstructRec.md) 使用全量微调
 
 ## 开放问题
 

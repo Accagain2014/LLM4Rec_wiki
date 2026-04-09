@@ -163,3 +163,9 @@ Deployment Pattern
 
 **来源**: 2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md
 ：在“工业部署架构”或“统一骨干网络”分类下补充 OneTrans 条目，强调其向 LLM 风格统一 Token 序列与推理缓存优化的靠拢趋势。
+
+
+## 更新于 2026-04-09
+
+**来源**: paper_a1f46d_MBGR_Multi-Business_Prediction_for_Generative_Recommendatio.md
+：在“工业部署架构”或“生成式推荐”分支下新增“多业务生成式推荐”节点，标注 MBGR 及美团实践。

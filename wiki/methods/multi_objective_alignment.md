@@ -132,3 +132,9 @@ L_slate = α · L_preference + β · L_business + γ · L_diversity
 
 **来源**: paper_a1f46d_MBGR_Multi-Business_Prediction_for_Generative_Recommendatio.md
 ：补充 MBP 与 LDR 作为多业务/多目标优化的新范式，对比传统列表级对齐（HiGR）与业务级动态路由的差异，强调稀疏标签稠密化在生成式管线中的作用。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2511_paper_25111013_GPR_Towards_a_Generative_Pre-trained_One-Model_Paradigm_for.md
+：新增 HEPO（层级增强策略优化）与价值感知微调作为推荐系统中商业价值对齐（类 RLHF）的典型方法。

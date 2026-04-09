@@ -130,3 +130,9 @@ OpenOneRec 提出的 RecIF-Bench（Recommendation Intelligence Framework Benchma
 
 - Zhou, G., et al. (2025). OpenOneRec Technical Report. arXiv:2512.24762.
 - Tencent Advertising Algorithm Challenge 2025: All-Modality Generative Recommendation. arXiv:2604.04974.
+
+
+## 更新于 2026-04-09
+
+**来源**: 2512_paper_25121450_RecGPT-V2_Technical_Report.md
+：补充 AgentasaJudge 评估协议，阐述其从传统自动化指标（BLEU/ROUGE）向多步逻辑推理与人类偏好对齐评估的演进。

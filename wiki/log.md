@@ -413,3 +413,35 @@
 - 已更新页面：3
 
 ---
+
+
+## [2026-04-09] ingest | 已处理源文件：2511_paper_25111013_GPR_Towards_a_Generative_Pre-trained_One-Model_Paradigm_for.md
+- 源文件：2511_paper_25111013_GPR_Towards_a_Generative_Pre-trained_One-Model_Paradigm_for.md
+- 已创建页面：0
+- 已更新页面：4
+
+---
+
+
+## [2026-04-09] ingest | 已处理源文件：2507_paper_25072287_RecGPT_Technical_Report.md
+- 源文件：2507_paper_25072287_RecGPT_Technical_Report.md
+- 已创建页面：3
+- 已更新页面：4
+
+---
+
+
+## [2026-04-09] ingest | 已处理源文件：2512_paper_25121450_RecGPT-V2_Technical_Report.md
+- 源文件：2512_paper_25121450_RecGPT-V2_Technical_Report.md
+- 已创建页面：0
+- 已更新页面：5
+
+---
+
+
+## [2026-04-09] ingest | 已处理源文件：rankmixer_to_oneranker.md
+- 源文件：rankmixer_to_oneranker.md
+- 已创建页面：0
+- 已更新页面：7
+
+---

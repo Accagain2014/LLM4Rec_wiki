@@ -37,3 +37,9 @@ status: "draft"
 
 **来源**: 2508_paper_25082090_OneRec-V2_Technical_Report.md
 ：新增 DurationAware Reward Shaping 与 Adaptive Ratio Clipping 技术细节，说明其如何将隐式时长反馈转化为强化学习优化信号。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2512_paper_25121450_RecGPT-V2_Technical_Report.md
+：新增约束强化学习（Constrained RL）在推荐多目标对齐中的应用，对比其与 DPO/RLHF 在硬约束/软惩罚设计上的差异。

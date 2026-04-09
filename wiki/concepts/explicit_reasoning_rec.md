@@ -137,3 +137,15 @@ Think-Ahead 架构通过以下方式实现工业部署：
 
 - Liu, Z., Wang, S., Wang, X., Zhang, R., Deng, J., Bao, H., Zhang, J., Li, W., Zheng, P., Wu, X., Hu, Y., Hu, Q., Luo, X., Ren, L., Zhang, Z., Wang, Q., Cai, K., Wu, Y., Cheng, H., Cheng, Z., Ren, L., Wang, H., Su, Y., Tang, R., Gai, K., & Zhou, G. (2025). OneRec-Think: In-Text Reasoning for Generative Recommendation. arXiv:2510.11639.
 - arXiv: https://arxiv.org/abs/2510.11639
+
+
+## 更新于 2026-04-09
+
+**来源**: 2507_paper_25072287_RecGPT_Technical_Report.md
+：补充 RecGPT 中“推理增强预对齐”与“可解释性生成模块”的工业实践，说明推理能力如何直接服务于意图抽离与推荐理由生成。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2512_paper_25121450_RecGPT-V2_Technical_Report.md
+：新增“分层多智能体协同推理”子范式，说明其如何通过路由调度与信息共享解决 V1 的认知冗余问题。

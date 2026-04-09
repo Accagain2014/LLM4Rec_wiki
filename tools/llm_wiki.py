@@ -765,14 +765,14 @@ def build_index() -> str:
                 title_match = re.search(r'title:\s*["\']?([^"\'\n]+)', content[:500])
                 title = title_match.group(1).strip() if title_match else path
                 # 提取 tags
-                tags_match = re.search(r'tags:\s*\[(.*?)\]', content[:500])
+                tags_match = re.search(r'tags:\s*\[(.*?)\]', content[:1000])
                 tags = tags_match.group(1).strip() if tags_match else ""
 
                 categories[cat].append({
                     "path": path,
                     "title": title,
                     "tags": tags,
-                    "content": content[:300]
+                    "content": content[:1000]
                 })
 
     # 构建 index 内容
@@ -828,8 +828,8 @@ def cmd_ingest(source_file: str):
     # 构建摄入提示 — 控制上下文大小
     # 只包含索引和少量页面摘要
     wiki_context = "\n\n".join(
-        f"=== {path} ===\n{content[:500]}..."
-        for path, content in list(wiki_pages.items())[:30]
+        f"=== {path} ===\n{content[:1000]}..."
+        for path, content in list(wiki_pages.items())[:50]
     )
 
     system_prompt = f"""你是 LLM 在推荐系统中应用的知识库专家级维护者。
@@ -966,18 +966,11 @@ status: "stable"
                 
                 if is_placeholder:
                     print(f"  🔄 更新占位符页面：{page_path.relative_to(WIKI_ROOT)}")
-                    update_details = page_info["details"]
-                    
-                    # 读取现有页面并追加
-                    update_marker = f"\n\n## 更新于 {today}\n\n**来源**: {source_path.name}\n{update_details}\n"
-
-                    if update_marker not in existing_content:
-                        new_content = existing_content + update_marker
-                        page_path.write_text(new_content, encoding="utf-8")
+                    # 对于占位符页面，直接调用 LLM 生成完整内容
+                    success = _enrich_page_with_llm(page_path, source_content, source_path.name, update_details, today)
+                    if success:
                         pages_updated += 1
                         new_page_paths.append(str(page_path.relative_to(WIKI_DIR)))
-                    else:
-                        print(f"  ↻ 页面已更新过：{page_path.relative_to(WIKI_ROOT)}")
                     continue
                 else:
                     print(f"  ↻ 页面已存在且完整，跳过：{page_path.relative_to(WIKI_ROOT)}")
@@ -1163,21 +1156,11 @@ status: "draft"
             update_details = page_info["details"]
 
             if page_path.exists():
-                # 读取现有页面
-                existing_content = page_path.read_text(encoding="utf-8")
-
-                # 简单更新：在末尾添加新内容
-                update_marker = f"\n\n## 更新于 {today}\n\n**来源**: {source_path.name}\n{update_details}\n"
-
-                # 检查是否已存在相同更新
-                if update_marker not in existing_content:
-                    new_content = existing_content + update_marker
-                    page_path.write_text(new_content, encoding="utf-8")
+                # 使用 LLM 对页面进行内容充实（而非仅添加日志条目）
+                success = _enrich_page_with_llm(page_path, source_content, source_path.name, update_details, today)
+                if success:
                     pages_updated += 1
                     new_page_paths.append(str(page_path.relative_to(WIKI_DIR)))
-                    print(f"  ✅ 已更新页面：{page_path.relative_to(WIKI_ROOT)}")
-                else:
-                    print(f"  ↻ 页面已更新过：{page_path.relative_to(WIKI_ROOT)}")
             else:
                 # 页面不存在，调用 LLM 生成完整内容
                 print(f"  🆕 创建缺失页面：{page_path.relative_to(WIKI_ROOT)}")
@@ -1300,6 +1283,115 @@ status: "draft"
         print("=" * 60)
     else:
         print("⏭️  未应用更改。")
+
+
+def _page_update_is_complete(page_path: Path, source_name: str) -> bool:
+    """检查页面是否已标记为更新完成。
+
+    如果页面包含 "## 更新完成：{source_name}" 标记，表示该源文档的更新已完成，
+    下次 fetch 其他文档时可以跳过此页面，避免重复更新。
+    """
+    if not page_path.exists():
+        return False
+
+    content = page_path.read_text(encoding="utf-8")
+    marker = f"## 更新完成：{source_name}"
+    return marker in content
+
+
+def _mark_page_update_complete(page_path: Path, source_name: str, update_summary: str = ""):
+    """在页面末尾添加更新完成标记。
+
+    标记格式：
+    ## 更新完成：{source_name}
+    **更新时间**: {timestamp}
+    **更新摘要**: {update_summary}
+
+    *该页面的此次更新已完成。下次 ingest 其他源文档时将跳过此页面。*
+    """
+    today = datetime.now().strftime("%Y-%m-%d %H:%M")
+    marker = f"""
+
+---
+
+## 更新完成：{source_name}
+**更新时间**: {today}
+**更新摘要**: {update_summary}
+
+*该页面的此次更新已完成。下次 ingest 其他源文档时将跳过此页面。*
+"""
+    content = page_path.read_text(encoding="utf-8")
+    content += marker
+    page_path.write_text(content, encoding="utf-8")
+
+
+def _enrich_page_with_llm(page_path: Path, source_content: str, source_name: str,
+                         update_details: str, today: str) -> bool:
+    """使用 LLM 对现有页面进行内容充实和更新（而非仅添加日志条目）。
+
+    返回: True 如果更新成功，False 如果跳过或失败
+    """
+    # 检查是否已标记为更新完成
+    if _page_update_is_complete(page_path, source_name):
+        print(f"  ↻ 页面已标记为更新完成（{source_name}），跳过")
+        return False
+
+    # 读取现有页面内容
+    existing_content = page_path.read_text(encoding="utf-8")
+
+    # 提取 frontmatter 和正文
+    frontmatter = ""
+    body = existing_content
+    if existing_content.strip().startswith('---'):
+        parts = existing_content.split('---', 2)
+        if len(parts) >= 3:
+            frontmatter = parts[0] + '---' + parts[1] + '---\n\n'
+            body = parts[2].strip()
+
+    # 调用 LLM 生成更新内容
+    print(f"  🤖 正在调用 LLM 充实页面内容：{page_path.name} ...")
+
+    enrichment_prompt = f"""你是一个 LLM4Rec 知识库的维护专家。请根据以下新源文档内容，对现有知识库页面进行**实质性的内容充实和更新**。
+
+## 现有页面内容
+{body[:6000]}
+
+## 新源文档相关内容
+{update_details}
+
+## 新源文档全文/摘要
+{source_content[:10000]}
+
+## 指令
+
+请基于新源文档的内容，对现有页面进行**丰富和扩展**：
+
+1. **合并新信息**：将源文档中的关键发现、方法、数据整合到现有内容中
+2. **扩展细节**：在适当的小节中添加更多技术细节、实验结果或案例
+3. **添加新小节**：如果源文档包含全新的概念或方法，添加相应的章节
+4. **更新关联**：更新"相关页面"部分，添加新的相关链接
+5. **保持风格一致**：与现有页面的写作风格和结构保持一致
+6. **标注来源**：在添加的内容末尾标注来源，例如"[来源：{source_name}]"
+
+请直接输出**完整的更新后的页面正文**（不包含 frontmatter），使用 Markdown 格式，全部内容为中文。
+"""
+
+    system_prompt = "你是推荐系统和大语言模型领域的专家，擅长撰写和维护知识库百科页面。"
+    enriched_content = call_llm(enrichment_prompt, system_prompt, max_tokens=16384)
+
+    if not enriched_content or len(enriched_content) < 500:
+        print(f"  ⚠️  LLM 生成内容不足（{len(enriched_content or '')} 字符），跳过更新")
+        return False
+
+    # 合并 frontmatter 和更新后的正文
+    new_content = frontmatter + enriched_content
+    page_path.write_text(new_content, encoding="utf-8")
+
+    # 标记更新完成
+    _mark_page_update_complete(page_path, source_name, f"已使用 LLM 对页面进行内容充实，基于 {source_name}")
+
+    print(f"  ✅ 已完成页面内容充实：{page_path.relative_to(WIKI_ROOT)}（{len(enriched_content)} 字符）")
+    return True
 
 
 def _enrich_draft_pages(created_paths: list[str], source_content: str, today: str):
@@ -1510,12 +1602,141 @@ def cmd_lint(auto_fix: bool = False):
         print(f"\n💡 自动修复完成。建议重新运行 lint 验证: python tools/llm_wiki.py lint")
 
 
+def _update_readme_current_content():
+    """更新 README.md 的 '## 当前内容' 部分，保持索引与知识库同步。"""
+    readme_path = WIKI_ROOT / "README.md"
+    if not readme_path.exists():
+        print("  ⚠️  README.md 不存在，跳过更新。")
+        return
+
+    readme_content = readme_path.read_text(encoding="utf-8")
+
+    # 检查是否有 "## 当前内容" 部分
+    if "## 当前内容" not in readme_content:
+        print("  ⚠️  README.md 中未找到 '## 当前内容' 部分，跳过更新。")
+        return
+
+    # 读取所有 wiki 页面并重建当前内容部分
+    pages = read_all_wiki_pages()
+
+    # 按类别组织页面
+    categories = {
+        "concepts": [],
+        "methods": [],
+        "models": [],
+        "entities": [],
+        "synthesis": [],
+        "sources": []
+    }
+
+    for path, content in pages.items():
+        parts = path.split("/")
+        if len(parts) >= 1:
+            cat = parts[0]
+            if cat in categories:
+                # 使用文件路径作为显示名称，而非标题
+                categories[cat].append({
+                    "path": path,
+                    "display_name": path,
+                })
+
+    # 计算总页面数
+    total_pages = sum(len(v) for v in categories.values())
+
+    # 构建新的 "## 当前内容" 部分
+    new_section_parts = []
+    new_section_parts.append(f"该 wiki 目前包含 **{total_pages} 个页面**，涵盖：\n")
+
+    # 为每个类别生成列表（包括所有页面，不限制数量）
+    display_categories = {
+        "Concepts": categories.get("concepts", []),
+        "Methods": categories.get("methods", []),
+        "Models": categories.get("models", []),
+        "Entities": categories.get("entities", []),
+        "Synthesis": categories.get("synthesis", []),
+        "Sources": categories.get("sources", []),
+    }
+
+    for cat_name, items in display_categories.items():
+        if items:
+            new_section_parts.append(f"\n### {cat_name}（{len(items)} 页）\n")
+            # 显示所有页面，不使用截断
+            for item in items:
+                # 使用文件路径作为链接文本和地址
+                link_path = item["path"]
+                display_name = item["display_name"]
+                new_section_parts.append(f"- [{display_name}]({link_path})\n")
+
+    new_section = "".join(new_section_parts)
+
+    # 使用正则替换 "## 当前内容" 和下一个 "##" 之间的部分
+    # 查找 "## 当前内容" 之后的第一个 "##" 标题
+    pattern = r'(## 当前内容\n\n)([\s\S]*?)(?=\n## )'
+    replacement = f'## 当前内容\n\n{new_section}'
+
+    updated_readme = re.sub(pattern, replacement, readme_content)
+
+    if updated_readme != readme_content:
+        readme_path.write_text(updated_readme, encoding="utf-8")
+        print(f"  ✅ 已更新 README.md '当前内容' 部分（{total_pages} 个页面）")
+    else:
+        print("  ℹ️  README.md '当前内容' 无需更新（内容未变化）")
+
+
+def _update_readme_summary(summary_content: str):
+    """更新 README.md 的 '## Summary' 部分，如果不存在则创建。"""
+    readme_path = WIKI_ROOT / "README.md"
+    if not readme_path.exists():
+        print("  ⚠️  README.md 不存在，跳过更新。")
+        return
+
+    readme_content = readme_path.read_text(encoding="utf-8")
+
+    # 构建新的 Summary 部分
+    new_summary_section = f"\n## Summary\n\n{summary_content.strip()}\n"
+
+    # 检查是否已存在 "## Summary" 部分
+    if "## Summary" in readme_content or "## summary" in readme_content:
+        # 使用正则替换现有的 Summary 部分（不区分大小写）
+        # 匹配从 ## Summary 到下一个 ## 或文件结尾
+        pattern = r'(## [Ss]ummary\n\n)([\s\S]*?)(?=\n## |\Z)'
+        replacement = f'## Summary\n\n{summary_content.strip()}\n'
+        
+        updated_readme = re.sub(pattern, replacement, readme_content)
+        
+        if updated_readme != readme_content:
+            readme_path.write_text(updated_readme, encoding="utf-8")
+            print(f"  ✅ 已更新 README.md 'Summary' 部分")
+        else:
+            print(f"  ℹ️  README.md 'Summary' 无需更新（内容未变化）")
+    else:
+        # Summary 部分不存在，需要创建
+        # 尝试在 "## 快速开始" 之前插入，如果不存在则在 "## 概述" 之后插入
+        if "## 快速开始" in readme_content:
+            # 在 "## 快速开始" 之前插入 Summary
+            pattern = r'(## 快速开始)'
+            replacement = f'{new_summary_section}\n\\1'
+            updated_readme = re.sub(pattern, replacement, readme_content, count=1)
+        elif "## 概述" in readme_content:
+            # 在 "## 概述" 部分之后插入（找到概述部分的结尾）
+            # 匹配 ## 概述 到下一个 ## 之间的内容，然后在其后插入
+            pattern = r'(## 概述\n\n[\s\S]*?)(\n## )'
+            replacement = f'\\1{new_summary_section}\\2'
+            updated_readme = re.sub(pattern, replacement, readme_content, count=1)
+        else:
+            # 添加到文件末尾
+            updated_readme = readme_content + new_summary_section
+        
+        readme_path.write_text(updated_readme, encoding="utf-8")
+        print(f"  ✅ 已在 README.md 创建 'Summary' 部分")
+
+
 def cmd_summarize():
     """生成知识库摘要。"""
     print("📊 正在生成知识库摘要...")
-    
+
     pages = read_all_wiki_pages()
-    
+
     # 分类统计
     categories = {}
     for path in pages.keys():
@@ -1525,27 +1746,109 @@ def cmd_summarize():
         if parts:
             cat = parts[0]
             categories[cat] = categories.get(cat, 0) + 1
-    
+
     # 统计
     total = sum(categories.values())
+
+    # 打印基本统计
+    print(f"\n知识库统计：")
+    print(f"  总页面数：{total}")
+    for cat, count in sorted(categories.items(), key=lambda x: x[1], reverse=True):
+        print(f"  {cat}: {count}")
+
+    # 构建 LLM 上下文：读取所有页面的 frontmatter 和部分内容
+    print(f"\n🤖 正在调用 LLM 总结知识库内容（{total} 个页面）...")
     
-    # 生成摘要
-    summary = f"""
+    # 为每个类别准备内容摘要
+    wiki_context_parts = []
+    for path, content in list(pages.items())[:100]:  # 限制最多 100 个页面避免上下文过长
+        # 提取 frontmatter 和标题
+        title_match = re.search(r'title:\s*["\']?([^"\'\n]+)', content[:500])
+        title = title_match.group(1).strip() if title_match else "未知"
+        
+        # 提取标签
+        tags_match = re.search(r'tags:\s*\[(.*?)\]', content[:500])
+        tags = tags_match.group(1).strip() if tags_match else ""
+        
+        # 提取前 500 字符的内容作为上下文
+        content_preview = content[500:1000].replace('\n', ' ').strip()[:200]
+        
+        wiki_context_parts.append(f"### {path}\n标题：{title}\n标签：{tags}\n内容预览：{content_preview}\n")
+    
+    wiki_context = "\n".join(wiki_context_parts)
+
+    # 调用 LLM 生成总结
+    summary_prompt = f"""你是一个 LLM4Rec（大语言模型在推荐系统应用）知识库的专家级维护者。请根据当前知识库中的内容，生成一份综合性的中文总结。
+
+## 知识库统计
+
+总页面数：{total}
+各类别页面分布：
+{json.dumps(categories, ensure_ascii=False, indent=2)}
+
+## 知识库页面内容概览
+
+{wiki_context}
+
+## 指令
+
+请基于上面的知识库内容，生成一份综合性的总结，格式如下：
+
+### 知识库统计
+- 总页面数：{total}
+- 各类别页面数量分布
+
+### 核心覆盖领域
+总结知识库涵盖的主要技术领域和研究方向（3-5个要点）
+
+### 关键方法与模型
+列出知识库中记录的主要方法、模型和架构（5-8个要点）
+
+### 工业实践与案例
+总结知识库中的工业界应用和实践案例（如果有）
+
+### 研究前沿与开放问题
+基于知识库内容，指出当前的研究前沿和尚未充分探索的领域（3-5个要点）
+
+### 未来建议的知识摄入方向
+基于当前知识库的内容和空白，建议优先摄入的高质量内容方向（3-5个具体方向）
+
+要求：
+1. **全部内容必须为中文**
+2. 基于实际知识库内容生成，不要编造不存在的内容
+3. 保持简洁精炼，每个要点 1-2 句话
+4. 突出知识库的特色和价值
+5. 指出真实的知识空白和改进建议
+"""
+
+    system_prompt = "你是推荐系统和大语言模型领域的专家，擅长分析和总结知识库内容。"
+    
+    print("⏳ 正在生成总结...")
+    summary = call_llm(summary_prompt, system_prompt, max_tokens=8192)
+
+    if not summary or len(summary) < 200:
+        print("⚠️  LLM 生成内容不足，使用基本统计信息")
+        summary = f"""
 知识库统计：
   总页面数：{total}
   {json.dumps(categories, ensure_ascii=False, indent=2)[1:-1]}
 
-该知识库已系统覆盖 LLM 在推荐系统中的核心范式转移，重点聚焦于**生成式检索/推荐**、**语义 ID 与表示对齐**、以及 **LLM 角色解耦（Ranker/Generator/Reasoner）**。在方法与模型层面，
-提示微调（P5、InstructRec、TALLRec）、RAG 增强、多目标/定量对齐（QARM 系列）及层次化规划（HiGR）均有详实记录；结合工业界实践（腾讯、快手、YouTube）与评估基准，初步构建了从传统
-判别式 ID 匹配向生成式语义理解演进的分类体系。然而，当前内容在**工程落地与系统优化**方面仍显薄弱，缺乏对推理加速（量化/蒸馏/KV Cache）、在线持续学习、冷启动策略、以及公平性/隐私安
-全等关键挑战的深入探讨，且部分页面仍为占位符或仅含元数据。
-
-未来最有价值的摄入方向应优先聚焦：1）**顶会最新综述与标准化基准**（如 SIGIR/KDD/RecSys 2024-2025 的 LLM4Rec Survey 与 Open Benchmark），以统一评估协议与指标；2）**轻量化与高效部
-署技术**（MoE 架构、模型压缩、流式推理优化），弥补工业级延迟与算力瓶颈；3）**实时推荐与在线微调机制**（Online Continual Learning/RLHF for RecSys），增强动态用户行为适配能力；4）
-**开源框架与工业技术博客**（如 RecBole-LLM、大厂架构分享），补充从算法原型到生产环境的完整链路与两阶段检索（GSU/ESU）的工程细节。
+知识库包含推荐系统与大语言模型交叉领域的多个主题，涵盖概念、方法、模型、实体和综合分析。
 """
-    
+
+    print("\n" + "=" * 60)
+    print("生成的总结：")
+    print("=" * 60)
     print(summary)
+    print("=" * 60)
+
+    # 更新 README.md 的 Summary 部分
+    print("\n📝 正在更新 README.md 'Summary' 部分...")
+    _update_readme_summary(summary)
+
+    # 更新 README.md 的当前内容部分
+    print("\n📝 正在更新 README.md '当前内容' 部分...")
+    _update_readme_current_content()
 
 
 def validate_api_key():

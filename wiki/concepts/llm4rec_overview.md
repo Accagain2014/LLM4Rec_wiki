@@ -124,3 +124,9 @@ LLM 通过以下方式解决这些问题：
 
 **来源**: 2507_paper_25071555_RankMixer_Scaling_Up_Ranking_Models_in_Industrial_Recommend.md
 ：在“工业部署挑战”部分新增延迟/QPS 约束与 MFU（模型浮点运算利用率）优化趋势，关联 RankMixer 的实证数据。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2507_paper_25072287_RecGPT_Technical_Report.md
+：在“范式演进”或“集成模式”章节新增“意图驱动推荐（IntentDriven Recommendation）”条目，对比传统日志拟合范式，引用 RecGPT 作为工业级标杆案例。

@@ -31,3 +31,9 @@ status: "draft"
 ---
 
 *本页面由 LLM 自动生成，内容可能需要人工审查和补充。*
+
+
+## 更新于 2026-04-09
+
+**来源**: 2507_paper_25072287_RecGPT_Technical_Report.md
+：关联并补充 RecGPT 的“自训练演进（Selftraining Evolution）”策略，作为工业场景下基于模型自生成样本进行迭代偏好对齐的典型实现。

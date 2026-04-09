@@ -50,9 +50,13 @@
 
 | [序列推荐](concepts/sequential_recommendation.md) | --- title: "序列推荐" category: "concepts" tags: [sequential, be... | sequential, behavior, temporal, sequence-modeling |
 
+| [从关联章节中检测到的页面](concepts/intent_driven_recommendation.md) | --- title: "从关联章节中检测到的页面" category: "concepts" tags: ["new",... | "new", "2026-04-09" |
+
 | [知识增强推荐](concepts/knowledge_enhanced_rec.md) | --- title: "知识增强推荐" category: "concepts" tags: [knowledge-gr... | knowledge-graph, external-knowledge, semantic, reasoning |
 
 | [定义推荐系统中的记忆Memorization与泛化Generalization能力阐述实例级分类方法及对模型评估的指导意义](concepts/memorization_vs_generalization.md) | --- title: "定义推荐系统中的记忆Memorization与泛化Generalization能力阐述实例级分类... | "new", "2026-04-08" |
+
+| [混合生成式推荐概念页面涵盖检索与生成协同的架构模式](concepts/hybrid_generative_recommendation.md) | --- title: "混合生成式推荐概念页面涵盖检索与生成协同的架构模式" category: "concepts"... | "new", "2026-04-09" |
 
 | [RecIF-Bench — Recommendation Intelligence Framework Benchmark](concepts/recif_bench.md) | --- title: "RecIF-Bench — Recommendation Intelligence Framew... | RecIF-Bench, benchmark, evaluation, open data, LLM4Rec, OpenOneRec, multi-task |
 
@@ -62,7 +66,7 @@
 
 
 
-- **24 个页面**
+- **26 个页面**
 
 
 ## Methods
@@ -91,6 +95,8 @@
 
 | [推荐系统中的奖励建模涵盖模拟用户生成和定制采样策略](methods/reward_modeling_rec.md) | --- title: "推荐系统中的奖励建模涵盖模拟用户生成和定制采样策略" category: "methods" t... | "new", "2026-04-09" |
 
+| [两阶段训练协议方法页面详细说明预训练](methods/two_stage_training_rec.md) | --- title: "两阶段训练协议方法页面详细说明预训练" category: "methods" tags: ["... | "new", "2026-04-09", "training-protocol", "generative-rec" |
+
 | [RAG for RecSys](methods/rag_for_recsys.md) | --- title: "RAG for RecSys" category: "方法" tags: [RAG, 检索, 生... | RAG, 检索, 生成, 增强, 知识 |
 
 | [面向推荐系统的提示式微调](methods/prompt_finetuning.md) | --- title: "面向推荐系统的提示式微调" category: "方法" tags: [微调, PEFT, Lo... | 微调, PEFT, LoRA, 提示微调, 适配 |
@@ -98,6 +104,8 @@
 | [LLM-as-Generator](methods/llm_as_generator.md) | --- title: "LLM-as-Generator" category: "方法" tags: [生成, 解释,... | 生成, 解释, 推荐文本, 创意 |
 
 | [详细说明](methods/memory_bank_sequential_rep.md) | --- title: "详细说明" category: "methods" tags: ["new", "2026-04... | "new", "2026-04-09" |
+
+| [从关联章节中检测到的页面](methods/human_llm_collaborative_evaluation.md) | --- title: "从关联章节中检测到的页面" category: "methods" tags: ["new",... | "new", "2026-04-09" |
 
 | [懒自回归解码器方法页面说明层间依赖放松机制](methods/lazy_ar.md) | --- title: "懒自回归解码器方法页面说明层间依赖放松机制" category: "methods" tags:... | "new", "2026-04-09" |
 
@@ -109,7 +117,7 @@
 
 
 
-- **18 个页面**
+- **20 个页面**
 
 
 ## Models
@@ -121,6 +129,8 @@
 | [LEMUR](models/LEMUR.md) | --- title: "LEMUR" category: "models" tags: ["new", "2026-04... | "new", "2026-04-09" |
 
 | [OneRec — Unifying Retrieve and Rank with Generative Recommendation](models/OneRec.md) | --- title: "OneRec — Unifying Retrieve and Rank with Generat... | OneRec, generative retrieval, MoE, DPO, preference alignment, Kuaishou, unified architecture |
+
+| [从关联章节中检测到的页面](models/RecGPT.md) | --- title: "从关联章节中检测到的页面" category: "models" tags: ["new", "... | "new", "2026-04-09" |
 
 | [LLMRank](models/LLMRank.md) | --- title: "LLMRank" category: "models" tags: [LLMRank, list... | LLMRank, listwise, ranking, pointwise, pairwise |
 
@@ -158,11 +168,13 @@
 
 | [GR4AD](models/GR4AD.md) | --- title: "GR4AD" category: "models" tags: ["new", "2026-04... | "new", "2026-04-09" |
 
+| [本论文提出的统一生成式推荐模型页面](models/test_generative_rec_model.md) | --- title: "本论文提出的统一生成式推荐模型页面" category: "models" tags: ["ne... | "new", "2026-04-09" |
+
 | [QARM](models/QARM.md) | --- title: "QARM" category: "models" tags: ["new", "2026-04-... | "new", "2026-04-08" |
 
 
 
-- **21 个页面**
+- **23 个页面**
 
 
 ## Entities
@@ -243,11 +255,15 @@
 
 | [2511 Paper 25111096 Lemur Large Scale End-To-End Multimodal Recommendation](sources/2511_paper_25111096_LEMUR_Large_scale_End-to-end_MUltimodal_Recommendation.md) | --- title: "2511 Paper 25111096 Lemur Large Scale End-To-End... | "source", "2026-04-09" |
 
+| [2512 Paper 25121450 Recgpt-V2 Technical Report](sources/2512_paper_25121450_RecGPT-V2_Technical_Report.md) | --- title: "2512 Paper 25121450 Recgpt-V2 Technical Report"... | "source", "2026-04-09" |
+
 | [OneRec: Unifying Retrieve and Rank with Generative Recommender](sources/2502_paper_25021896_OneRec_Unifying_Retrieve_and_Rank_with_Generative_Recommend.md) | --- title: "OneRec: Unifying Retrieve and Rank with Generati... | "source", "2026-04-09", "generative-retrieval", "unified-model", "kuaishou", "preference-alignment" |
 
 | [2510 Paper 25101163 Onerec-Think In-Text Reasoning For Generative Recommendatio](sources/2510_paper_25101163_OneRec-Think_In-Text_Reasoning_for_Generative_Recommendatio.md) | --- title: "2510 Paper 25101163 Onerec-Think In-Text Reasoni... | "source", "2026-04-08" |
 
 | [2512 Paper 25122476 Openonerec Technical Report](sources/2512_paper_25122476_OpenOneRec_Technical_Report.md) | --- title: "2512 Paper 25122476 Openonerec Technical Report"... | "source", "2026-04-08" |
+
+| [2507 Paper 25072287 Recgpt Technical Report](sources/2507_paper_25072287_RecGPT_Technical_Report.md) | --- title: "2507 Paper 25072287 Recgpt Technical Report" cat... | "source", "2026-04-09" |
 
 | [2311 Paper 23110588 Hiformer Heterogeneous Feature Interactions Learning With T](sources/2311_paper_23110588_Hiformer_Heterogeneous_Feature_Interactions_Learning_with_T.md) | --- title: "2311 Paper 23110588 Hiformer Heterogeneous Featu... | "source", "2026-04-09" |
 
@@ -255,15 +271,21 @@
 
 | [2604 Paper 26040497 Tencent Advertising Algorithm Challenge 2025 All-Modality G](sources/2604_paper_26040497_Tencent_Advertising_Algorithm_Challenge_2025_All-Modality_G.md) | --- title: "2604 Paper 26040497 Tencent Advertising Algorith... | "source", "2026-04-09" |
 
+| [Test Generative Rec](sources/test_generative_rec.md) | --- title: "Test Generative Rec" category: "sources" tags: [... | "source", "2026-04-09" |
+
 | [2203 Paper 22031101 Dhen A Deep And Hierarchical Ensemble Network For Large-Sca](sources/2203_paper_22031101_DHEN_A_Deep_and_Hierarchical_Ensemble_Network_for_Large-Sca.md) | --- title: "2203 Paper 22031101 Dhen A Deep And Hierarchical... | "source", "2026-04-09" |
 
 | [Paper 1B102D Qarm V2 Quantitative Alignment Multi-Modal Recommendation F](sources/paper_1b102d_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation_f.md) | --- title: "Paper 1B102D Qarm V2 Quantitative Alignment Mult... | "source", "2026-04-08" |
+
+| [Rankmixer To Oneranker](sources/rankmixer_to_oneranker.md) | --- title: "Rankmixer To Oneranker" category: "sources" tags... | "source", "2026-04-09" |
 
 | [2511 Paper 25110607 Make It Long, Keep It Fast End-To-End 10K-Sequence Modeling](sources/2511_paper_25110607_Make_It_Long,_Keep_It_Fast_End-to-End_10k-Sequence_Modeling.md) | --- title: "2511 Paper 25110607 Make It Long, Keep It Fast E... | "source", "2026-04-09" |
 
 | [2602 Paper 26021698 Bending The Scaling Law Curve In Large-Scale Recommendation](sources/2602_paper_26021698_Bending_the_Scaling_Law_Curve_in_Large-Scale_Recommendation.md) | --- title: "2602 Paper 26021698 Bending The Scaling Law Curv... | "source", "2026-04-09" |
 
 | [Paper 81Ec38 Plum Adapting Pre-Trained Language Models For Industrial-Sc](sources/paper_81ec38_PLUM_Adapting_Pre-trained_Language_Models_for_Industrial-sc.md) | --- title: "Paper 81Ec38 Plum Adapting Pre-Trained Language... | "source", "2026-04-08" |
+
+| [2511 Paper 25111013 Gpr Towards A Generative Pre-Trained One-Model Paradigm For](sources/2511_paper_25111013_GPR_Towards_a_Generative_Pre-trained_One-Model_Paradigm_for.md) | --- title: "2511 Paper 25111013 Gpr Towards A Generative Pre... | "source", "2026-04-09" |
 
 | [2505 Paper 25050442 Longer Scaling Up Long Sequence Modeling In Industrial Reco](sources/2505_paper_25050442_LONGER_Scaling_Up_Long_Sequence_Modeling_in_Industrial_Reco.md) | --- title: "2505 Paper 25050442 Longer Scaling Up Long Seque... | "source", "2026-04-09" |
 
@@ -275,11 +297,11 @@
 
 
 
-- **27 个页面**
+- **32 个页面**
 
 
 ---
 
 **统计**：
 
-- 总页面数：103
+- 总页面数：114

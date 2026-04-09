@@ -110,3 +110,15 @@ FORGE 的力引导探索方法在此场景中特别有价值，因为：
 
 - "FORGE: Forming Semantic Identifiers for Generative Retrieval." arXiv:2509.20903.
 - 阿里巴巴集团推荐系统技术出版物。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2507_paper_25072287_RecGPT_Technical_Report.md
+：补充 RecGPT 在淘宝 App 的全量部署细节、业务指标提升（多样性、长尾曝光、CVR）及技术架构定位，强化阿里电商场景的 LLM4Rec 实践记录。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2512_paper_25121450_RecGPT-V2_Technical_Report.md
+：追加 RecGPTV2 的全量部署数据（CTR +2.98%, IPV +3.71%, NER +11.46% 等），更新工业实践记录与算力优化成果。

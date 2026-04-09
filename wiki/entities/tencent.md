@@ -36,3 +36,9 @@ status: "draft"
 
 **来源**: 2505_paper_25050442_LONGER_Scaling_Up_Long_Sequence_Modeling_in_Industrial_Reco.md
 & wiki/entities/kuaishou.md：在“工业部署对比”章节追加字节跳动 LONGER 的部署规模（>10 场景、十亿用户），形成多厂牌长序列/生成式推荐部署的横向对照。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2511_paper_25111013_GPR_Towards_a_Generative_Pre-trained_One-Model_Paradigm_for.md
+：补充 GPR 在腾讯视频号广告系统的全量部署案例、核心业务指标提升（GMV、CTCVR）及技术架构定位。

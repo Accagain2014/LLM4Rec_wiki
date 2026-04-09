@@ -152,3 +152,9 @@ Semantic ID 是 GR 的核心创新：
 
 **来源**: paper_a1f46d_MBGR_Multi-Business_Prediction_for_Generative_Recommendatio.md
 ：在“工业挑战与架构演进”章节新增多业务 GR 瓶颈说明，补充业务解耦预测与动态路由作为 GR 范式的重要扩展方向。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2511_paper_25111013_GPR_Towards_a_Generative_Pre-trained_One-Model_Paradigm_for.md
+：在工业应用章节新增 GPR 作为广告场景下的端到端生成式推荐实践，强调其从多阶段到单模型范式的架构演进。

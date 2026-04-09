@@ -1663,9 +1663,12 @@ def _update_readme_current_content():
             # 显示所有页面，不使用截断
             for item in items:
                 # 使用文件路径作为链接文本和地址
+                # 在链接路径前添加 wiki/ 前缀，以便从 README.md 正确链接到 wiki 页面
                 link_path = item["path"]
                 display_name = item["display_name"]
-                new_section_parts.append(f"- [{display_name}]({link_path})\n")
+                # README.md 在项目根目录，wiki 页面在 wiki/ 子目录下
+                wiki_link_path = f"wiki/{link_path}"
+                new_section_parts.append(f"- [{display_name}]({wiki_link_path})\n")
 
     new_section = "".join(new_section_parts)
 

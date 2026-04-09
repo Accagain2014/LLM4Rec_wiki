@@ -1,7 +1,7 @@
 ---
-title: "DSI / TIGER — Generative Retrieval for Recommender Systems"
+title: "TIGER — Generative Retrieval for Recommender Systems"
 category: "models"
-tags: [DSI, TIGER, generative retrieval, semantic ID, neural retrieval, Google, NeurIPS]
+tags: [TIGER, generative retrieval, semantic ID, neural retrieval, Google, NeurIPS]
 created: "2026-04-08"
 updated: "2026-04-09"
 sources: ["../sources/paper_4ddaf2_Recommender_Systems_with_Generative_Retrieval.md"]
@@ -15,11 +15,11 @@ confidence: "high"
 status: "stable"
 ---
 
-# DSI / TIGER — 推荐系统的生成式检索
+# TIGER — 推荐系统的生成式检索
 
 ## 概述
 
-这项工作（通常被称为 **TIGER** 或 **DSI for Rec**）引入了推荐系统中首个**基于 Semantic ID 的生成式检索模型**。发表于 **NeurIPS 2023**，它提出了从基于嵌入的检索（双塔 + ANN）到**自回归生成物品标识符**的范式转变。Transformer seq2seq 模型直接从用户会话上下文中预测 Semantic ID——学习到的代表物品的码字元组。
+这项工作（通常被称为 **TIGER** 或 **Google TIGER**）引入了推荐系统中首个**基于 Semantic ID 的生成式检索模型**。发表于 **NeurIPS 2023**，它提出了从基于嵌入的检索（双塔 + ANN）到**自回归生成物品标识符**的范式转变。Transformer seq2seq 模型直接从用户会话上下文中预测 Semantic ID——学习到的代表物品的码字元组。
 
 ## 要点
 

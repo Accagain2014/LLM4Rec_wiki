@@ -1052,19 +1052,41 @@ status: "stable"
 
 {index[:3000]}
 
-请输出完整的 Markdown 页面（含 frontmatter）。要求：
+请**直接**输出完整的 Markdown 页面。要求：
 1. **全部内容为中文**
-2. frontmatter 中 status 为 "draft"，confidence 为 "medium"
+2. 页面必须以下面的 `---` 开始（frontmatter），不要有任何额外的 markdown 代码块包裹：
+---
+title: "{title}"
+category: "{page_category}"
+tags: ["new", "{today}"]
+created: "{today}"
+updated: "{today}"
+sources: ["../sources/{source_path.stem}.md"]
+related: []
+confidence: "medium"
+status: "draft"
+---
 3. 包含完整结构：摘要、要点列表、详细说明（分 3-5 个小节）、关联页面、开放问题、参考文献
 4. 结合你的领域知识撰写内容，不局限于源文档
 5. 保持与现有 wiki 页面风格一致（参见类似页面）
-6. 相关页面链接使用相对路径（如 ../models/XXX.md）"""
+6. 相关页面链接使用相对路径（如 ../models/XXX.md）
+7. **不要**在输出中包含任何其他 frontmatter 或代码块包裹"""
 
             generated_content = call_llm(page_gen_prompt, "你是推荐系统和大语言模型领域的专家，擅长撰写详实、准确的知识库百科页面。", max_tokens=16384)
 
             if generated_content and len(generated_content) > 500:
+                # 后处理：清理可能的嵌套 frontmatter 或代码块包裹
+                gc = generated_content.strip()
+                # 去除 \`\`\`markdown 包裹
+                if gc.startswith('```markdown'):
+                    gc = gc[len('```markdown'):].strip()
+                if gc.startswith('```'):
+                    gc = gc[len('```'):].strip()
+                if gc.endswith('```'):
+                    gc = gc[:-3].strip()
+
                 # 确保 frontmatter 正确
-                if not generated_content.strip().startswith('---'):
+                if not gc.startswith('---'):
                     page_content = f"""---
 title: "{title}"
 category: "{page_category}"
@@ -1077,9 +1099,9 @@ confidence: "medium"
 status: "draft"
 ---
 
-""" + generated_content
+""" + gc
                 else:
-                    page_content = generated_content
+                    page_content = gc
 
                 write_file_safe(page_path, page_content)
                 pages_created += 1

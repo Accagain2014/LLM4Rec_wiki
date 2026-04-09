@@ -75,6 +75,8 @@
 
 | [Representation Alignment](methods/representation_alignment.md) | --- title: "Representation Alignment" category: "methods" ta... | "new", "2026-04-09" |
 
+| [Synergistic Upscaling — 协同扩展策略](methods/synergistic_upscaling.md) | --- title: "Synergistic Upscaling — 协同扩展策略" category: "metho... | "scaling law", "model expansion", "Wukong", "depth-width scaling", "recommendation systems" |
+
 | [统一广告语义](methods/ua_sid.md) | --- title: "统一广告语义" category: "methods" tags: ["new", "2026-... | "new", "2026-04-09" |
 
 | [详细介绍论文提出的记忆感知指标MemorizationAware](methods/adaptive_fusion_gr_id.md) | --- title: "详细介绍论文提出的记忆感知指标MemorizationAware" category: "met... | "new", "2026-04-08" |
@@ -107,7 +109,7 @@
 
 
 
-- **17 个页面**
+- **18 个页面**
 
 
 ## Models
@@ -126,9 +128,13 @@
 
 | [P5 — 个性化提示学习](models/P5.md) | --- title: "P5 — 个性化提示学习" category: "models" tags: [P5, prom... | P5, prompt, personalization, unified, multi-task |
 
+| [TIGER — Generative Retrieval for Recommender Systems](models/TIGER.md) | --- title: "TIGER — Generative Retrieval for Recommender Sys... | TIGER, generative retrieval, semantic ID, neural retrieval, Google, NeurIPS |
+
 | [InstructRec](models/InstructRec.md) | --- title: "InstructRec" category: "models" tags: [InstructR... | InstructRec, instruction-tuning, LLM, conversational |
 
 | [ULTRA-HSTU — Bending the Scaling Law Curve in Recommendation](models/ULTRA_HSTU.md) | --- title: "ULTRA-HSTU — Bending the Scaling Law Curve in Re... | ULTRA-HSTU, HSTU, scaling law, sparse attention, Meta, sequential recommendation, system co-design |
+
+| [从关联章节中检测到的页面](models/DHEN.md) | --- title: "从关联章节中检测到的页面" category: "models" tags: ["new", "... | "new", "2026-04-09" |
 
 | [LONGER — Long-Sequence Optimized Transformer for Industrial Recommenders](models/LONGER.md) | --- title: "LONGER — Long-Sequence Optimized Transformer for... | LONGER, long sequence, transformer, ByteDance, sparse attention, token merge, industrial deployment, scaling law |
 
@@ -138,6 +144,8 @@
 
 | [OneRec-Think — In-Text Reasoning for Generative Recommendation](models/OneRec-Think.md) | --- title: "OneRec-Think — In-Text Reasoning for Generative... | OneRec, reasoning, explicit reasoning, generative recommendation, Kuaishou, itemic alignment, Think-Ahead |
 
+| [Wukong — 迈向大规模推荐系统的缩放定律](models/Wukong.md) | --- title: "Wukong — 迈向大规模推荐系统的缩放定律" category: "models" tags... | "scaling law", "factorization machines", "large-scale recommendation", "model architecture", "compute efficiency", "synergistic upscaling" |
+
 | [Hiformer](models/Hiformer.md) | --- title: "Hiformer" category: "models" tags: ["new", "2026... | "new", "2026-04-09" |
 
 | [PLUM — Adapting Pre-trained LLMs for Industrial Generative Recommendations](models/PLUM.md) | --- title: "PLUM — Adapting Pre-trained LLMs for Industrial... | PLUM, semantic ID, continued pre-training, generative retrieval, YouTube, Google, industrial deployment |
@@ -145,8 +153,6 @@
 | [Qwen 系列](models/qwen_series.md) | --- title: "Qwen 系列" category: "models" tags: [Qwen, Bailian... | Qwen, Bailian, Alibaba, model-family, cloud |
 
 | [GRID — Generative Recommendation with Semantic IDs Framework](models/GRID.md) | --- title: "GRID — Generative Recommendation with Semantic I... | GRID, semantic ID, generative recommendation, open-source, benchmarking, modular framework, Snap Research |
-
-| [DSI / TIGER — Generative Retrieval for Recommender Systems](models/DSI.md) | --- title: "DSI / TIGER — Generative Retrieval for Recommend... | DSI, TIGER, generative retrieval, semantic ID, neural retrieval, Google, NeurIPS |
 
 | [OneRec-V2 — Lazy Decoder-Only Generative Recommendation](models/OneRec-V2.md) | --- title: "OneRec-V2 — Lazy Decoder-Only Generative Recomme... | OneRec, generative recommendation, decoder-only, preference alignment, Kuaishou, MoE, duration-aware |
 
@@ -156,7 +162,7 @@
 
 
 
-- **19 个页面**
+- **21 个页面**
 
 
 ## Entities
@@ -223,6 +229,8 @@
 
 | [Paper 4Ddaf2 Recommender Systems With Generative Retrieval](sources/paper_4ddaf2_Recommender_Systems_with_Generative_Retrieval.md) | --- title: "Paper 4Ddaf2 Recommender Systems With Generative... | "source", "2026-04-08" |
 
+| [2403 Paper 24030254 Wukong Towards A Scaling Law For Large-Scale Recommendation](sources/2403_paper_24030254_Wukong_Towards_a_Scaling_Law_for_Large-Scale_Recommendation.md) | --- title: "2403 Paper 24030254 Wukong Towards A Scaling Law... | "source", "2026-04-09" |
+
 | [Paper C4A451 Forge Forming Semantic Identifiers For Generative Retrieval](sources/paper_c4a451_FORGE_Forming_Semantic_Identifiers_for_Generative_Retrieval.md) | --- title: "Paper C4A451 Forge Forming Semantic Identifiers... | "source", "2026-04-08" |
 
 | [QARM V2 — Quantitative Alignment Multi-Modal Recommendation](sources/paper_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation.md) | --- title: "QARM V2 — Quantitative Alignment Multi-Modal Rec... | QARM V2, multi-modal, quantitative alignment, GSU/ESU, LLM embedding, user sequence, industrial |
@@ -247,6 +255,8 @@
 
 | [2604 Paper 26040497 Tencent Advertising Algorithm Challenge 2025 All-Modality G](sources/2604_paper_26040497_Tencent_Advertising_Algorithm_Challenge_2025_All-Modality_G.md) | --- title: "2604 Paper 26040497 Tencent Advertising Algorith... | "source", "2026-04-09" |
 
+| [2203 Paper 22031101 Dhen A Deep And Hierarchical Ensemble Network For Large-Sca](sources/2203_paper_22031101_DHEN_A_Deep_and_Hierarchical_Ensemble_Network_for_Large-Sca.md) | --- title: "2203 Paper 22031101 Dhen A Deep And Hierarchical... | "source", "2026-04-09" |
+
 | [Paper 1B102D Qarm V2 Quantitative Alignment Multi-Modal Recommendation F](sources/paper_1b102d_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation_f.md) | --- title: "Paper 1B102D Qarm V2 Quantitative Alignment Mult... | "source", "2026-04-08" |
 
 | [2511 Paper 25110607 Make It Long, Keep It Fast End-To-End 10K-Sequence Modeling](sources/2511_paper_25110607_Make_It_Long,_Keep_It_Fast_End-to-End_10k-Sequence_Modeling.md) | --- title: "2511 Paper 25110607 Make It Long, Keep It Fast E... | "source", "2026-04-09" |
@@ -265,11 +275,11 @@
 
 
 
-- **25 个页面**
+- **27 个页面**
 
 
 ---
 
 **统计**：
 
-- 总页面数：98
+- 总页面数：103

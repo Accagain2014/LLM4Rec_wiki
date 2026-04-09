@@ -187,3 +187,15 @@ Phase 4 (2027+): Convergence
 
 **来源**: 2507_paper_25071555_RankMixer_Scaling_Up_Ranking_Models_in_Industrial_Recommend.md
 ：在架构效率对比章节加入 RankMixer 的 MFU 提升数据（4.5% → 45%）与参数扩展能力，强化传统手工特征模块向硬件感知架构演进的论点。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2403_paper_24030254_Wukong_Towards_a_Scaling_Law_for_Large-Scale_Recommendation.md
+：在架构范式讨论中引入 Wukong 的发现，说明推荐系统无需盲目依赖庞大 Transformer 结构，合理的架构简化与协同扩展同样可逼近大模型规模下的性能上限。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2203_paper_22031101_DHEN_A_Deep_and_Hierarchical_Ensemble_Network_for_Large-Sca.md
+：在对比传统深度模型与 LLM 架构时，增加 DHEN 作为“模块化/层次化特征交互”向“统一 Transformer 骨干”演进的过渡案例，强调其设计哲学对 LLM 推荐模块化基座的启发。

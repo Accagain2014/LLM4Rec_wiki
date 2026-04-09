@@ -149,3 +149,15 @@ Performance
 - Ding, Q., Course, K., Ma, L., et al. (2026). Bending the Scaling Law Curve in Large-Scale Recommendation Systems. arXiv:2602.16986.
 - Chai, Z., et al. (2025). LONGER: Scaling Up Long Sequence Modeling in Industrial Recommenders. RecSys 2025. arXiv:2505.04421.
 - Zhu, J., et al. (2025). RankMixer: Scaling Up Ranking Models in Industrial Recommenders. arXiv:2507.15551.
+
+
+## 更新于 2026-04-09
+
+**来源**: 2403_paper_24030254_Wukong_Towards_a_Scaling_Law_for_Large-Scale_Recommendation.md
+：补充 Wukong 作为推荐领域首个确立缩放定律的里程碑工作；更新 100+ GFLOP 阈值下的单调增益数据；增加“纯 FM 堆叠 vs Transformer 扩展”的对比视角。
+
+
+## 更新于 2026-04-09
+
+**来源**: 2203_paper_22031101_DHEN_A_Deep_and_Hierarchical_Ensemble_Network_for_Large-Sca.md
+：在“训练效率与系统协同优化”小节中，引用 DHEN 的协同训练系统作为工业界突破深层网络算力瓶颈的早期实践，补充动态计算图裁剪与混合精度在推荐场景的应用背景。

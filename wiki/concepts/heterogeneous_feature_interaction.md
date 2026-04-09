@@ -31,3 +31,9 @@ status: "draft"
 ---
 
 *本页面由 LLM 自动生成，内容可能需要人工审查和补充。*
+
+
+## 更新于 2026-04-09
+
+**来源**: 2203_paper_22031101_DHEN_A_Deep_and_Hierarchical_Ensemble_Network_for_Large-Sca.md
+：补充 DHEN 作为传统深度 CTR 中异构特征交互的代表性工作，说明其层次化集成策略如何缓解单一结构的信息遗漏，并建立与 LLM4Rec 中 MoE/特征路由机制的演进关联。

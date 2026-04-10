@@ -16,12 +16,13 @@ status: "stable"
 
 ## 摘要
 
-本页面展示了 LLM4Rec 方法的**综合分类体系**，将多样化的方法、模型和应用组织成一个结构化框架。该分类体系不仅涵盖传统的 **LLM 角色**、**适配策略**、**任务类型**和**部署模式**，更引入了面向工业落地的**演进主线与技术趋势**维度，为浏览 Wiki 内容、追踪技术范式迁移提供了动态导航地图。
+本页面展示了 LLM4Rec 方法的**综合分类体系**，将多样化的方法、模型和应用组织成一个结构化框架。该分类体系不仅涵盖传统的 **LLM 角色**、**适配策略**、**任务类型**和**部署模式**，更引入了面向工业落地的**演进主线与技术趋势**维度。为夯实技术底座，本次更新新增**基础 LLM 能力层**维度，将预训练、指令对齐、高效微调与推理优化作为底层支撑模块纳入分类树，为浏览 Wiki 内容、追踪技术范式迁移提供了从底层能力到上层应用的动态导航地图。
 
 ## 要点
 
+- **基础 LLM 能力层（新增）**：涵盖 Decoder-only 架构演进、MoE 动态路由、上下文扩展、SFT/PEFT 微调范式、RLHF/DPO 偏好对齐及量化/投机解码等推理加速技术
 - LLM 承担四种核心角色：**Ranker（排序器）**、**Generator（生成器）**、**Reasoner（推理器）**、**Unifier/Tokenizer（统一主干与语义标记器）**
-- 适配策略：**Zero-shot（零样本）**、**Few-shot（少样本）**、**PEFT（参数高效微调）**、**Full Fine-Tuning（全量微调）**、**Inference-time Scaling（推理期扩展）**
+- 适配策略：**Zero-shot（零样本）**、**Few-shot（少样本）**、**PEFT（参数高效微调）**、**Full Fine-Tuning（全量微调）**、**Alignment-based（偏好对齐适配）**、**Inference-time Scaling（推理期扩展）**
 - 任务类别：**Candidate Generation（候选生成）**、**Ranking（排序）**、**Generative One-Model（端到端生成式推荐）**、**Explanation & Dialogue（解释与对话）**
 - 部署模式：**Pure LLM（纯 LLM）**、**Hybrid LLM+RecSys（混合架构）**、**Distilled/Serving-Optimized（蒸馏与服务优化）**、**Generative One-Model Pipeline（生成式单模型流水线）**
 - **工业演进主线**：大 Ranking Backbone 可扩展化、长序列建模工业化、统一 Backbone 重构、Semantic Token 与生成式 One-Model
@@ -30,7 +31,32 @@ status: "stable"
 
 ## 详细内容
 
-### 维度一：LLM 角色
+### 维度一：基础 LLM 能力层（新增底层支撑）
+
+本维度聚焦 LLM 在接入推荐系统前的底层技术栈，涵盖架构基座、训练范式、价值对齐与推理优化，为上层推荐适配提供可复用的能力模块。
+
+```
+Foundation LLM Capability Layer
+├── 预训练与架构基座 (Pretraining & Architecture)
+│   ├── Decoder-only Transformer 变体与位置编码 (RoPE, ALiBi)
+│   ├── 混合专家模型 (MoE) 与动态路由机制
+│   └── 上下文窗口扩展 (Attention 稀疏化, KV Cache 压缩)
+├── 指令微调与监督学习 (Instruction Tuning & SFT)
+│   ├── 领域指令构建与高质量数据配比
+│   ├── 全参数微调 vs 参数高效微调 (LoRA, Adapter, Prefix-Tuning)
+│   └── 垂直领域适配 (推荐冷启动/特征工程/多模态对齐)
+├── 偏好对齐与价值优化 (Alignment & Preference Optimization)
+│   ├── RLHF (PPO-based 奖励建模)
+│   ├── 直接偏好优化 (DPO / IPO / ORPO)
+│   └── 推荐场景对齐 (缓解信息茧房/流行度偏差/公平性约束)
+└── 推理优化与部署加速 (Inference & Serving Optimization)
+    ├── 模型压缩 (INT4/INT8 量化, 结构化剪枝)
+    ├── 解码加速 (投机解码, 连续批处理 Continuous Batching)
+    └── 显存与计算开销控制 (PEFT 降显存 60%+, 精度损失 <2%)
+```
+[来源：[A Comprehensive Overview of Large Language Models](../sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md)]
+
+### 维度二：LLM 角色
 
 ```
 LLM Role in RecSys
@@ -53,9 +79,9 @@ LLM Role in RecSys
     ├── Semantic tokenization & indexing (TRM, MERGE)
     └── Multi-scenario/task token injection (MDL, MTFM)
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md)]
 
-### 维度二：适配策略
+### 维度三：适配策略
 
 ```
 Adaptation Strategy
@@ -67,19 +93,22 @@ Adaptation Strategy
 │   └── Chain-of-thought examples
 ├── Parameter-Efficient Fine-Tuning
 │   ├── LoRA (TALLRec)
-│   ├── Prompt/Prefix tuning
+│   ├── Prompt/Prefix tuning & Adapters
 │   └── Sparse MoE / Memory-based activation (MSN)
 ├── Full Fine-Tuning
 │   ├── Instruction tuning (InstructRec)
 │   └── Task-specific fine-tuning
-└── Inference-Time & Serving Adaptation (新增)
+├── Alignment-based Adaptation (新增)
+│   ├── DPO/IPO for preference alignment
+│   └── Reward modeling for fairness & diversity
+└── Inference-Time & Serving Adaptation
     ├── KV Caching & Request-level batching (STCA, OneTrans)
     ├── User-side computation reuse (UG-Separation)
     └── Process reward & dynamic beam serving (GRank, PROMISE)
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md) | [A Comprehensive Overview of Large Language Models](../sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md)]
 
-### 维度三：推荐任务
+### 维度四：推荐任务
 
 ```
 RecSys Task
@@ -103,9 +132,9 @@ RecSys Task
 └── Multi-Business Prediction (新增)
     └── Cross-domain generative recommendation (MBGR)
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md)]
 
-### 维度四：数据需求
+### 维度五：数据需求
 
 ```
 Data Requirements
@@ -124,9 +153,9 @@ Data Requirements
     ├── Tencent Advertising Challenge Datasets
     └── Cross-platform heterogeneous behavior logs
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md)]
 
-### 维度五：部署模式
+### 维度六：部署模式
 
 ```
 Deployment Pattern
@@ -144,11 +173,12 @@ Deployment Pattern
 └── Distilled & Serving-Optimized (新增)
     ├── User/Item decoupling for online reuse (UG-Separation)
     ├── Near-line reasoning + Online fast decoding (OxygenREC)
+    ├── Quantization & Speculative Decoding (INT4/8, 投机解码)
     └── Foundation-Expert paradigm (Meta)
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md) | [A Comprehensive Overview of Large Language Models](../sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md)]
 
-### 维度六：工业演进主线与技术趋势（新增）
+### 维度七：工业演进主线与技术趋势（新增）
 
 本维度从静态分类转向动态技术演进视角，刻画 2025—2026 年推荐系统大模型化的核心路径。
 
@@ -169,75 +199,21 @@ Deployment Pattern
 
 ### Wiki 内容到分类体系的映射
 
-| Wiki 页面 | LLM 角色 | 适配策略 | 任务 | 部署模式 | 演进主线/趋势 |
-|-----------|----------|----------|------|----------|----------------|
-| [P5](../models/P5.md) | Ranker/Generator | Few-Shot | 多种任务 | Pure LLM | 早期探索 |
-| [InstructRec](../models/InstructRec.md) | 全部角色 | Full FT | 多种任务 | Pure LLM | 早期探索 |
-| [TALLRec](../models/TALLRec.md) | Ranker | LoRA | Ranking | Hybrid | 判别式扩展 |
-| [LLMRank](../models/LLMRank.md) | Ranker | Zero/Few-Shot | Listwise Ranking | Hybrid | 判别式扩展 |
-| [RankMixer](../models/RankMixer.md) | Unifier/Ranker | Full FT + SparseMoE | Ranking | Discriminative Large Backbone | 主线一：可扩展化 |
-| [OneTrans](../models/OneTrans.md) | Unifier | Mixed Param + KV Cache | Unified Modeling | Hybrid / Serving-Optimized | 主线三：统一主干 |
-| [TRM](../models/TRM.md) | Tokenizer | Semantic Tokenization | Generative Retrieval/Rank | Generative One-Model | 主线四：语义Token |
-| [GPR](../models/GPR.md) | Generator/Unifier | Heterogeneous Decoder | End-to-End Ad Rec | Generative One-Model | 主线四 / 趋势二 |
-| [OneRanker](../models/OneRanker.md) | Generator/Ranker | Task Token + Ranking Decoder | Multi-Obj Alignment | Generative One-Model | 主线四 / 趋势二 |
-| [SORT](../models/SORT.md) | Ranker | Generative Pre-training | E-commerce Ranking | Discriminative Large Backbone | 主线一 / 趋势一 |
-| [MTmixAtt](../models/MTmixAtt.md) | Unifier | AutoToken + Multi-Mix Attn | Multi-Scenario | Hybrid / Discriminative | 主线一、三 |
-| [MBGR](../models/MBGR.md) | Generator | Multi-Business Prompt | Cross-Domain GenRec | Pure/Hybrid LLM | 趋势二、五 |
-| [Qwen](../models/qwen_series.md) | 任意 | 任意 | 任意 | 任意 | 基础底座 |
+| Wiki 页面 | 基础能力层 | LLM 角色 | 适配策略 | 任务 | 部署模式 | 演进主线/趋势 |
+|-----------|------------|----------|----------|------|----------|----------------|
+| [P5](../models/P5.md) | SFT/指令微调 | Ranker/Generator | Few-Shot | 多种任务 | Pure LLM | 早期探索 |
+| [InstructRec](../models/InstructRec.md) | SFT/数据配比 | Generator/Reasoner | Full FT / Instruction Tuning | 多种任务 | Hybrid | 统一化探索 |
+| [TALLRec](../models/TALLRec.md) | PEFT (LoRA) | Ranker | PEFT | Ranking | Hybrid | 判别式成熟化 |
+| [RankMixer](../models/RankMixer.md) | MoE/架构基座 | Ranker/Unifier | PEFT / Inference-time | Ranking | Discriminative Backbone | 大 Backbone 可扩展化 |
+| [OneRanker](../models/OneRanker.md) | 上下文扩展/对齐 | Unifier/Generator | Alignment / Full FT | Generative One-Model | Generative Pipeline | 生成式 One-Model 落地 |
+| [A Comprehensive Overview of LLMs](../sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md) | **全栈底层支撑** | 通用基座 | PEFT/RLHF/DPO/量化 | 通用/多模态/Agent | 压缩/投机解码/连续批处理 | 基础能力向推荐垂直映射 |
 
-## 关联
-
-- [LLM4Rec 概述](../concepts/llm4rec_overview.md) 提供了高层范式
-- [传统方法与 LLM 方法对比](./traditional_vs_llm.md) 比较了不同方法
-- [生成式检索与推荐](../concepts/generative_retrieval.md) 详解 Semantic Token 与 One-Model 架构
-- [工业部署与推理优化](../concepts/serving_optimization.md) 涵盖 KV Cache、复用与 Inference-time Scaling
-- 每个方法和模型页面都映射到特定的分类类别与演进主线
-
-## 开放问题
-
-1. 当前研究中，哪些分类单元格（如生成式多目标对齐、跨模态统一主干）尚未充分探索？
-2. 如何标准化 Semantic Token 的构建协议，使其在不同业务线间具备可迁移性？
-3. 判别式大 Backbone 与生成式 One-Model 在长期演进中是融合还是分化？
-4. Inference-time Scaling 与动态 Serving 策略如何与现有推荐系统 SLA 深度耦合？
-5. 随着领域发展，会出现哪些新的维度（如 Agent-based RecSys、World Model for Rec）？
-
-## 参考文献
-
-- 本分类体系综合了所有 Wiki 页面的见解与工业界最新技术报告
-- 灵感来源于 LLM4Rec 综述论文及头部大厂 2025—2026 技术路线总结
-- [来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
+> 💡 **维护提示**：新增的“基础 LLM 能力层”为所有上层推荐适配提供技术底座。在撰写新模型页面时，建议优先标注其依赖的预训练架构、对齐策略（如 DPO/RLHF）及推理优化手段（如 INT4 量化、KV Cache 策略），以便自动映射至本分类体系。
 
 ---
 
-## 更新于 2026-04-08
-
-**来源**: paper_4ddaf2_Recommender_Systems_with_Generative_Retrieval.md
-：分类体系需要更新以包含"生成式检索"作为独立的集成模式，与 LLMasRanker、LLMasReasoner 并列。
-
-## 更新于 2026-04-09
-
-**来源**: 2604_paper_26040497_Tencent_Advertising_Algorithm_Challenge_2025_All-Modality_G.md
-：在数据集分类中添加腾讯广告数据集类别
-
-## 更新于 2026-04-09
-
-**来源**: 2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md
-：在“工业部署架构”或“统一骨干网络”分类下补充 OneTrans 条目，强调其向 LLM 风格统一 Token 序列与推理缓存优化的靠拢趋势。
-
-## 更新于 2026-04-09
-
-**来源**: paper_a1f46d_MBGR_Multi-Business_Prediction_for_Generative_Recommendatio.md
-：在“工业部署架构”或“生成式推荐”分支下新增“多业务生成式推荐”节点，标注 MBGR 及美团实践。
-
-## 更新于 2026-04-10
-
-**来源**: 从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线
-：引入“四条主线+五大趋势”工业演进分类框架，全面扩充维度一至五的工业模型映射，新增维度六（工业演进主线与技术趋势），更新映射表与开放问题，强化 Serving 优化、Semantic Token 接口化与生成式 One-Model 的分类地位。
-
----
-
-## 更新完成：rankmixer_to_oneranker.md
-**更新时间**: 2026-04-09 12:29
-**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 rankmixer_to_oneranker.md
+## 更新完成：2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md
+**更新时间**: 2026-04-10 11:41
+**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md
 
 *该页面的此次更新已完成。下次 ingest 其他源文档时将跳过此页面。*

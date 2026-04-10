@@ -1,6 +1,6 @@
 # LLM4Rec Wiki
 
-> 一个持久的、不断增长的**大语言模型用于推荐系统(LLM4Rec)**知识库，基于Karpathy LLM Wiki模式构建，由阿里云百炼（百炼）提供支持。
+> 一个持久的、不断增长的**大语言模型用于推荐系统(LLM4Rec)**知识库，基于 [karpathy/llm-wiki.md](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) 模式构建，由Qwen Code调用qwen3.6-plus实现，使用阿里百炼Code Plan.
 
 ## 这是什么？
 

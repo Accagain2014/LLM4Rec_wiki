@@ -90,7 +90,7 @@ PLUM 提出了系统的扩展分析：
 - [DSI/TIGER](./DSI.md) — PLUM 构建的基础生成式检索方法
 - [生成式检索](../concepts/generative_retrieval.md) — 更广泛的范式
 - [HiGR](./HiGR.md) — 另一个工业级生成式框架（腾讯），具有 slate 级规划
-- [表示对齐](../concepts/representation_alignment.md) — Semantic ID 学习与对齐相关
+- [表示对齐](../methods/representation_alignment.md) — Semantic ID 学习与对齐相关
 
 ## 开放问题
 

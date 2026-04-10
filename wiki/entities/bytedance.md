@@ -163,8 +163,8 @@ status: "stable"
 - Zhu, J., et al. (2025). RankMixer: Scaling Up Ranking Models in Industrial Recommenders. arXiv:2507.15551.
 - "Make It Long, Keep It Fast: End-to-End 10k-Sequence Modeling." arXiv:2511.06077.
 - "LEMUR: Large-scale End-to-end Multimodal Recommendation." arXiv:2511.10966.
-- Leopold. (2025). 从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线. [来源：rankmixer_to_oneranker.md]
-- 字节跳动推荐团队内部技术报告与公开论文合集 (2024-2026). [来源：rankmixer_to_oneranker.md]
+- Leopold. (2025). 从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线. [来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
+- 字节跳动推荐团队内部技术报告与公开论文合集 (2024-2026). [来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
 
 ---
 *[注：本页面已根据最新工业技术路线文档进行实质性扩充，重点补充了字节跳动完整技术链的上下文关系、四大演进主线、Serving/推理优化趋势及行业对比视角。]*

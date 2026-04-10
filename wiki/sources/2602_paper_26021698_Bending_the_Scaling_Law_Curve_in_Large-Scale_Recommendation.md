@@ -25,7 +25,7 @@ status: "stable"
 
 ### 矛盾/冲突
 - **未发现直接矛盾**。本文与现有知识库中关于“长序列推荐依赖 Cross-Attention 导致计算爆炸”的共识一致，但提供了明确的工程化解法（稀疏注意力+拓扑重构），属于对现有范式的增强而非推翻。
-- **潜在差异提示**：现有 `concepts/sequential_recommendation.md` 可能侧重 Transformer/GRU 等基础架构，需明确区分 ULTRA-HSTU 的“系统级协同优化”与纯算法级改进的边界。
+- **潜在差异提示**：现有 [`concepts/sequential_recommendation.md`](wiki/concepts/sequential_recommendation.md) 可能侧重 Transformer/GRU 等基础架构，需明确区分 ULTRA-HSTU 的“系统级协同优化”与纯算法级改进的边界。
 
 ### 提取的关键事实
 - **核心问题**：长序列推荐中 Cross-Attention 的 $O(N^2)$ 复杂度严重制约模型扩展与推理延迟。

@@ -57,7 +57,7 @@ QARM V2 提出了一个统一框架：
 ## 关联
 
 - 关联到 [GSU/ESU 范式](../concepts/gsu_esu_paradigm.md) — QARM V2 改进的工业架构
-- 连接到 [表示对齐](../concepts/representation_alignment.md) — 核心技术挑战
+- 连接到 [表示对齐](../methods/representation_alignment.md) — 核心技术挑战
 - 关联到 [多目标对齐](../methods/multi_objective_alignment.md) — 对齐方法
 
 ---

@@ -46,7 +46,7 @@ status: "draft"
 - [用于推荐系统的大语言模型 — 概述](../concepts/llm4rec_overview.md)
 - [Generative Retrieval — 生成式检索](../concepts/generative_retrieval.md)
 - [Continued Pretraining — Domain Adaptation for LLM-based Recommendation](../concepts/continued_pretraining.md)
-- [Representation Alignment — 表示对齐](../concepts/representation_alignment.md)
+- [Representation Alignment — 表示对齐](../methods/representation_alignment.md)
 - [Evaluation of LLM4Rec — Benchmarks and Protocols for Generative Recommendation](../concepts/evaluation_llm4rec.md)
 
 ## 开放问题

@@ -21,7 +21,7 @@ status: "stable"
 
 RankMixer 是字节跳动提出的**硬件感知可扩展排序模型**，解决了在严格延迟和 QPS 约束下扩展推荐排序模型的实际挑战。它解决了两个关键问题：（1）传统特征交叉模块继承自 CPU 时代，无法利用现代 GPU，导致模型 FLOPs 利用率（MFU）低下；（2）多样化手工模块阻碍统一扩展。RankMixer 用**统一的 token 混合架构**替代这些模块，在保持 Transformer 级并行性的同时，用高效的多头 token 混合取代二次自注意力。Sparse-MoE 变体扩展到 **10 亿参数**，实现 **MFU 10 倍提升**（从 4.5% 到 45%）和**在相似延迟下 100 倍参数扩展**。已部署于推荐和广告场景，使用户活跃天数提升 0.3%，应用内使用时长提升 1.08%。
 
-作为工业推荐系统大模型化演进的关键起点，RankMixer 首次系统地将 ranking backbone 改造为适合大规模扩展的结构，验证了推荐排序模型可围绕统一的 token 交互主干形成独立的 scaling 路线，为后续判别式大模型的工业化奠定了架构基础。[来源：rankmixer_to_oneranker.md]
+作为工业推荐系统大模型化演进的关键起点，RankMixer 首次系统地将 ranking backbone 改造为适合大规模扩展的结构，验证了推荐排序模型可围绕统一的 token 交互主干形成独立的 scaling 路线，为后续判别式大模型的工业化奠定了架构基础。[来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
 
 ## 要点
 
@@ -109,7 +109,7 @@ RankMixer 的动态路由通过以下方式解决：
 
 ### 历史地位与架构演进
 
-RankMixer 并非传统意义上的“又一个 CTR 模型”，而是**可扩展 Ranking Backbone 演进的起点**。其核心贡献在于验证了推荐排序模型可以围绕统一的 token 交互主干形成自己的 scaling 路线。在这一命题被验证后，字节跳动沿三个方向持续深化，形成了完整的工业化补强路径：[来源：rankmixer_to_oneranker.md]
+RankMixer 并非传统意义上的“又一个 CTR 模型”，而是**可扩展 Ranking Backbone 演进的起点**。其核心贡献在于验证了推荐排序模型可以围绕统一的 token 交互主干形成自己的 scaling 路线。在这一命题被验证后，字节跳动沿三个方向持续深化，形成了完整的工业化补强路径：[来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
 
 1. **TokenMixer-Large（主干结构升级）**：解决“能够扩展之后，如何稳定扩展”的问题。在 RankMixer 基础上引入 mixing-and-reverting、inter-layer residuals、auxiliary loss 及 Sparse Per-token MoE，将模型规模推进至 7B 在线、15B 离线量级。
 2. **MSN（容量扩张机制升级）**：解决“在严格算力预算下，如何继续扩大模型容量”的问题。摒弃标准 Sparse MoE 路线，引入基于 Product-Key Memory 的 memory-based sparse activation，将容量增长从“激活更大 expert”转化为“检索式注入个性化参数”。
@@ -119,7 +119,7 @@ RankMixer 并非传统意义上的“又一个 CTR 模型”，而是**可扩展
 
 ### 产业定位与技术主线
 
-在 2025—2026 年推荐系统大模型化的技术图谱中，RankMixer 位于**“大 ranking backbone 的可扩展化”**主线之首。该主线关注的核心是工业排序模型如何像语言模型一样具备随参数、数据与算力共同扩展的能力。[来源：rankmixer_to_oneranker.md]
+在 2025—2026 年推荐系统大模型化的技术图谱中，RankMixer 位于**“大 ranking backbone 的可扩展化”**主线之首。该主线关注的核心是工业排序模型如何像语言模型一样具备随参数、数据与算力共同扩展的能力。[来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
 
 - **判别式路线的成熟化**：与生成式 one-model 并行发展，RankMixer 及其后续工作表明，判别式大 ranking 并未终结，而是正演变为具备统一 token 接口、一体化主干、明确 scaling 目标与系统 serving 优化的 foundation model 形态。
 - **外部工业对照**：阿里 SORT（通过 request-centric 组织、local attention 与工程优化改造 Transformer 本体）与美团 MTmixAtt（AutoToken 聚合 + Multi-Mix Attention）均属于同一问题域的不同技术解法。RankMixer 代表了“更适合推荐异构特征的 Transformer 变体”路线。
@@ -137,7 +137,7 @@ RankMixer 并非传统意义上的“又一个 CTR 模型”，而是**可扩展
 - [SORT](../models/sort.md) — 阿里判别式大 ranking backbone 的对照路线
 - [MTmixAtt](../models/mtmixatt.md) — 美团多场景自适应 token 混合架构
 - [OneRanker](../models/oneranker.md) — 生成式广告 one-model 的架构级协同
-- [Hiformer](../models/hiformer.md) — 类似的硬件感知异构特征交互排序模型
+- [Hiformer](Hiformer.md) — 类似的硬件感知异构特征交互排序模型
 
 ## 开放问题
 
@@ -146,13 +146,13 @@ RankMixer 并非传统意义上的“又一个 CTR 模型”，而是**可扩展
 3. 1B 模型的训练稳定性与较小变体相比如何？
 4. RankMixer 的方法能否扩展到特征空间差异显著的跨域推荐？
 5. 在判别式 backbone 与生成式 one-model 并行发展的背景下，RankMixer 的 token 混合范式如何与 semantic token 及生成式解码器深度融合？
-6. UG-Separation 提出的用户侧计算复用机制，能否反向指导 RankMixer 主干的早期结构设计以进一步降低在线延迟？[来源：rankmixer_to_oneranker.md]
+6. UG-Separation 提出的用户侧计算复用机制，能否反向指导 RankMixer 主干的早期结构设计以进一步降低在线延迟？[来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
 
 ## 参考文献
 
 - Zhu, J., Fan, Z., Zhu, X., Jiang, Y., Wang, H., Han, X., Ding, H., Wang, X., Zhao, W., Gong, Z., Yang, H., Chai, Z., Chen, Z., Zheng, Y., Chen, Q., Zhang, F., Zhou, X., Xu, P., Yang, X., Wu, D., & Liu, Z. (2025). RankMixer: Scaling Up Ranking Models in Industrial Recommenders. arXiv:2507.15551.
 - arXiv: https://arxiv.org/abs/2507.15551
-- Leopold. (2025). 从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线. [来源：rankmixer_to_oneranker.md]
+- Leopold. (2025). 从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线. [来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
 
 ## 更新于 2026-04-09
 

@@ -57,7 +57,7 @@ QARM 引入了一个**定量多模态框架**：
 
 ## 关联
 
-- [表示对齐](../concepts/representation_alignment.md) — QARM 解决的核心技术问题
+- [表示对齐](../methods/representation_alignment.md) — QARM 解决的核心技术问题
 - [多目标对齐](../methods/multi_objective_alignment.md) — 对齐方法
 - [快手](../entities/kuaishou.md) — QARM 部署的工业平台
 - [QARM V2](./paper_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation.md) — 集成 LLM 的后续版本

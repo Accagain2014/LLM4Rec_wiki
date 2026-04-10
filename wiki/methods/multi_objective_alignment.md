@@ -110,7 +110,7 @@ L_slate = α · L_preference + β · L_business + γ · L_diversity
 
 - [HiGR](../models/HiGR.md) — 列表级多目标偏好对齐的实现
 - [QARM V2](../models/QARM.md) — 定量多模态多目标对齐
-- [Representation Alignment](../concepts/representation_alignment.md) — 单目标对齐的基础
+- [Representation Alignment](representation_alignment.md) — 单目标对齐的基础
 - [Slate Recommendation](../concepts/slate_recommendation.md) — 多目标优化的主要场景
 - [LLM as Ranker](./llm_as_ranker.md) — 排序阶段的多目标优化
 

@@ -166,7 +166,7 @@ Unified representation for prediction / generation
 ## 参考文献
 
 - Zhang, Z., Pei, H., Guo, J., Wang, T., Feng, Y., Sun, H., Liu, S., & Sun, A. (2026). OneTrans: Unified Feature Interaction and Sequence Modeling with One Transformer in Industrial Recommender. WWW 2026. arXiv:2510.26104.
-- Leopold. (2026). 从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线. [来源：rankmixer_to_oneranker.md]
+- Leopold. (2026). 从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线. [来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
 - 相关工业论文系列：MixFormer, MDL, MTFM, SORT, TRM, MERGE, OneRanker, GR4AD, OxygenREC (2025-2026).
 
 ## 更新于 2026-04-09
@@ -174,7 +174,7 @@ Unified representation for prediction / generation
 **来源**: 2311_paper_23110588_Hiformer_Heterogeneous_Feature_Interactions_Learning_with_T.md
 ：添加 Hiformer 作为统一 Transformer 骨干架构的早期工业案例，补充异构特征交互处理的技术细节
 
-**本次更新**: 基于 2025—2026 年工业技术路线演进，大幅扩展统一范式的技术边界。新增 MixFormer（协同扩展）、MDL（分布/任务统一）、MTFM（免对齐骨干）等核心案例；明确统一对象已从“特征交互”扩展至“场景分布与多任务目标”；补充 Serving 优化、Inference-time Scaling 与生成式架构融合趋势；更新对比表格、关联页面与开放问题。[来源：rankmixer_to_oneranker.md]
+**本次更新**: 基于 2025—2026 年工业技术路线演进，大幅扩展统一范式的技术边界。新增 MixFormer（协同扩展）、MDL（分布/任务统一）、MTFM（免对齐骨干）等核心案例；明确统一对象已从“特征交互”扩展至“场景分布与多任务目标”；补充 Serving 优化、Inference-time Scaling 与生成式架构融合趋势；更新对比表格、关联页面与开放问题。[来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
 
 ---
 

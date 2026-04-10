@@ -48,7 +48,7 @@ Wukong 的成功对 LLM4Rec 发展具有三重深远启示：
 - [Scaling Laws in Recommendation Systems — Predictable Performance Gains from Scaling](../concepts/scaling_laws_recsys.md)
 - [Model FLOPs Utilization (MFU) — Measuring Hardware Efficiency in Recommendation Models](../concepts/model_flops_utilization_mfu.md)
 - [用于推荐系统的大语言模型 — 概述](../concepts/llm4rec_overview.md)
-- [Representation Alignment — 表示对齐](../concepts/representation_alignment.md)
+- [Representation Alignment — 表示对齐](representation_alignment.md)
 
 ## 开放问题
 - 🌐 **稀疏性与动态性挑战**：纯 FM 堆叠架构在应对极度稀疏的长尾特征、动态用户兴趣漂移以及多模态/跨域推荐场景时的泛化边界在哪里？是否需要引入动态路由或稀疏激活机制？

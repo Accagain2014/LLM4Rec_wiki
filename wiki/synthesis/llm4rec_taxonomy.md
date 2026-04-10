@@ -53,7 +53,7 @@ LLM Role in RecSys
     ├── Semantic tokenization & indexing (TRM, MERGE)
     └── Multi-scenario/task token injection (MDL, MTFM)
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](wiki/models/RankMixer.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
 
 ### 维度二：适配策略
 
@@ -77,7 +77,7 @@ Adaptation Strategy
     ├── User-side computation reuse (UG-Separation)
     └── Process reward & dynamic beam serving (GRank, PROMISE)
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](wiki/models/RankMixer.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
 
 ### 维度三：推荐任务
 
@@ -103,7 +103,7 @@ RecSys Task
 └── Multi-Business Prediction (新增)
     └── Cross-domain generative recommendation (MBGR)
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](wiki/models/RankMixer.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
 
 ### 维度四：数据需求
 
@@ -124,7 +124,7 @@ Data Requirements
     ├── Tencent Advertising Challenge Datasets
     └── Cross-platform heterogeneous behavior logs
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](wiki/models/RankMixer.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
 
 ### 维度五：部署模式
 
@@ -146,7 +146,7 @@ Deployment Pattern
     ├── Near-line reasoning + Online fast decoding (OxygenREC)
     └── Foundation-Expert paradigm (Meta)
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](wiki/models/RankMixer.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
 
 ### 维度六：工业演进主线与技术趋势（新增）
 
@@ -165,7 +165,7 @@ Deployment Pattern
 - **趋势四：Serving 与 Inference-time Scaling 成为一等公民**。训练创新必须转化为在线可控计算图；Beam 设计、Path-level Reward、动态 Serving 成为竞争焦点。
 - **趋势五：统一化向分布、目标与平台级演进**。从特征统一扩展至场景/任务 Token 化，并走向“中心大模型 + 轻专家部署”的平台组织逻辑。
 
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](wiki/models/RankMixer.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
 
 ### Wiki 内容到分类体系的映射
 
@@ -205,7 +205,7 @@ Deployment Pattern
 
 - 本分类体系综合了所有 Wiki 页面的见解与工业界最新技术报告
 - 灵感来源于 LLM4Rec 综述论文及头部大厂 2025—2026 技术路线总结
-- [来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](wiki/models/RankMixer.md)]
+- [来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
 
 ---
 

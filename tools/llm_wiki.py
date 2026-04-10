@@ -1062,8 +1062,8 @@ status: "draft"
 3. 包含完整结构：摘要、要点列表、详细说明（分 3-5 个小节）、关联页面、开放问题、参考文献
 4. 结合你的领域知识撰写内容，不局限于源文档
 5. 保持与现有 wiki 页面风格一致（参见类似页面）
-6. **相关页面链接使用相对于 wiki 根目录的路径**（如 `wiki/models/XXX.md`、`wiki/concepts/YYY.md`、`wiki/methods/ZZZ.md`）
-7. **来源引用必须使用可点击的超链接格式**：`[来源：[文件名](wiki/sources/源文件.md)]` 或 `[来源：[概念名](wiki/concepts/概念.md)]`
+6. **相关页面链接使用相对于当前文件所在目录的路径**（如 `../models/XXX.md`、`../concepts/YYY.md`、`../methods/ZZZ.md`、`../sources/AAA.md`）
+7. **来源引用必须使用可点击的超链接格式**：`[来源：[文件名](../sources/源文件.md)]` 或 `[来源：[概念名](../concepts/概念.md)]`
 8. **不要**在输出中包含任何其他 frontmatter 或代码块包裹"""
 
             generated_content = call_llm(page_gen_prompt, "你是推荐系统和大语言模型领域的专家，擅长撰写详实、准确的知识库百科页面。", max_tokens=16384)
@@ -1123,13 +1123,13 @@ status: "draft"
 
 {desc_text}
 
-**来源**: [源文档：{source_path.name}](wiki/sources/{source_path.stem}.md)
+**来源**: [源文档：{source_path.name}](../sources/{source_path.stem}.md)
 
 ---
 
 ## 相关主题
 
-- [源文档](wiki/sources/{source_path.stem}.md)
+- [源文档](../sources/{source_path.stem}.md)
 
 ## 扩展阅读
 
@@ -1197,8 +1197,8 @@ status: "draft"
 3. 包含完整结构：摘要、要点列表、详细说明（分 3-5 个小节）、关联页面、开放问题、参考文献
 4. 结合你的领域知识撰写内容
 5. 保持与现有 wiki 页面风格一致
-6. **相关页面链接使用相对于 wiki 根目录的路径**（如 `wiki/models/XXX.md`、`wiki/concepts/YYY.md`）
-7. **来源引用必须使用可点击的超链接格式**：`[来源：[文件名](wiki/sources/源文件.md)]`"""
+6. **相关页面链接使用相对于当前文件所在目录的路径**（如 `../models/XXX.md`、`../concepts/YYY.md`、`../sources/AAA.md`）
+7. **来源引用必须使用可点击的超链接格式**：`[来源：[文件名](../sources/源文件.md)]`"""
 
                 generated = call_llm(page_gen_prompt, "你是推荐系统专家，擅长撰写知识库页面。", max_tokens=16384)
 
@@ -1242,13 +1242,13 @@ status: "draft"
 
 {update_details}
 
-**来源**: [源文档：{source_path.name}](wiki/sources/{source_path.stem}.md)
+**来源**: [源文档：{source_path.name}](../sources/{source_path.stem}.md)
 
 ---
 
 ## 相关主题
 
-- [源文档](wiki/sources/{source_path.stem}.md)
+- [源文档](../sources/{source_path.stem}.md)
 
 ## 扩展阅读
 
@@ -1373,7 +1373,7 @@ def _enrich_page_with_llm(page_path: Path, source_content: str, source_name: str
 3. **添加新小节**：如果源文档包含全新的概念或方法，添加相应的章节
 4. **更新关联**：更新"相关页面"部分，添加新的相关链接
 5. **保持风格一致**：与现有页面的写作风格和结构保持一致
-6. **标注来源**：在添加的内容末尾标注来源，使用可点击的超链接格式，例如"[来源：[{source_name}](wiki/sources/{source_name})]"
+6. **标注来源**：在添加的内容末尾标注来源，使用可点击的超链接格式，例如"[来源：[{source_name}](../sources/{source_name})]"
 
 请直接输出**完整的更新后的页面正文**（不包含 frontmatter），使用 Markdown 格式，全部内容为中文。
 """

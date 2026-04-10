@@ -20,11 +20,11 @@ status: "draft"
 
 ## 相关主题
 
-- [源文档]({ "../sources/" + source_path.stem + ".md" })
+- [源文档]((../sources/SOURCE_FILE.md))
 
 ## 扩展阅读
 
-- [知识库首页](../index.md)
+- [知识库首页](../README.md)
 - [全部模型](../models/)
 - [全部概念](../concepts/)
 

@@ -18,28 +18,28 @@ status: "draft"
 | 位置 | 矛盾描述 | 影响 |
 |------|----------|------|
 | `models/DSI.md` | `title: "Tiger"`，但正文首行写的是 `：创建DSIDifferentiable`。模型命名与内容意图不一致。 | 检索与引用时易产生混淆 |
-| [`entities/kuaishou.md`](wiki/entities/kuaishou.md) vs `wiki/entities/kuaishou.md` | 同一实体存在两个路径，且 `category` 分别为 `"entities"` 和 `"/"`。 | 数据冗余，破坏单一事实来源原则 |
-| [`models/QARM.md`](wiki/models/QARM.md) | 一处标题为 `"QARM"`，另一处（`wiki/models/QARM.md`）标题为 `"Qarm"`。大小写不统一。 | 影响跨页面链接与索引一致性 |
+| [`entities/kuaishou.md`](../entities/kuaishou.md) vs `wiki/entities/kuaishou.md` | 同一实体存在两个路径，且 `category` 分别为 `"entities"` 和 `"/"`。 | 数据冗余，破坏单一事实来源原则 |
+| [`models/QARM.md`](../models/QARM.md) | 一处标题为 `"QARM"`，另一处（`wiki/models/QARM.md`）标题为 `"Qarm"`。大小写不统一。 | 影响跨页面链接与索引一致性 |
 | `log.md` | 同一源文件 `paper_ad0dff_QARM_...md` 被重复记录多次 `ingest` 操作，且状态描述不一致。 | 日志可信度下降，难以追踪真实变更历史 |
 
 ## 2. ⏳ 过时内容 (Stale Content)
-- **占位符/草稿泛滥**：大量页面（如 [`concepts/slate_recommendation.md`](wiki/concepts/slate_recommendation.md), [`models/HiGR.md`](wiki/models/HiGR.md), [`methods/quantitative_alignment.md`](wiki/methods/quantitative_alignment.md) 等）仅包含一行提示词残留文本（如 `：HiGR 模型架构、层次化规划机制、多目标对齐详情`），未填充实际知识。违反 `status: "draft"` 应包含最小可用内容的原则。
+- **占位符/草稿泛滥**：大量页面（如 [`concepts/slate_recommendation.md`](../concepts/slate_recommendation.md), [`models/HiGR.md`](../models/HiGR.md), [`methods/quantitative_alignment.md`](../methods/quantitative_alignment.md) 等）仅包含一行提示词残留文本（如 `：HiGR 模型架构、层次化规划机制、多目标对齐详情`），未填充实际知识。违反 `status: "draft"` 应包含最小可用内容的原则。
 - **未来时间戳**：所有页面的 `created`/`updated` 均为 `2026-04-08`。虽内部一致，但表明可能是测试/模板生成数据，缺乏真实时间演进记录。
 - **Jupyter 检查点文件**：全库存在大量 `.ipynb_checkpoints/` 目录下的副本文件。这些是编辑器自动生成的临时文件，不应纳入版本控制或知识库索引。
 
 ## 3. 🕳️ 孤立页面 (Orphan Pages)
 以下页面 `related: []` 且未被 `index.md` 或其他页面有效反向链接，形成信息孤岛：
-- [`concepts/slate_recommendation.md`](wiki/concepts/slate_recommendation.md)
-- [`concepts/hierarchical_planning_rec.md`](wiki/concepts/hierarchical_planning_rec.md)
-- [`concepts/continued_pretraining.md`](wiki/concepts/continued_pretraining.md)
-- [`concepts/representation_alignment.md`](wiki/methods/representation_alignment.md)
-- [`concepts/generative_retrieval.md`](wiki/concepts/generative_retrieval.md)
-- [`concepts/gsu_esu_paradigm.md`](wiki/concepts/gsu_esu_paradigm.md)
-- [`concepts/semantic_id.md`](wiki/concepts/semantic_id.md)
-- [`methods/quantitative_alignment.md`](wiki/methods/quantitative_alignment.md)
-- [`methods/multi_objective_alignment.md`](wiki/methods/multi_objective_alignment.md)
-- [`models/HiGR.md`](wiki/models/HiGR.md), [`models/PLUM.md`](wiki/models/PLUM.md), `models/DSI.md`, [`models/QARM.md`](wiki/models/QARM.md)
-- [`entities/tencent.md`](wiki/entities/tencent.md), [`entities/google_youtube.md`](wiki/entities/google_youtube.md), [`entities/kuaishou.md`](wiki/entities/kuaishou.md), [`entities/guorui_zhou.md`](wiki/entities/guorui_zhou.md)
+- [`concepts/slate_recommendation.md`](../concepts/slate_recommendation.md)
+- [`concepts/hierarchical_planning_rec.md`](../concepts/hierarchical_planning_rec.md)
+- [`concepts/continued_pretraining.md`](../concepts/continued_pretraining.md)
+- [`concepts/representation_alignment.md`](../methods/representation_alignment.md)
+- [`concepts/generative_retrieval.md`](../concepts/generative_retrieval.md)
+- [`concepts/gsu_esu_paradigm.md`](../concepts/gsu_esu_paradigm.md)
+- [`concepts/semantic_id.md`](../concepts/semantic_id.md)
+- [`methods/quantitative_alignment.md`](../methods/quantitative_alignment.md)
+- [`methods/multi_objective_alignment.md`](../methods/multi_objective_alignment.md)
+- [`models/HiGR.md`](../models/HiGR.md), [`models/PLUM.md`](../models/PLUM.md), `models/DSI.md`, [`models/QARM.md`](../models/QARM.md)
+- [`entities/tencent.md`](../entities/tencent.md), [`entities/google_youtube.md`](../entities/google_youtube.md), [`entities/kuaishou.md`](../entities/kuaishou.md), [`entities/guorui_zhou.md`](../entities/guorui_zhou.md)
 - **所有 `.ipynb_checkpoints/` 下的文件**（绝对孤立，应直接删除）
 
 ## 4. 📄 缺失页面 (Missing Pages)
@@ -50,12 +50,12 @@ status: "draft"
 - `wiki/entities/meta_research.md`（索引中提及但无实体文件）
 - `wiki/concepts/hstu_architecture.md`
 - `wiki/methods/listwise_preference_alignment.md`
-- `wiki/methods/hierarchical_planning_rec.md`（与 [`concepts/hierarchical_planning_rec.md`](wiki/concepts/hierarchical_planning_rec.md) 路径冲突，需明确归类）
+- `wiki/methods/hierarchical_planning_rec.md`（与 [`concepts/hierarchical_planning_rec.md`](../concepts/hierarchical_planning_rec.md) 路径冲突，需明确归类）
 
 ## 5. 🔗 缺失的交叉引用 (Missing Cross-References)
 - **单向链接泛滥**：`sources/` 页面详细列出了 `需要更新的页面`，但目标页面的 `related` 字段几乎全为 `[]`，未建立双向链接。
 - **索引解析失败**：`wiki/index.md` 的表格中，“摘要”列直接粘贴了原始 YAML frontmatter（如 `--- title: "Slate" category: "concepts" tags: ["new", "2026-...`），而非提取的一句话摘要。导致索引失去导航价值。
-- **核心概念未互联**：例如 [`concepts/llm4rec_overview.md`](wiki/concepts/llm4rec_overview.md) 链接了多个方法/模型，但这些方法/模型页面未反向链接回概述页，破坏了知识图谱的连通性。
+- **核心概念未互联**：例如 [`concepts/llm4rec_overview.md`](../concepts/llm4rec_overview.md) 链接了多个方法/模型，但这些方法/模型页面未反向链接回概述页，破坏了知识图谱的连通性。
 
 ## 6. 📝 前置元数据问题 (Frontmatter Issues)
 | 问题类型 | 示例 | 违反约定 |

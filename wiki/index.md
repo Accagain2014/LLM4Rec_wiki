@@ -3,7 +3,7 @@
 
 > 知识库内容目录。由 LLM 自动维护。
 
-> 最后更新：2026-04-09
+> 最后更新：2026-04-10
 
 
 ## Concepts
@@ -166,6 +166,8 @@
 
 | [OneRec-V2 — Lazy Decoder-Only Generative Recommendation](models/OneRec-V2.md) | --- title: "OneRec-V2 — Lazy Decoder-Only Generative Recomme... | OneRec, generative recommendation, decoder-only, preference alignment, Kuaishou, MoE, duration-aware |
 
+| [Ultra-Hstu](models/ULTRA-HSTU.md) | --- title: Ultra-Hstu category: models status: draft confide... |  |
+
 | [GR4AD](models/GR4AD.md) | --- title: "GR4AD" category: "models" tags: ["new", "2026-04... | "new", "2026-04-09" |
 
 | [本论文提出的统一生成式推荐模型页面](models/test_generative_rec_model.md) | --- title: "本论文提出的统一生成式推荐模型页面" category: "models" tags: ["ne... | "new", "2026-04-09" |
@@ -174,7 +176,7 @@
 
 
 
-- **23 个页面**
+- **24 个页面**
 
 
 ## Entities
@@ -245,6 +247,8 @@
 
 | [Paper C4A451 Forge Forming Semantic Identifiers For Generative Retrieval](sources/paper_c4a451_FORGE_Forming_Semantic_Identifiers_for_Generative_Retrieval.md) | --- title: "Paper C4A451 Forge Forming Semantic Identifiers... | "source", "2026-04-08" |
 
+| [2411 Paper 24111173 Qarm Quantitative Alignment Multi-Modal Recommendation At K](sources/2411_paper_24111173_QARM_Quantitative_Alignment_Multi-Modal_Recommendation_at_K.md) | --- title: "2411 Paper 24111173 Qarm Quantitative Alignment... | "source", "2026-04-10" |
+
 | [QARM V2 — Quantitative Alignment Multi-Modal Recommendation](sources/paper_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation.md) | --- title: "QARM V2 — Quantitative Alignment Multi-Modal Rec... | QARM V2, multi-modal, quantitative alignment, GSU/ESU, LLM embedding, user sequence, industrial |
 
 | [2508 Paper 25082090 Onerec-V2 Technical Report](sources/2508_paper_25082090_OneRec-V2_Technical_Report.md) | --- title: "2508 Paper 25082090 Onerec-V2 Technical Report"... | "source", "2026-04-09" |
@@ -266,6 +270,8 @@
 | [2507 Paper 25072287 Recgpt Technical Report](sources/2507_paper_25072287_RecGPT_Technical_Report.md) | --- title: "2507 Paper 25072287 Recgpt Technical Report" cat... | "source", "2026-04-09" |
 
 | [2311 Paper 23110588 Hiformer Heterogeneous Feature Interactions Learning With T](sources/2311_paper_23110588_Hiformer_Heterogeneous_Feature_Interactions_Learning_with_T.md) | --- title: "2311 Paper 23110588 Hiformer Heterogeneous Featu... | "source", "2026-04-09" |
+
+| [2602 Paper 26021001 Kunlun Establishing Scaling Laws For Massive-Scale Recommen](sources/2602_paper_26021001_Kunlun_Establishing_Scaling_Laws_for_Massive-Scale_Recommen.md) | --- title: "2602 Paper 26021001 Kunlun Establishing Scaling... | "source", "2026-04-09" |
 
 | [Paper 8Edbf8 Higr Efficient Generative Slate Recommendation Via Hierarch](sources/paper_8edbf8_HiGR_Efficient_Generative_Slate_Recommendation_via_Hierarch.md) | --- title: "Paper 8Edbf8 Higr Efficient Generative Slate Rec... | "source", "2026-04-08" |
 
@@ -293,15 +299,17 @@
 
 | [Recommender Systems with Generative Retrieval (NeurIPS 2023)](sources/paper_2305_05065_Generative_Retrieval_RecSys.md) | --- title: "Recommender Systems with Generative Retrieval (N... | generative retrieval, semantic ID, DSI, TIGER, neural retrieval, Google, NeurIPS 2023 |
 
+| [2602 Paper 26020855 Qarm V2 Quantitative Alignment Multi-Modal Recommendation F](sources/2602_paper_26020855_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation_f.md) | --- title: "2602 Paper 26020855 Qarm V2 Quantitative Alignme... | "source", "2026-04-10" |
+
 | [Paper C33D89 Farewell To Item Ids Unlocking The Scaling Potential Of Lar](sources/paper_c33d89_Farewell_to_Item_IDs_Unlocking_the_Scaling_Potential_of_Lar.md) | --- title: "Paper C33D89 Farewell To Item Ids Unlocking The... | "source", "2026-04-08" |
 
 
 
-- **32 个页面**
+- **35 个页面**
 
 
 ---
 
 **统计**：
 
-- 总页面数：114
+- 总页面数：118

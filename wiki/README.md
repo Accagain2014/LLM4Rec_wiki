@@ -30,13 +30,13 @@ python tools/llm_wiki.py lint
 
 | 章节 | 描述 |
 |---------|-------------|
-| [📇 索引](wiki/index.md) | 所有维基页面的完整目录 |
-| [📝 日志](wiki/log.md) | 操作历史 |
-| [💡 概念](wiki/concepts/) | 核心理论和框架 |
-| [🔧 方法](wiki/methods/) | 算法和技术 |
-| [🤖 模型](wiki/models/) | 特定模型架构 |
-| [👥 实体](wiki/entities/) | 人物、数据集、平台 |
-| [🔬 综合分析](wiki/synthesis/) | 跨领域分析 |
+| [📇 索引](README.md) | 所有维基页面的完整目录 |
+| [📝 日志](log.md) | 操作历史 |
+| [💡 概念](concepts) | 核心理论和框架 |
+| [🔧 方法](methods) | 算法和技术 |
+| [🤖 模型](models) | 特定模型架构 |
+| [👥 实体](entities) | 人物、数据集、平台 |
+| [🔬 综合分析](synthesis) | 跨领域分析 |
 
 ## LLM后端
 

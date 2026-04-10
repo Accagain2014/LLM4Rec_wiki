@@ -20,7 +20,7 @@ status: "stable"
 
 长上下文效率涵盖了一系列使基于 Transformer 的序列建模**在工业级规模上计算可行**的技术，其中用户行为历史跨越数千次交互。这些技术通过多种互补策略解决自注意力的二次复杂度瓶颈：**token 合并**减少有效序列长度、**KV 缓存**避免冗余计算、**混合精度训练**提高内存效率，以及**长度外推训练**处理比训练期间所见更长的序列。LONGER（InnerTransformers、混合注意力、全局 token）和 10k 序列建模方法（STCA 线性复杂度交叉注意力、请求级批量共享、长度外推）中的方法代表了工业长上下文优化的最先进水平。
 
-近年来，工业界进一步将优化视角从“单一算法降复杂度”扩展至**全栈工程协同**，强调**目标感知注意力（Target-Aware Attention）**、**请求级批处理与缓存复用（Request-Level Batching & Cache Reuse）**以及**I/O 与计算图优化**。小红书 LASER、LinkedIn Feed-SR、腾讯长行为序列建模等工作表明，长序列效率已不再是附属工程，而是决定模型能否在线落地的核心创新维度。[来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
+近年来，工业界进一步将优化视角从“单一算法降复杂度”扩展至**全栈工程协同**，强调**目标感知注意力（Target-Aware Attention）**、**请求级批处理与缓存复用（Request-Level Batching & Cache Reuse）**以及**I/O 与计算图优化**。小红书 LASER、LinkedIn Feed-SR、腾讯长行为序列建模等工作表明，长序列效率已不再是附属工程，而是决定模型能否在线落地的核心创新维度。[来源：[rankmixer_to_oneranker.md](../sources/rankmixer_to_oneranker.md)]
 
 ## 要点
 
@@ -43,7 +43,7 @@ status: "stable"
 - 生产延迟约束（< 10ms）限制可行计算，要求计算图与存储访问模式高度可控
 - 训练内存限制最大序列长度，且需兼顾增量更新与时效性衰减
 
-长上下文效率技术使超长序列建模成为实际可行，且必须与在线 Serving 约束深度耦合。[来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
+长上下文效率技术使超长序列建模成为实际可行，且必须与在线 Serving 约束深度耦合。[来源：[rankmixer_to_oneranker.md](../sources/rankmixer_to_oneranker.md)]
 
 ### Token 合并（LONGER）
 
@@ -85,7 +85,7 @@ InnerTransformer 是一个轻量级模块：
 益处：
 - 避免相同特征的冗余计算
 - 减少每请求延迟与显存峰值
-- 在高 QPS 场景中特别有效，使长序列模型具备工业级吞吐能力 [来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
+- 在高 QPS 场景中特别有效，使长序列模型具备工业级吞吐能力 [来源：[rankmixer_to_oneranker.md](../sources/rankmixer_to_oneranker.md)]
 
 ### 目标感知注意力与分段机制（工业新范式）
 
@@ -95,7 +95,7 @@ InnerTransformer 是一个轻量级模块：
 - **LASER（小红书）**：结合超长行为序列的 I/O 访问优化与 target-aware segmented attention。将长序列按时间或语义分段，仅对与当前目标高度相关的分段进行精细注意力计算，其余分段采用轻量级聚合，实现全栈长序列优化。
 - **Feed-SR（LinkedIn）**：在判别式序列排序器中引入 RoPE 位置编码、增量训练（Incremental Training）与时效性加权（Recency Weighting），并通过 Late Fusion 平衡长短期兴趣，确保长序列在真实 Feed 流中的稳定推理。
 
-这些方案表明，长序列效率的核心已从“单纯压缩序列”转向“按需计算与目标对齐”。[来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
+这些方案表明，长序列效率的核心已从“单纯压缩序列”转向“按需计算与目标对齐”。[来源：[rankmixer_to_oneranker.md](../sources/rankmixer_to_oneranker.md)]
 
 ### 请求级批处理与 Serving 优化
 
@@ -108,7 +108,7 @@ InnerTransformer 是一个轻量级模块：
 **Serving 与推理预算控制**：
 - 训练阶段的模型创新必须转化为在线可控的计算图、存储访问模式与推理策略
 - 引入 LazyAR 解码、动态 Beam Serving、近线 Reasoning Distillation 等推理期优化手段
-- 长序列模型的竞争已延伸至推理阶段（Inference-Time Scaling），要求系统级协同设计 [来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
+- 长序列模型的竞争已延伸至推理阶段（Inference-Time Scaling），要求系统级协同设计 [来源：[rankmixer_to_oneranker.md](../sources/rankmixer_to_oneranker.md)]
 
 ### 训练优化
 
@@ -126,7 +126,7 @@ InnerTransformer 是一个轻量级模块：
 #### 增量训练与时效性建模
 - 采用增量训练策略持续吸收新行为数据，避免全量重训
 - 结合 Recency Weighting 与 Late Fusion 缓解长序列中的“近期偏好淹没”问题
-- 配合 Memory Bank 控制长历史上的重复编码成本（如 LEMUR 多模态长序列方案）[来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
+- 配合 Memory Bank 控制长历史上的重复编码成本（如 LEMUR 多模态长序列方案）[来源：[rankmixer_to_oneranker.md](../sources/rankmixer_to_oneranker.md)]
 
 ### 长度外推训练
 
@@ -173,13 +173,13 @@ InnerTransformer 是一个轻量级模块：
 4. 当 KV 缓存满时，缓存驱逐策略应如何工作？
 5. 不同效率技术之间的交互是什么——它们是相加的还是协同的？
 6. 目标感知注意力在生成式 One-Model 架构中如何与 Beam Search/Prefix Constraint 协同？
-7. 长序列 I/O 优化与近线 Reasoning Distillation 能否进一步解耦训练与推理预算？[来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
+7. 长序列 I/O 优化与近线 Reasoning Distillation 能否进一步解耦训练与推理预算？[来源：[rankmixer_to_oneranker.md](../sources/rankmixer_to_oneranker.md)]
 
 ## 参考文献
 
 - Chai, Z., Ren, Q., Xiao, X., Yang, H., Han, B., Zhang, S., Chen, D., Lu, H., Zhao, W., Yu, L., Xie, X., Ren, S., Sun, X., Tan, Y., Xu, P., Zheng, Y., & Wu, D. (2025). LONGER: Scaling Up Long Sequence Modeling in Industrial Recommenders. RecSys 2025. arXiv:2505.04421.
 - "Make It Long, Keep It Fast: End-to-End 10k-Sequence Modeling." arXiv:2511.06077.
-- Leopold. (2025). 从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线. [来源：[rankmixer_to_oneranker.md](wiki/sources/rankmixer_to_oneranker.md)]
+- Leopold. (2025). 从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线. [来源：[rankmixer_to_oneranker.md](../sources/rankmixer_to_oneranker.md)]
 
 ## 更新于 2026-04-09
 

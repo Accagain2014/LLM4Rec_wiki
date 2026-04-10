@@ -445,3 +445,11 @@
 - 已更新页面：7
 
 ---
+
+
+## [2026-04-10] ingest | 已处理源文件：2602_paper_26020855_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation_f.md
+- 源文件：2602_paper_26020855_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation_f.md
+- 已创建页面：0
+- 已更新页面：5
+
+---

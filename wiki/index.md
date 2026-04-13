@@ -3,7 +3,7 @@
 
 > 知识库内容目录。由 LLM 自动维护。
 
-> 最后更新：2026-04-10
+> 最后更新：2026-04-13
 
 
 ## Concepts
@@ -146,6 +146,8 @@
 
 | [ULTRA-HSTU — Bending the Scaling Law Curve in Recommendation](wiki/models/ULTRA_HSTU.md) | --- title: "ULTRA-HSTU — Bending the Scaling Law Curve in Re... | ULTRA-HSTU, HSTU, scaling law, sparse attention, Meta, sequential recommendation, system co-design |
 
+| [从关联章节中检测到的页面](wiki/models/SASRec.md) | --- title: "从关联章节中检测到的页面" category: "models" tags: ["new", "... | "new", "2026-04-13" |
+
 | [从关联章节中检测到的页面](wiki/models/DHEN.md) | --- title: "从关联章节中检测到的页面" category: "models" tags: ["new", "... | "new", "2026-04-09" |
 
 | [LONGER — Long-Sequence Optimized Transformer for Industrial Recommenders](wiki/models/LONGER.md) | --- title: "LONGER — Long-Sequence Optimized Transformer for... | LONGER, long sequence, transformer, ByteDance, sparse attention, token merge, industrial deployment, scaling law |
@@ -182,7 +184,7 @@
 
 
 
-- **26 个页面**
+- **27 个页面**
 
 
 ## Entities
@@ -201,6 +203,8 @@
 
 | [Amazon 评论数据集](wiki/entities/amazon_reviews.md) | --- title: "Amazon 评论数据集" category: "entities" tags: [datase... | dataset, amazon, e-commerce, reviews, benchmark |
 
+| [从关联章节中检测到的页面](wiki/entities/pinterest.md) | --- title: "从关联章节中检测到的页面" category: "entities" tags: ["new",... | "new", "2026-04-13" |
+
 | [腾讯广告算法挑战赛Tencent](wiki/entities/taac.md) | --- title: "腾讯广告算法挑战赛Tencent" category: "entities" tags: ["n... | "new", "2026-04-09" |
 
 | [Kuaishou](wiki/entities/kuaishou.md) | --- title: "Kuaishou" category: "entities" tags: ["new", "20... | "new", "2026-04-08" |
@@ -217,7 +221,7 @@
 
 
 
-- **12 个页面**
+- **13 个页面**
 
 
 ## Synthesis
@@ -299,6 +303,12 @@
 
 | [2203 Paper 22031101 Dhen A Deep And Hierarchical Ensemble Network For Large-Sca](wiki/sources/2203_paper_22031101_DHEN_A_Deep_and_Hierarchical_Ensemble_Network_for_Large-Sca.md) | --- title: "2203 Paper 22031101 Dhen A Deep And Hierarchical... | "source", "2026-04-09" |
 
+| [2510 Paper 25102715 A Survey On Generative Recommendation Data, Model, And Task](wiki/sources/2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md) | --- title: "2510 Paper 25102715 A Survey On Generative Recom... | "source", "2026-04-12" |
+
+| [1808 Paper 18080978 Self-Attentive Sequential Recommendation](wiki/sources/1808_paper_18080978_Self-Attentive_Sequential_Recommendation.md) | --- title: "1808 Paper 18080978 Self-Attentive Sequential Re... | "source", "2026-04-13" |
+
+| [2205 Paper 22051413 Flashattention Fast And Memory-Efficient Exact Attention Wi](wiki/sources/2205_paper_22051413_FlashAttention_Fast_and_Memory-Efficient_Exact_Attention_wi.md) | --- title: "2205 Paper 22051413 Flashattention Fast And Memo... | "source", "2026-04-13" |
+
 | [Paper 1B102D Qarm V2 Quantitative Alignment Multi-Modal Recommendation F](wiki/sources/paper_1b102d_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation_f.md) | --- title: "Paper 1B102D Qarm V2 Quantitative Alignment Mult... | "source", "2026-04-08" |
 
 | [Rankmixer To Oneranker](wiki/sources/rankmixer_to_oneranker.md) | --- title: "Rankmixer To Oneranker" category: "sources" tags... | "source", "2026-04-09" |
@@ -321,13 +331,15 @@
 
 | [Paper C33D89 Farewell To Item Ids Unlocking The Scaling Potential Of Lar](wiki/sources/paper_c33d89_Farewell_to_Item_IDs_Unlocking_the_Scaling_Potential_of_Lar.md) | --- title: "Paper C33D89 Farewell To Item Ids Unlocking The... | "source", "2026-04-08" |
 
+| [2504 Paper 25041050 Pinrec Outcome-Conditioned, Multi-Token Generative Retrieva](wiki/sources/2504_paper_25041050_PinRec_Outcome-Conditioned,_Multi-Token_Generative_Retrieva.md) | --- title: "2504 Paper 25041050 Pinrec Outcome-Conditioned,... | "source", "2026-04-13" |
 
 
-- **39 个页面**
+
+- **43 个页面**
 
 
 ---
 
 **统计**：
 
-- 总页面数：127
+- 总页面数：133

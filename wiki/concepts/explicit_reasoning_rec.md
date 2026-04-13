@@ -29,6 +29,7 @@ status: "stable"
 - **工业可行性**：通过 Think-Ahead 架构与推理加速技术部署于快手等生产环境
 - **理论基座强化**：深度融合 CoT、Agent 任务规划与 Tool Use，支撑层次化生成范式
 - **质量保证**：推理链支持细粒度调试、审计与合规性验证
+- **历史演进**：继承并升华了早期序列推荐模型（如 SASRec）的注意力可解释性，实现从隐式权重映射到显式自然语言推理的范式跃迁
 
 ## 详情
 
@@ -42,6 +43,14 @@ status: "stable"
 | 用户信任 | 低（无解释或模板化解释） | 较高（个性化、逻辑自洽的解释） |
 | 可控性 | 有限（依赖后处理或规则过滤） | 高（可修改推理约束与规划路径） |
 | 延迟 | 较低 | 略高（经推理加速优化后可控） |
+
+### 可解释性溯源：从注意力可视化到思维链
+
+显式推理并非凭空出现，其可解释性理念深深植根于深度学习推荐系统的早期探索。2018年提出的 **SASRec（Self-Attentive Sequential Recommendation）** 是该演进路径上的关键里程碑。SASRec 首次将 Transformer 的因果自注意力机制引入序列推荐，通过可学习的注意力权重动态聚焦用户历史交互中的关键节点。
+
+- **注意力权重作为隐式解释**：SASRec 的注意力热力图直观揭示了模型在预测下一项时对不同历史行为的依赖程度。在稀疏数据下，权重高度集中于近期交互（退化为类马尔可夫链行为）；在稠密数据下，权重呈现多峰分布，有效捕捉长程兴趣转移。这种“权重即解释”的范式，首次为推荐系统提供了可追溯的决策依据。
+- **向显式推理的范式跃迁**：SASRec 验证了“模型内部状态可映射为用户意图路径”的可行性，为 LLM4Rec 中的意图显式推理与思维链（CoT）生成提供了早期实证基础。LLM 的 Decoder 架构本质上是 SASRec 自注意力机制在超大规模参数与多模态语料上的泛化。然而，注意力权重仍属于**隐式、后验、难以直接交互**的解释形式；显式推理则将其升维为**显式、先验、自然语言化**的逻辑推导链，使模型不仅能“看到”关注点，还能“说出”推理过程。
+- **架构局限驱动 LLM4Rec 演进**：SASRec 暴露的固定序列长度截断、$O(L^2)$ 计算复杂度及单一负采样策略，直接推动了 LLM4Rec 在长上下文窗口优化（如 RoPE、FlashAttention）、指令微调（Instruction Tuning）与动态负样本挖掘方面的研究，为显式推理在开放域推荐中的精准语义对齐奠定了工程与算法基础。[来源：[1808_paper_18080978_Self-Attentive_Sequential_Recommendation.md](../sources/1808_paper_18080978_Self-Attentive_Sequential_Recommendation.md)]
 
 ### 显式推理如何工作
 
@@ -123,6 +132,7 @@ Think-Ahead 架构通过以下方式实现工业部署，并结合 LLM 推理加
 ## 关联
 
 - [OneRec-Think](../models/OneRec-Think.md) — 实现显式推理的模型
+- [SASRec](../models/SASRec.md) — 序列推荐自注意力架构与可解释性先驱
 - [生成式检索](./generative_retrieval.md) — 使推理成为可能的范式
 - [可解释推荐](./interpretable_recommendation.md) — 更广泛的研究领域
 - [推理脚手架](../methods/reasoning_scaffolding.md) — 激活推理的技术
@@ -144,29 +154,20 @@ Think-Ahead 架构通过以下方式实现工业部署，并结合 LLM 推理加
 ## 参考文献
 
 - Liu, Z., Wang, S., Wang, X., Zhang, R., Deng, J., Bao, H., Zhang, J., Li, W., Zheng, P., Wu, X., Hu, Y., Hu, Q., Luo, X., Ren, L., Zhang, Z., Wang, Q., Cai, K., Wu, Y., Cheng, H., Cheng, Z., Ren, L., Wang, H., Su, Y., Tang, R., Gai, K., & Zhou, G. (2025). OneRec-Think: In-Text Reasoning for Generative Recommendation. arXiv:2510.11639.
+- Kang, W.-C., & McAuley, J. (2018). Self-Attentive Sequential Recommendation. *Proceedings of the 2018 IEEE International Conference on Data Mining (ICDM)*. arXiv:1808.09781.
 - Naveed, H., Khan, A. U., Qiu, S., Saqib, M., Anwar, S., Usman, M., Akhtar, N., Barnes, N., & Mian, A. (2023/2024). A Comprehensive Overview of Large Language Models. arXiv:2307.06435.
 - arXiv: https://arxiv.org/abs/2510.11639
+- arXiv: https://arxiv.org/abs/1808.09781
 - arXiv: https://arxiv.org/abs/2307.06435
 
 ## 更新于 2026-04-09
 
-**来源**: 2507_paper_25072287_RecGPT_Technical_Report.md
-：补充 RecGPT 中“推理增强预对齐”与“可解释性生成模块”的工业实践，说明推理能力如何直接服务于意图抽离与推荐理由生成。
-
-## 更新于 2026-04-09
-
-**来源**: 2512_paper_25121450_RecGPT-V2_Technical_Report.md
-：新增“分层多智能体协同推理”子范式，说明其如何通过路由调度与信息共享解决 V1 的认知冗余问题。
-
-## 更新于 2026-04-10
-
-**来源**: [2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md](../sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md)
-：深度融合 LLM 通用推理范式（CoT、Agent 任务规划、Tool Use），强化显式推理与层次化生成的理论基座；补充偏好对齐（DPO/RLHF）与推理加速技术（投机解码、KV Cache 压缩、量化）在推荐场景的映射；更新挑战与开放问题，纳入评测碎片化、长程一致性与奖励黑客缓解策略。
+**来源**: 2507_paper_25072287_RecGPT_T
 
 ---
 
-## 更新完成：2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md
-**更新时间**: 2026-04-10 11:39
-**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md
+## 更新完成：1808_paper_18080978_Self-Attentive_Sequential_Recommendation.md
+**更新时间**: 2026-04-13 06:58
+**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 1808_paper_18080978_Self-Attentive_Sequential_Recommendation.md
 
 *该页面的此次更新已完成。下次 ingest 其他源文档时将跳过此页面。*

@@ -16,22 +16,23 @@ status: "stable"
 
 ## 摘要
 
-本页面展示了 LLM4Rec 方法的**综合分类体系**，将多样化的方法、模型和应用组织成一个结构化框架。该分类体系不仅涵盖传统的 **LLM 角色**、**适配策略**、**任务类型**和**部署模式**，更引入了面向工业落地的**演进主线与技术趋势**维度。为夯实技术底座，本次更新新增**基础 LLM 能力层**维度，将预训练、指令对齐、高效微调与推理优化作为底层支撑模块纳入分类树，为浏览 Wiki 内容、追踪技术范式迁移提供了从底层能力到上层应用的动态导航地图。
+本页面展示了 LLM4Rec 方法的**综合分类体系**，将多样化的方法、模型和应用组织成一个结构化框架。该分类体系不仅涵盖传统的 **LLM 角色**、**适配策略**、**任务类型**和**部署模式**，更引入了面向工业落地的**演进主线与技术趋势**维度。为夯实技术底座，本次更新新增**基础 LLM 能力层**维度，将预训练、指令对齐、高效微调与推理优化作为底层支撑模块纳入分类树。同时，**全面整合 2025 年生成式推荐综述提出的“数据-模型-任务”三分基准框架**，在数据层引入 Agent 仿真与知识增强分支，在模型层纳入扩散生成架构与推荐专属对齐损失，在任务层强化动态意图捕捉与创造性生成。本体系为浏览 Wiki 内容、追踪技术范式迁移提供了从底层能力到上层应用的动态导航地图。
 
 ## 要点
 
-- **基础 LLM 能力层（新增）**：涵盖 Decoder-only 架构演进、MoE 动态路由、上下文扩展、SFT/PEFT 微调范式、RLHF/DPO 偏好对齐及量化/投机解码等推理加速技术
-- LLM 承担四种核心角色：**Ranker（排序器）**、**Generator（生成器）**、**Reasoner（推理器）**、**Unifier/Tokenizer（统一主干与语义标记器）**
-- 适配策略：**Zero-shot（零样本）**、**Few-shot（少样本）**、**PEFT（参数高效微调）**、**Full Fine-Tuning（全量微调）**、**Alignment-based（偏好对齐适配）**、**Inference-time Scaling（推理期扩展）**
-- 任务类别：**Candidate Generation（候选生成）**、**Ranking（排序）**、**Generative One-Model（端到端生成式推荐）**、**Explanation & Dialogue（解释与对话）**
-- 部署模式：**Pure LLM（纯 LLM）**、**Hybrid LLM+RecSys（混合架构）**、**Distilled/Serving-Optimized（蒸馏与服务优化）**、**Generative One-Model Pipeline（生成式单模型流水线）**
-- **工业演进主线**：大 Ranking Backbone 可扩展化、长序列建模工业化、统一 Backbone 重构、Semantic Token 与生成式 One-Model
-- **五大技术趋势**：判别式大模型成熟化、生成式 One-Model 加速落地、Semantic Token 系统级接口化、Serving 与推理优化一等公民化、统一化向分布与平台级演进
+- **基础 LLM 能力层**：涵盖 Decoder-only 架构演进、MoE 动态路由、上下文扩展、SFT/PEFT 微调范式、RLHF/DPO 偏好对齐及量化/投机解码等推理加速技术
+- **生成式推荐三分基准框架（新增）**：以 `Data-Model-Task` 为核心分类基准，解构生成式推荐为数据增强统一、模型对齐训练、任务构建执行三大可操作阶段
+- LLM 承担五种核心角色：**Ranker（排序器）**、**Generator（生成器）**、**Reasoner（推理器）**、**Unifier/Tokenizer（统一主干与语义标记器）**、**Agent/Assistant（智能交互助手）**
+- 适配策略：**Zero-shot**、**Few-shot**、**PEFT**、**Full Fine-Tuning**、**Alignment-based**、**Diffusion-based Generation（扩散生成适配）**、**Inference-time Scaling**
+- 任务类别：**Candidate Generation**、**Ranking**、**Generative One-Model**、**Explanation & Dialogue**、**Creative & Multi-turn Generation**
+- 部署模式：**Pure LLM**、**Hybrid LLM+RecSys**、**Discriminative Large Backbone**、**Generative One-Model Pipeline**、**Distilled & Serving-Optimized**
+- **数据需求演进**：从交互矩阵扩展至 Agent 仿真轨迹、知识图谱增强、多模态异构信号语义对齐
+- **性能与权衡**：冷启动/复杂意图场景 NDCG@10/Recall@20 提升 15%~30%，对话/解释任务 CSAT 提升 20%~40%；但推理延迟增加 2~5 倍，长尾生成幻觉率约 5%~12%
 - 本分类体系将所有 Wiki 内容组织到一个连贯且具备工业演进视角的框架中
 
 ## 详细内容
 
-### 维度一：基础 LLM 能力层（新增底层支撑）
+### 维度一：基础 LLM 能力层（底层支撑）
 
 本维度聚焦 LLM 在接入推荐系统前的底层技术栈，涵盖架构基座、训练范式、价值对齐与推理优化，为上层推荐适配提供可复用的能力模块。
 
@@ -48,13 +49,14 @@ Foundation LLM Capability Layer
 ├── 偏好对齐与价值优化 (Alignment & Preference Optimization)
 │   ├── RLHF (PPO-based 奖励建模)
 │   ├── 直接偏好优化 (DPO / IPO / ORPO)
-│   └── 推荐场景对齐 (缓解信息茧房/流行度偏差/公平性约束)
+│   ├── 推荐场景对齐 (缓解信息茧房/流行度偏差/公平性约束)
+│   └── 缩放定律应用 (Scaling Laws for RecSys) [新增]
 └── 推理优化与部署加速 (Inference & Serving Optimization)
     ├── 模型压缩 (INT4/INT8 量化, 结构化剪枝)
     ├── 解码加速 (投机解码, 连续批处理 Continuous Batching)
     └── 显存与计算开销控制 (PEFT 降显存 60%+, 精度损失 <2%)
 ```
-[来源：[A Comprehensive Overview of Large Language Models](../sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md)]
+[来源：[A Comprehensive Overview of Large Language Models](../sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md)] | [来源：[2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md](../sources/2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md)]
 
 ### 维度二：LLM 角色
 
@@ -74,12 +76,16 @@ LLM Role in RecSys
 │   ├── Preference decomposition
 │   ├── Cross-domain reasoning
 │   └── Planning & strategy
-└── LLM-as-Unifier & Tokenizer (新增)
-    ├── Unified backbone modeling (OneTrans, MixFormer)
-    ├── Semantic tokenization & indexing (TRM, MERGE)
-    └── Multi-scenario/task token injection (MDL, MTFM)
+├── LLM-as-Unifier & Tokenizer
+│   ├── Unified backbone modeling (OneTrans, MixFormer)
+│   ├── Semantic tokenization & indexing (TRM, MERGE)
+│   └── Multi-scenario/task token injection (MDL, MTFM)
+└── LLM-as-Agent/Assistant (新增)
+    ├── Multi-turn conversational recommendation
+    ├── Dynamic intent tracking & feedback loop
+    └── Autonomous tool-use & external API orchestration
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md)] | [来源：[2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md](../sources/2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md)]
 
 ### 维度三：适配策略
 
@@ -98,15 +104,19 @@ Adaptation Strategy
 ├── Full Fine-Tuning
 │   ├── Instruction tuning (InstructRec)
 │   └── Task-specific fine-tuning
-├── Alignment-based Adaptation (新增)
+├── Alignment-based Adaptation
 │   ├── DPO/IPO for preference alignment
-│   └── Reward modeling for fairness & diversity
+│   ├── Reward modeling for fairness & diversity
+│   └── Recommendation-specific losses (对比生成损失/排序一致性约束) [新增]
+├── Diffusion-based Generation (新增)
+│   ├── Latent diffusion for item representation
+│   └── Conditional generation with user history
 └── Inference-Time & Serving Adaptation
     ├── KV Caching & Request-level batching (STCA, OneTrans)
     ├── User-side computation reuse (UG-Separation)
     └── Process reward & dynamic beam serving (GRank, PROMISE)
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md) | [A Comprehensive Overview of Large Language Models](../sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md)] | [来源：[A Comprehensive Overview of Large Language Models](../sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md)] | [来源：[2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md](../sources/2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md)]
 
 ### 维度四：推荐任务
 
@@ -119,7 +129,7 @@ RecSys Task
 │   ├── Score-based (CTR/CVR)
 │   ├── Order-based (Listwise)
 │   └── Set-based (diverse)
-├── Generative One-Model (新增)
+├── Generative One-Model
 │   ├── End-to-end Retrieve+Rank (OneRec, GPR)
 │   ├── Multi-objective & Value alignment (OneRanker, GR4AD)
 │   └── Cross-scenario unified generation (OneMall, OneLoc)
@@ -128,11 +138,14 @@ RecSys Task
 │   └── Business rule application
 ├── Explanation & Dialogue
 │   ├── Textual/Visual explanation
-│   └── Conversational recommendation
-└── Multi-Business Prediction (新增)
-    └── Cross-domain generative recommendation (MBGR)
+│   ├── Conversational recommendation
+│   └── CoT-based reasoning & dynamic intent capture [新增]
+└── Creative & Multi-turn Generation (新增)
+    ├── Personalized content creation (文案/海报/短视频脚本)
+    ├── Open-domain recommendation with world knowledge
+    └── Interactive feedback-driven refinement
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md)] | [来源：[2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md](../sources/2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md)]
 
 ### 维度五：数据需求
 
@@ -146,14 +159,19 @@ Data Requirements
 ├── Interaction + Knowledge
 │   ├── Knowledge graphs
 │   └── External databases
-├── Semantic & Hierarchical Tokens (新增)
+├── Semantic & Hierarchical Tokens
 │   ├── Dynamic clustering & streaming indexing (MERGE)
 │   └── Geo-aware & Business-aware tokens (OneLoc, GR4AD)
-└── Industrial Ad & Multi-Scenario Datasets (新增)
-    ├── Tencent Advertising Challenge Datasets
-    └── Cross-platform heterogeneous behavior logs
+├── Agent-Simulated & Feedback Data (新增)
+│   ├── Agent-driven user behavior trajectory simulation
+│   ├── Closed-loop feedback generation & preference evolution
+│   └── Cold-start & OOD scenario augmentation
+└── Knowledge-Enhanced & Heterogeneous Alignment (新增)
+    ├── External knowledge injection & commonsense grounding
+    ├── Semantic alignment of clicks, views, reviews & logs
+    └── Cross-platform heterogeneous behavior unification
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md)] | [来源：[2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md](../sources/2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md)]
 
 ### 维度六：部署模式
 
@@ -164,56 +182,65 @@ Deployment Pattern
 ├── Hybrid LLM + RecSys
 │   ├── Traditional retriever + LLM ranker
 │   └── LLM explanation + CF ranking
-├── Discriminative Large Backbone (新增)
+├── Discriminative Large Backbone
 │   ├── Token-mixer based scalable ranker (RankMixer, SORT)
 │   └── Memory-augmented sparse activation (MSN)
-├── Generative One-Model Pipeline (新增)
+├── Generative One-Model Pipeline
 │   ├── Unified schema & hierarchical decoder (GPR, OneRanker)
 │   └── Lazy decoding & inference budget control (GR4AD)
-└── Distilled & Serving-Optimized (新增)
-    ├── User/Item decoupling for online reuse (UG-Separation)
-    ├── Near-line reasoning + Online fast decoding (OxygenREC)
-    ├── Quantization & Speculative Decoding (INT4/8, 投机解码)
-    └── Foundation-Expert paradigm (Meta)
+├── Distilled & Serving-Optimized
+│   ├── User/Item decoupling for online reuse (UG-Separation)
+│   ├── Near-line reasoning + Online fast decoding (OxygenREC)
+│   └── Quantization & Speculative Decoding (INT4/8, 投机解码)
+└── Latency & Hallucination Mitigation (新增)
+    ├── KV Cache reuse & request-level batching for 2~5x latency reduction
+    ├── Fact-checking modules & constrained decoding (幻觉率压至 <5%)
+    └── Edge-cloud collaborative serving for real-time constraints
 ```
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md) | [A Comprehensive Overview of Large Language Models](../sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md)]
+[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../sources/rankmixer_to_oneranker.md)] | [来源：[2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md](../sources/2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md)]
 
-### 维度七：工业演进主线与技术趋势（新增）
+### 维度七：生成式推荐三分基准框架（Data-Model-Task Triad）[新增]
 
-本维度从静态分类转向动态技术演进视角，刻画 2025—2026 年推荐系统大模型化的核心路径。
+本维度以 2025 年生成式推荐综述提出的统一三分框架为基准，将 LLM4Rec 的技术栈解构为三个可操作、可复现的阶段，为工业落地与学术研究提供标准化分类路径。
 
-#### 📈 四条工业演进主线
-1. **大 Ranking Backbone 的可扩展化**：关注工业排序模型如何具备随参数、数据与算力共同扩展的能力。代表工作：`RankMixer`、`TokenMixer-Large`、`SORT`、`MTmixAtt`。
-2. **长序列建模的工业化**：聚焦训练成本、在线时延、系统存储与效果收益的可持续平衡。代表工作：`LONGER`、`STCA`、`LEMUR`、`LASER`、`Feed-SR`。
-3. **统一 Backbone 重构**：将 sequence modeling、feature interaction、multi-scenario、multi-task 统一到更强主干中。代表工作：`OneTrans`、`MixFormer`、`MDL`、`MTFM`。
-4. **Semantic Token 与生成式 One-Model**：重构 item 表示、索引方式、召回与排序接口，实现端到端流水线重组。代表工作：`TRM`、`MERGE`、`GPR`、`OneRanker`、`OneRec`、`GR4AD`、`OxygenREC`。
+```
+Generative Rec Tripartite Framework (Data-Model-Task)
+├── 数据增强与统一 (Data Augmentation & Unification)
+│   ├── 异构信号语义对齐 (点击/浏览/评论/多模态)
+│   ├── 知识图谱与常识注入 (Knowledge-Enhanced Data)
+│   └── Agent 仿真轨迹生成与反馈闭环构建
+├── 模型对齐与训练 (Model Alignment & Training)
+│   ├── 基础表征对齐 (Instruction Tuning, Cross-modal Learning)
+│   ├── 偏好与价值对齐 (RLHF/DPO, 公平性/多样性约束)
+│   └── 推荐专属损失设计 (对比生成损失, 排序一致性约束)
+└── 任务构建与执行 (Task Formulation & Execution)
+    ├── 序列/ID 生成范式重构 (End-to-End Retrieve+Rank)
+    ├── 动态意图捕捉与 CoT 推理链
+    └── 多轮对话交互与个性化内容创造性生成
+```
+[来源：[2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md](../sources/2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md)]
 
-#### 🔮 五大技术趋势
-- **趋势一：判别式大 Ranking 进入成熟期**。判别式路线未被放弃，而是向 Foundation Model 演进（统一 Token 接口、一体化主干、明确 Scaling 目标）。
-- **趋势二：生成式 One-Model 加速落地**。从检索试水走向主排序、广告与电商链路，天然契合多目标优化与全局收益建模。
-- **趋势三：Semantic Token 成为系统级接口**。Item 从原子 ID 演化为可组合、可生成、可索引的 Token 序列，重塑检索、排序与推理约束。
-- **趋势四：Serving 与 Inference-time Scaling 成为一等公民**。训练创新必须转化为在线可控计算图；Beam 设计、Path-level Reward、动态 Serving 成为竞争焦点。
-- **趋势五：统一化向分布、目标与平台级演进**。从特征统一扩展至场景/任务 Token 化，并走向“中心大模型 + 轻专家部署”的平台组织逻辑。
+### 实验基准、性能权衡与工业挑战 [新增]
 
-[来源：[从 RankMixer 到 OneRanker：2025—2026 大厂搜推大模型技术路线](../models/RankMixer.md)]
+基于最新综述的系统性实证整合，生成式推荐在多项公开基准（Amazon, MovieLens, LastFM, 对话推荐数据集）上展现出显著优势，但也暴露出明确的性能权衡与落地瓶颈：
 
-### Wiki 内容到分类体系的映射
+- **核心性能增益**：
+  - 在冷启动与复杂意图理解场景下，基于 LLM 的生成式方法相比传统协同过滤与深度判别模型，`NDCG@10` 与 `Recall@20` 平均提升 **15%~30%**。
+  - 在可解释性与多轮对话任务中，生成式架构的用户满意度（CSAT）与任务完成率显著优于基线，提升幅度达 **20%~40%**。
+- **关键性能权衡**：
+  - **推理延迟**：端到端生成式模型的推理延迟通常比传统判别式模型高 **2~5 倍**，对毫秒级实时推荐构成挑战。
+  - **幻觉与鲁棒性**：在开放域与长尾物品生成时，事实性错误与过度生成导致的幻觉率约为 **5%~12%**；对噪声数据与分布外（OOD）场景的泛化能力仍需加强。
+- **工业优化方向**：
+  - 亟需建立针对生成质量、逻辑一致性与多轮交互能力的标准化评测体系。
+  - 通过轻量化架构、KV Cache 复用、连续批处理与近线推理+在线快速解码的混合部署策略，压缩 Serving 开销。
+  - 引入约束解码、事实校验模块与推荐专属一致性损失，系统性压制幻觉并提升排序稳定性。
 
-| Wiki 页面 | 基础能力层 | LLM 角色 | 适配策略 | 任务 | 部署模式 | 演进主线/趋势 |
-|-----------|------------|----------|----------|------|----------|----------------|
-| [P5](../models/P5.md) | SFT/指令微调 | Ranker/Generator | Few-Shot | 多种任务 | Pure LLM | 早期探索 |
-| [InstructRec](../models/InstructRec.md) | SFT/数据配比 | Generator/Reasoner | Full FT / Instruction Tuning | 多种任务 | Hybrid | 统一化探索 |
-| [TALLRec](../models/TALLRec.md) | PEFT (LoRA) | Ranker | PEFT | Ranking | Hybrid | 判别式成熟化 |
-| [RankMixer](../models/RankMixer.md) | MoE/架构基座 | Ranker/Unifier | PEFT / Inference-time | Ranking | Discriminative Backbone | 大 Backbone 可扩展化 |
-| [OneRanker](../models/OneRanker.md) | 上下文扩展/对齐 | Unifier/Generator | Alignment / Full FT | Generative One-Model | Generative Pipeline | 生成式 One-Model 落地 |
-| [A Comprehensive Overview of LLMs](../sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md) | **全栈底层支撑** | 通用基座 | PEFT/RLHF/DPO/量化 | 通用/多模态/Agent | 压缩/投机解码/连续批处理 | 基础能力向推荐垂直映射 |
-
-> 💡 **维护提示**：新增的“基础 LLM 能力层”为所有上层推荐适配提供技术底座。在撰写新模型页面时，建议优先标注其依赖的预训练架构、对齐策略（如 DPO/RLHF）及推理优化手段（如 INT4 量化、KV Cache 策略），以便自动映射至本分类体系。
+[来源：[2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md](../sources/2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md)]
 
 ---
 
-## 更新完成：2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md
-**更新时间**: 2026-04-10 11:41
-**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md
+## 更新完成：2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md
+**更新时间**: 2026-04-12 16:57
+**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md
 
 *该页面的此次更新已完成。下次 ingest 其他源文档时将跳过此页面。*

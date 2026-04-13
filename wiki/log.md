@@ -485,3 +485,35 @@
 - 已更新页面：3
 
 ---
+
+
+## [2026-04-12] ingest | 已处理源文件：2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md
+- 源文件：2510_paper_25102715_A_Survey_on_Generative_Recommendation_Data,_Model,_and_Task.md
+- 已创建页面：0
+- 已更新页面：5
+
+---
+
+
+## [2026-04-13] ingest | 已处理源文件：2504_paper_25041050_PinRec_Outcome-Conditioned,_Multi-Token_Generative_Retrieva.md
+- 源文件：2504_paper_25041050_PinRec_Outcome-Conditioned,_Multi-Token_Generative_Retrieva.md
+- 已创建页面：1
+- 已更新页面：4
+
+---
+
+
+## [2026-04-13] ingest | 已处理源文件：2205_paper_22051413_FlashAttention_Fast_and_Memory-Efficient_Exact_Attention_wi.md
+- 源文件：2205_paper_22051413_FlashAttention_Fast_and_Memory-Efficient_Exact_Attention_wi.md
+- 已创建页面：0
+- 已更新页面：4
+
+---
+
+
+## [2026-04-13] ingest | 已处理源文件：1808_paper_18080978_Self-Attentive_Sequential_Recommendation.md
+- 源文件：1808_paper_18080978_Self-Attentive_Sequential_Recommendation.md
+- 已创建页面：1
+- 已更新页面：3
+
+---

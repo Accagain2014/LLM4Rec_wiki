@@ -17,7 +17,7 @@ status: "stable"
 
 ## 摘要
 
-序列推荐对**用户交互的有序序列**进行建模以预测下一个物品。与静态协同过滤不同，它捕捉了**时序动态**——用户偏好如何演变、物品选择如何依赖于先前的选择，以及上下文如何随时间变化。从早期的马尔可夫链、循环神经网络，到以 **SASRec** 为代表的自注意力机制，序列建模范式不断演进，其架构思想与因果掩码设计直接奠定了现代大语言模型（LLM）在推荐系统中落地的理论基础。凭借**自回归**架构、超长上下文窗口与语义推理能力，LLM 已成为处理复杂序列依赖与开放域推荐任务的核心引擎。近年来，**上下文感知分词**与**特征共现建模**的引入，进一步弥合了离散行为序列与大模型语义空间之间的鸿沟，推动序列推荐向生成式、可解释化方向深度演进。
+序列推荐对**用户交互的有序序列**进行建模以预测下一个物品。与静态协同过滤不同，它捕捉了**时序动态**——用户偏好如何演变、物品选择如何依赖于先前的选择，以及上下文如何随时间变化。从早期的马尔可夫链、循环神经网络，到以 **SASRec** 为代表的自注意力机制，序列建模范式不断演进，其架构思想与因果掩码设计直接奠定了现代大语言模型（LLM）在推荐系统中落地的理论基础。凭借**自回归**架构、超长上下文窗口与语义推理能力，LLM 已成为处理复杂序列依赖与开放域推荐任务的核心引擎。近年来，**上下文感知分词**与**特征共现建模**的引入，进一步弥合了离散行为序列与大模型语义空间之间的鸿沟；同时，**自监督与强化学习融合的双头优化范式**有效破解了短期点击与长期转化难以兼顾的瓶颈，推动序列推荐向生成式、可解释化与长程对齐方向深度演进。
 
 ## 要点
 
@@ -28,6 +28,7 @@ status: "stable"
 - LLM 可以推理用户**为什么**在物品间转换（语义/主题关联），而不仅仅是**什么**是他们下一个点击
 - **SASRec** 作为关键过渡节点，验证了因果自注意力在平衡稀疏/稠密数据与计算效率上的优势，其机制与 LLM Decoder 架构高度同源
 - **上下文感知分词**（如 ActionPiece）通过特征共现与集合正则化，将无序物品属性转化为语义连贯的 Token，显著增强长序列动态意图捕捉能力
+- **自监督+强化学习双头范式**通过密集监督信号稳定训练，并以 RL 作为正则化器引导长期价值对齐，实现短期交互与多目标转化的动态平衡
 
 ## 详情
 
@@ -69,6 +70,14 @@ status: "stable"
 
 在 Amazon Beauty、Sports、Toys 数据集上的实验表明，ActionPiece 在 Recall@10 与 NDCG@10 指标上均取得稳定提升（如 Beauty 数据集 Recall@10 达 18.72%，较最优基线 TIGER 提升 +2.41%）。消融实验验证了上下文共现词表与排列正则化的核心贡献。该工作为 LLM4Rec 提供了从“浅层 ID 映射”向“深度上下文语义理解”演进的关键数据预处理范式。[来源：[2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md](../sources/2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md)]
 
+### 长期优化与多目标建模
+
+传统序列推荐多聚焦于短期点击率（CTR）优化，依赖隐式正反馈日志，难以兼顾长期用户满意度、多类型交互转化（如浏览→加购→购买）及负反馈信号。离线环境下的策略分布偏移与奖励稀疏常导致纯强化学习训练不稳定。**自监督强化学习（Self-Supervised RL）双头范式**为此提供了系统性解决方案：
+- **共享编码器与双输出头架构**：底层序列编码器（RNN/Attention/Transformer）提取历史隐状态 $h_t$，并行连接自监督头与强化学习头。自监督头执行标准下一项预测，提供密集且稳定的交叉熵梯度；RL 头（如 SQN 或 SAC 变体）输出 Q 值或策略分布，评估动作的长期累积回报。
+- **梯度解耦与 RL 正则化机制**：总损失设计为 $\mathcal{L} = \mathcal{L}_{SSL} + \lambda \mathcal{L}_{RL}$。自监督损失 $\mathcal{L}_{SSL}$ 确保基础预测精度与训练稳定性；RL 损失 $\mathcal{L}_{RL}$ 作为方向性正则化项，通过奖励塑形（如点击=1，购买=5）与隐式负采样，引导编码器参数向高长期价值目标对齐，避免模型陷入短期点击局部最优。
+- **离线策略评估与泛化性**：该框架有效缓解了离线日志中分布外推（OOD）与负反馈缺失问题。在 Retailrocket 与 Yoochoose 数据集上，SQN 与 SAC 变体使 HR@10 提升 5.6%~8.3%，NDCG@10 提升 4.9%~7.1%，且训练方差较纯 RL 降低约 40%。消融实验证实双头协同的必要性：移除自监督头会导致 RL 训练崩溃，移除 RL 头则退化为传统短期预测。
+- **与 LLM4Rec 的架构映射**：该范式与当前大模型推荐系统的“生成头（Next-Token Prediction）+ 价值/奖励头（Reward/Value Head）”高度同源。其离线自监督稳定训练 + RL 对齐长期目标的思路，为 LLM 推荐 Agent 的 RLHF/RLAIF 提供了早期理论支撑，可直接启发多目标偏好建模、Prompt 奖励设计及安全探索策略，推动推荐系统从“短期点击优化”向“长程用户价值与商业目标协同”演进。[来源：[2006_paper_20060577_Self-Supervised_Reinforcement_Learning_for_Recommender_Syste.md](../sources/2006_paper_20060577_Self-Supervised_Reinforcement_Learning_for_Recommender_Syste.md)]
+
 ### 序列推荐的提示词设计
 
 ```
@@ -76,7 +85,7 @@ status: "stable"
 任务：预测用户将观看的下一部电影。
 考虑：类型模式、导演偏好、主题演变、近因效应。
 ```
-*设计注记*：提示词可借鉴 SASRec 的动态聚焦机制与 ActionPiece 的上下文共现思想，显式引导模型区分“近期强信号”与“长程兴趣主题”，模拟注意力权重的自适应分配过程，同时注入特征共现线索以辅助意图推理。
+*设计注记*：提示词可借鉴 SASRec 的动态聚焦机制与 ActionPiece 的上下文共现思想，显式引导模型区分“近期强信号”与“长程兴趣主题”，模拟注意力权重的自适应分配过程，同时注入特征共现线索以辅助意图推理。结合自监督 RL 范式，可在 Prompt 中引入长期目标约束（如“优先推荐高转化潜力且符合用户长期偏好的物品”），实现多目标指令对齐。
 
 ### 挑战与工业架构演进
 
@@ -84,7 +93,7 @@ status: "stable"
 - **统一序列与特征建模**：传统架构将序列建模与特征交叉分离。**OneTrans** 等工业架构提出 Token 统一策略与参数共享机制，将离散特征、连续特征与行为序列映射至同一语义空间，实现端到端的联合优化，减少冗余计算。
 - **超长序列建模（Ultralong Sequence Modeling）**：面对用户数年跨度的交互历史，**LONGER** 等方案引入分层记忆压缩、关键事件提取与滑动窗口注意力，在保留核心兴趣信号的同时控制计算开销，推动工业级推荐系统技术栈向“长周期用户画像”演进。
 - **时间粒度与位置编码**：真实时间戳需精细编码。可学习位置编码虽灵活，但难以捕捉绝对/相对时间间隔，需结合现代旋转位置编码（RoPE）或时间感知注意力模块。
-- **负采样与优化目标**：传统 Point-wise BCE 与均匀负采样限制了细粒度排序上限。LLM4Rec 正探索对比学习、难负样本挖掘，并与**生成式检索**范式结合，直接预测下一个物品的语义 ID 或文本描述，绕过传统两阶段召回-排序流程。
+- **负采样与优化目标**：传统 Point-wise BCE 与均匀负采样限制了细粒度排序上限。LLM4Rec 正探索对比学习、难负样本挖掘，并与**生成式检索**范式结合，直接预测下一个物品的语义 ID 或文本描述，绕过传统两阶段召回-排序流程。自监督 RL 双头架构进一步提供了平衡短期点击与长期转化的可插拔优化路径。
 - **效率与部署**：处理长历史在计算上代价高昂，需依赖 KV Cache、推测解码（Speculative Decoding）与模型蒸馏等推理加速技术。
 - **分词质量与冷启动适应**：上下文感知分词高度依赖物品元数据的完整性。在特征稀疏或长尾场景下，共现统计易失真。未来需结合自监督预训练与动态词表自适应机制，提升分词器在开放域与冷启动场景下的泛化鲁棒性。
 
@@ -95,6 +104,7 @@ status: "stable"
 - [协同过滤](./collaborative_filtering.md) 是非序列基线方法，常与序列模型进行特征融合
 - [生成式检索](../methods/generative_retrieval.md) 将序列推荐转化为自回归语义 ID 生成任务，代表下一代范式
 - [ActionPiece](../models/ActionPiece.md) 面向生成式推荐的上下文感知动作序列分词框架，解决离散序列语义对齐瓶颈
+- [Self-Supervised RL for Rec](../methods/self_supervised_rl_rec.md) 提出自监督+强化学习双头范式，实现短期点击与长期转化的多目标对齐
 
 ## 开放问题
 
@@ -103,24 +113,20 @@ status: "stable"
 3. 如何将 SASRec 验证的“动态稀疏适配”与 LLM 的指令微调结合，实现无需重新训练即可按需切换“探索/利用”策略的零样本序列推荐？
 4. 生成式序列推荐中，如何保证语义 ID 生成的稳定性、可解释性，并与传统 ID-based 排序指标（NDCG/HR）对齐？
 5. 如何构建自适应、低依赖的上下文分词机制，以在物品元数据缺失或长尾分布下，仍能保持序列表征的语义连贯性与动态意图捕捉能力？
+6. 在离线日志训练环境下，如何进一步缓解自监督 RL 双头架构中的分布外推（OOD）误差？能否结合因果推断或反事实学习实现更鲁棒的长期奖励塑形？
 
 ## 参考文献
 
 - Kang, W. C., & McAuley, J. (2018). Self-attentive sequential recommendation. *ICDM 2018*.
 - Sun, F., et al. (2019). BERT4Rec: Sequential recommendation with bidirectional encoder representations. *CIKM 2019*.
 - Hidasi, B., et al. (2016). Session-based recommendations with recurrent neural networks. *ICLR 2016*.
-- Hou, Y., et al. (2025). ActionPiece: Contextually Tokenizing Action Sequences for Generative Recommendation. *ICML 2025 (Spotlight)*.
-- 相关工业架构与长序列建模进展：HSTU/ULTRAHSTU, OneTrans, LONGER 等（参见对应技术报告与会议论文）
-
-## 更新于 2026-04-14
-
-**来源**: [2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md](../sources/2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md)
-：新增“输入表示与特征工程”与“生成式序列推荐与上下文感知分词”小节，深度整合 ActionPiece 的上下文共现词表构建、集合排列正则化机制及实验结论；阐明无序特征集合建模对长序列动态意图捕捉的增强作用；同步更新要点、挑战、关联页面与开放问题。
+- Xin, X., Karatzoglou, A., Arapakis, I., & Jose, J. M. (2020). Self-supervised reinforcement learning for recommender systems. *SIGIR 2020*.
+- Hou, Y., et al. (2025). ActionPiece: Contextually tokenizing action sequences for generative recommendation. *arXiv 2502.1358*.
 
 ---
 
-## 更新完成：2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md
-**更新时间**: 2026-04-14 16:02
-**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md
+## 更新完成：2006_paper_20060577_Self-Supervised_Reinforcement_Learning_for_Recommender_Syste.md
+**更新时间**: 2026-04-15 03:11
+**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 2006_paper_20060577_Self-Supervised_Reinforcement_Learning_for_Recommender_Syste.md
 
 *该页面的此次更新已完成。下次 ingest 其他源文档时将跳过此页面。*

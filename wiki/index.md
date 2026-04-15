@@ -3,7 +3,7 @@
 
 > 知识库内容目录。由 LLM 自动维护。
 
-> 最后更新：2026-04-14
+> 最后更新：2026-04-15
 
 
 ## Concepts
@@ -130,6 +130,8 @@
 
 |------|------|------|
 
+| [从关联章节中检测到的页面](wiki/models/2509_paper_25092090_FORGE_Forming_Semantic_Identifiers_for_Generative_Retrieval.md) | --- title: "从关联章节中检测到的页面" category: "models" tags: ["new", "... | "new", "2026-04-15" |
+
 | [LEMUR](wiki/models/LEMUR.md) | --- title: "LEMUR" category: "models" tags: ["new", "2026-04... | "new", "2026-04-09" |
 
 | [OneRec — Unifying Retrieve and Rank with Generative Recommendation](wiki/models/OneRec.md) | --- title: "OneRec — Unifying Retrieve and Rank with Generat... | OneRec, generative retrieval, MoE, DPO, preference alignment, Kuaishou, unified architecture |
@@ -186,7 +188,7 @@
 
 
 
-- **27 个页面**
+- **28 个页面**
 
 
 ## Entities
@@ -257,6 +259,8 @@
 
 | [2509 Paper 25092090 Forge Forming Semantic Identifiers For Generative Retrieval](wiki/sources/2509_paper_25092090_FORGE_Forming_Semantic_Identifiers_for_Generative_Retrieval.md) | --- title: "2509 Paper 25092090 Forge Forming Semantic Ident... | "source", "2026-04-08" |
 
+| [2604 Paper 26041144 R3-Vae Reference Vector-Guided Rating Residual Quantization](wiki/sources/2604_paper_26041144_R3-VAE_Reference_Vector-Guided_Rating_Residual_Quantization.md) | --- title: "2604 Paper 26041144 R3-Vae Reference Vector-Guid... | "source", "2026-04-15" |
+
 | [Paper 4Ddaf2 Recommender Systems With Generative Retrieval](wiki/sources/paper_4ddaf2_Recommender_Systems_with_Generative_Retrieval.md) | --- title: "Paper 4Ddaf2 Recommender Systems With Generative... | "source", "2026-04-08" |
 
 | [2403 Paper 24030254 Wukong Towards A Scaling Law For Large-Scale Recommendation](wiki/sources/2403_paper_24030254_Wukong_Towards_a_Scaling_Law_for_Large-Scale_Recommendation.md) | --- title: "2403 Paper 24030254 Wukong Towards A Scaling Law... | "source", "2026-04-09" |
@@ -288,6 +292,8 @@
 | [2512 Paper 25122476 Openonerec Technical Report](wiki/sources/2512_paper_25122476_OpenOneRec_Technical_Report.md) | --- title: "2512 Paper 25122476 Openonerec Technical Report"... | "source", "2026-04-08" |
 
 | [2507 Paper 25072287 Recgpt Technical Report](wiki/sources/2507_paper_25072287_RecGPT_Technical_Report.md) | --- title: "2507 Paper 25072287 Recgpt Technical Report" cat... | "source", "2026-04-09" |
+
+| [2206 Paper 22060735 Rethinking Reinforcement Learning For Recommendation A Prom](wiki/sources/2206_paper_22060735_Rethinking_Reinforcement_Learning_for_Recommendation_A_Prom.md) | --- title: "2206 Paper 22060735 Rethinking Reinforcement Lea... | "source", "2026-04-15" |
 
 | [2408 Paper 24080458 Forge Force-Guided Exploration For Robust Contact-Rich Mani](wiki/sources/2408_paper_24080458_FORGE_Force-Guided_Exploration_for_Robust_Contact-Rich_Mani.md) | --- title: "2408 Paper 24080458 Forge Force-Guided Explorati... | "source", "2026-04-10" |
 
@@ -321,6 +327,8 @@
 
 | [Rankmixer To Oneranker](wiki/sources/rankmixer_to_oneranker.md) | --- title: "Rankmixer To Oneranker" category: "sources" tags... | "source", "2026-04-09" |
 
+| [2006 Paper 20060577 Self-Supervised Reinforcement Learning For Recommender Syste](wiki/sources/2006_paper_20060577_Self-Supervised_Reinforcement_Learning_for_Recommender_Syste.md) | --- title: "2006 Paper 20060577 Self-Supervised Reinforcemen... | "source", "2026-04-15" |
+
 | [2511 Paper 25110607 Make It Long, Keep It Fast End-To-End 10K-Sequence Modeling](wiki/sources/2511_paper_25110607_Make_It_Long,_Keep_It_Fast_End-to-End_10k-Sequence_Modeling.md) | --- title: "2511 Paper 25110607 Make It Long, Keep It Fast E... | "source", "2026-04-09" |
 
 | [2602 Paper 26021698 Bending The Scaling Law Curve In Large-Scale Recommendation](wiki/sources/2602_paper_26021698_Bending_the_Scaling_Law_Curve_in_Large-Scale_Recommendation.md) | --- title: "2602 Paper 26021698 Bending The Scaling Law Curv... | "source", "2026-04-09" |
@@ -345,11 +353,11 @@
 
 
 
-- **47 个页面**
+- **50 个页面**
 
 
 ---
 
 **统计**：
 
-- 总页面数：138
+- 总页面数：142

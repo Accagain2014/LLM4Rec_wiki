@@ -549,3 +549,27 @@
 - 已更新页面：4
 
 ---
+
+
+## [2026-04-15] ingest | 已处理源文件：2604_paper_26041144_R3-VAE_Reference_Vector-Guided_Rating_Residual_Quantization.md
+- 源文件：2604_paper_26041144_R3-VAE_Reference_Vector-Guided_Rating_Residual_Quantization.md
+- 已创建页面：1
+- 已更新页面：4
+
+---
+
+
+## [2026-04-15] ingest | 已处理源文件：2006_paper_20060577_Self-Supervised_Reinforcement_Learning_for_Recommender_Syste.md
+- 源文件：2006_paper_20060577_Self-Supervised_Reinforcement_Learning_for_Recommender_Syste.md
+- 已创建页面：0
+- 已更新页面：5
+
+---
+
+
+## [2026-04-15] ingest | 已处理源文件：2206_paper_22060735_Rethinking_Reinforcement_Learning_for_Recommendation_A_Prom.md
+- 源文件：2206_paper_22060735_Rethinking_Reinforcement_Learning_for_Recommendation_A_Prom.md
+- 已创建页面：0
+- 已更新页面：4
+
+---

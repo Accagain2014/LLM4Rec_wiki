@@ -573,3 +573,11 @@
 - 已更新页面：4
 
 ---
+
+
+## [2026-04-15] ingest | 已处理源文件：2205_paper_22050450_PinnerFormer_Sequence_Modeling_for_User_Representation_at_P.md
+- 源文件：2205_paper_22050450_PinnerFormer_Sequence_Modeling_for_User_Representation_at_P.md
+- 已创建页面：0
+- 已更新页面：3
+
+---

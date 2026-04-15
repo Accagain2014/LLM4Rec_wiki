@@ -10,39 +10,43 @@
 ## Summary
 
 ### 知识库统计
-- 总页面数：148
-- 各类别页面数量分布：`entities` (13), `summary` (6), `models` (28), `sources` (50), `concepts` (27), `methods` (21), `synthesis` (3)
+- 总页面数：149
+- 各类别页面数量分布：entities(13)、summary(6)、models(28)、sources(51)、concepts(27)、methods(21)、synthesis(3)
 
 ### 核心覆盖领域
-1. **生成式检索与语义ID（Semantic ID）**：聚焦以自回归生成替代传统“双塔+ANN”范式，涵盖离散码本构建、量化分词与标识符优化。
-2. **端到端统一推荐架构**：打破召回、排序、重排的多阶段流水线，探索单一生成式模型统一处理特征交互、序列建模与多任务预测。
-3. **推荐系统扩展定律（Scaling Law）与硬件协同**：验证算力-性能幂律关系，研究稀疏注意力、MoE路由与底层算子优化以提升硬件效率（MFU）。
-4. **多模态定量对齐与表征学习**：将通用LLM/多模态特征通过可微对齐层映射至CTR/CVR等业务目标空间，解决语义表征与下游任务脱节问题。
-5. **工业级大规模部署与多目标优化**：覆盖头部互联网公司在超大规模流量下的模型训练、推理加速、动态路由与商业价值对齐实践。
+- **生成式推荐与语义ID（SID）范式**：系统梳理从传统双塔ANN检索向自回归生成物品标识符的架构演进，涵盖SID构建、量化分词与码本优化。
+- **大模型序列建模与长上下文处理**：聚焦用户行为序列的Transformer架构优化，探索线性注意力、Token融合与万级序列的高效建模。
+- **工业级扩展定律与系统协同设计**：实证推荐领域的算力-性能Scaling Law，研究硬件感知架构、MFU优化与分布式训练/推理的工程落地。
+- **多模态对齐与意图驱动推荐**：探索LLM语义表征与CTR/CVR等业务指标的定量映射，支持跨模态特征融合、显式推理与动态偏好对齐。
+- **统一推荐流水线与多目标优化**：打破召回-排序-重排的传统割裂，研究端到端生成式架构、列表级（Slate）生成与业务价值联合优化。
 
 ### 关键方法与模型
-1. **TIGER / PLUM (Google/YouTube)**：开创基于Semantic ID的生成式检索，结合领域持续预训练（CPT）实现数十亿用户规模的工业落地。
-2. **OneRec 系列 (快手)**：从统一检索排序的端到端架构，演进至惰性纯解码器（V2）与显式文内推理（Think），大幅降低计算开销并增强可解释性。
-3. **FORGE / R3-VAE (阿里/淘宝)**：提出力引导探索机制与参考向量残差量化，有效缓解码本崩溃，并首创免训练SID代理评估指标。
-4. **ULTRA-HSTU / Wukong (Meta)**：通过线性化注意力与纯FM堆叠架构，首次在推荐领域实证并成功“弯曲”了Scaling Law曲线。
-5. **RankMixer / LONGER (字节跳动)**：硬件感知的排序扩展模型与长序列优化Transformer，结合稀疏MoE与Token融合突破二次复杂度瓶颈。
-6. **QARM / QARM V2 (快手)**：定量对齐多模态推荐框架，实现从离线特征增强到端到端业务原生范式的跨越。
-7. **P5 / InstructRec / TALLRec**：基于指令微调与参数高效适配（LoRA）的通用LLM推荐基座，支持零样本/少样本迁移与对话式推荐。
+- **TIGER & PLUM**：开创基于语义ID的生成式检索，PLUM通过持续预训练与SID增强实现YouTube数十亿用户规模的工业级部署。
+- **OneRec 系列（V1/V2/Think）**：快手提出的端到端统一架构，逐步演进为惰性纯解码器与显式文内推理，大幅降低计算开销并支持偏好对齐。
+- **HSTU / ULTRA-HSTU**：Meta的序列建模基座，采用相对位置偏置与线性化注意力，首次验证推荐Scaling Law并实现训练/推理效率的跨越式提升。
+- **FORGE & R3-VAE**：针对SID构建的码本崩溃问题，提出力引导探索与残差量化框架，并首创免训练代理指标以低成本评估标识符质量。
+- **RankMixer & LONGER**：字节跳动面向严格延迟约束的硬件感知模型，通过稀疏MoE、全局Token机制与KV缓存优化实现百亿参数高效扩展。
+- **QARM / LEMUR / RecGPT**：聚焦多模态定量对齐与意图挖掘，将通用LLM表征投影至推荐任务空间，支持端到端联合优化与动态元提示。
+- **HiGR & Pctx**：面向列表级推荐的层次化规划生成框架，结合上下文感知的动态分词器，实现多目标可控生成与长尾物品精准覆盖。
 
 ### 工业实践与案例
-知识库系统梳理了全球头部科技公司的LLM4Rec落地路径：**Google/YouTube** 依托PLUM与Hiformer实现生成式检索在生产环境的规模化服务；**快手** 将OneRec系列与QARM全量部署于短视频主场景与广告系统，验证了端到端生成与多目标对齐的商业收益；**字节跳动** 通过RankMixer与LONGER在万亿级数据上实现排序模型百倍参数扩展与万级长序列高效推理；**阿里/淘宝** 利用FORGE与RecGPT优化十亿级商品目录的语义ID分配与意图驱动推荐；**腾讯、美团、Pinterest** 等亦在列表推荐（HiGR）、多业务解耦（MBGR）与结果条件化生成（PinRec）方面取得显著线上指标提升。
+- 知识库深度覆盖全球头部平台（Google/YouTube、Meta、字节跳动、快手、腾讯、阿里淘宝、美团、Pinterest等）的生成式推荐落地路径。
+- 核心实践包括：YouTube以PLUM替代重度优化嵌入表、快手OneRec全量上线统一召回排序、Meta HSTU日均服务数十亿用户验证Scaling Law、美团MBGR解耦超级App多业务表征、淘宝RecGPT实现意图驱动与长尾曝光提升。
+- 工业部署普遍采用硬件感知优化（MFU提升至30%~45%）、动态路由/MoE架构、以及结合业务指标的偏好对齐（DPO/RLHF），形成从离线预训练到线上A/B测试的完整工程闭环。
 
 ### 研究前沿与开放问题
-1. **生成式推荐的泛化与记忆边界**：研究表明GR模型在底层易退化为Token级模式记忆，如何有效平衡记忆型实例与真实泛化能力仍是核心挑战。
-2. **语义ID的鲁棒构建与评估体系**：码本崩溃与长尾覆盖不均问题突出，需发展更稳定的量化算法与高置信度的免训练代理评估指标。
-3. **显式推理与多目标价值对齐**：从隐式概率生成转向可控的链式推理，并解决商业目标（eCPM、预算消耗）与用户兴趣之间的奖励冲突。
-4. **超长序列建模与算力效率的协同**：在保持毫秒级推理SLA的前提下，如何进一步突破$O(L^2)$复杂度并持续提升GPU MFU利用率。
+- **语义ID评估与构建标准化**：当前SID易出现热门物品主导的码本崩溃，免训练代理指标与下游推荐性能的映射关系仍需理论深化与统一基准。
+- **生成式幻觉控制与可解释推理**：LLM引入的文本生成特性带来幻觉风险，如何在保证推荐精度的同时实现可控推理链与业务逻辑强对齐仍是难点。
+- **长序列建模的算力-延迟权衡**：尽管有LONGER等优化，但在超大规模实时推荐中，万级历史序列的端到端推理延迟、显存占用与动态上下文管理仍需突破。
+- **多业务/跨域表征解耦**：超级App中跨域交互易导致全局语义混淆，如何设计业务感知ID与动态路由以实现细粒度定制化生成尚待完善。
+- **Scaling Law的边界与数据质量交互**：虽已验证算力-性能幂律关系，但特征稀疏性、数据分布偏移与模型容量的非线性交互机制仍需系统探索。
 
 ### 未来建议的知识摄入方向
-1. **标准化在线评估与安全可控机制**：优先摄入涵盖长期用户价值、公平性、隐私保护及幻觉检测的评测基准与对齐策略文献。
-2. **LLM Agent与交互式推荐系统**：补充基于智能体规划、多轮对话反馈与动态环境交互的推荐架构研究，填补当前以静态生成为主的空白。
-3. **生成式推荐底层服务优化**：深入摄入KV Cache管理、动态批处理、推测解码（Speculative Decoding）等推理加速与工程部署技术。
-4. **跨域迁移与隐私计算下的LLM4Rec**：关注数据孤岛场景下的参数高效微调、知识蒸馏与跨业务/跨平台语义对齐方法，增强知识库的泛化覆盖度。
+- **生成式推荐标准化评测基准**：优先摄入涵盖冷启动、长尾覆盖、幻觉检测、公平性与多目标权衡的开源Benchmark（如扩展GRID/RecIF-Bench体系）。
+- **高效微调与推理加速技术**：重点补充针对推荐场景的LoRA/QLoRA变体、投机解码（Speculative Decoding）、KV Cache压缩及端侧轻量化部署方案。
+- **多模态定量对齐与跨域迁移**：增加图文/视频/音频特征与推荐目标深度耦合的最新工作，以及跨平台迁移学习、联邦推荐与隐私保护实践。
+- **强化学习与偏好对齐深化**：系统整理RLHF/RLAIF、DPO、在线策略优化在推荐排序与列表生成中的最新算法、稳定性保障与奖励冲突消解机制。
+- **工业级系统架构与算力调度**：补充大模型推荐在分布式训练、异构GPU适配、动态算力分配（如CompSkip）及线上服务SLA保障的工程白皮书与技术报告。
 
 ## 快速开始
 ### 0. 创建独立环境
@@ -113,7 +117,7 @@ LLM4REC_wiki/
 
 ## 当前内容
 
-该 wiki 目前包含 **142 个页面**，涵盖：
+该 wiki 目前包含 **143 个页面**，涵盖：
 
 ### Concepts（27 页）
 - [concepts/model_flops_utilization_mfu.md](wiki/concepts/model_flops_utilization_mfu.md)
@@ -217,7 +221,7 @@ LLM4REC_wiki/
 - [synthesis/llm4rec_taxonomy.md](wiki/synthesis/llm4rec_taxonomy.md)
 - [synthesis/lint_report_2026-04-08.md](wiki/synthesis/lint_report_2026-04-08.md)
 
-### Sources（50 页）
+### Sources（51 页）
 - [sources/2603_paper_26031980_How_Well_Does_Generative_Recommendation_Generalize.md](wiki/sources/2603_paper_26031980_How_Well_Does_Generative_Recommendation_Generalize.md)
 - [sources/2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md](wiki/sources/2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md)
 - [sources/2507_paper_25072222_Generative_Recommendation_with_Semantic_IDs_A_Practitioner'.md](wiki/sources/2507_paper_25072222_Generative_Recommendation_with_Semantic_IDs_A_Practitioner'.md)
@@ -236,6 +240,7 @@ LLM4REC_wiki/
 - [sources/2511_paper_25111096_LEMUR_Large_scale_End-to-end_MUltimodal_Recommendation.md](wiki/sources/2511_paper_25111096_LEMUR_Large_scale_End-to-end_MUltimodal_Recommendation.md)
 - [sources/2512_paper_25121450_RecGPT-V2_Technical_Report.md](wiki/sources/2512_paper_25121450_RecGPT-V2_Technical_Report.md)
 - [sources/2502_paper_25021896_OneRec_Unifying_Retrieve_and_Rank_with_Generative_Recommend.md](wiki/sources/2502_paper_25021896_OneRec_Unifying_Retrieve_and_Rank_with_Generative_Recommend.md)
+- [sources/2205_paper_22050450_PinnerFormer_Sequence_Modeling_for_User_Representation_at_P.md](wiki/sources/2205_paper_22050450_PinnerFormer_Sequence_Modeling_for_User_Representation_at_P.md)
 - [sources/2510_paper_25101163_OneRec-Think_In-Text_Reasoning_for_Generative_Recommendatio.md](wiki/sources/2510_paper_25101163_OneRec-Think_In-Text_Reasoning_for_Generative_Recommendatio.md)
 - [sources/2512_paper_25122476_OpenOneRec_Technical_Report.md](wiki/sources/2512_paper_25122476_OpenOneRec_Technical_Report.md)
 - [sources/2507_paper_25072287_RecGPT_Technical_Report.md](wiki/sources/2507_paper_25072287_RecGPT_Technical_Report.md)

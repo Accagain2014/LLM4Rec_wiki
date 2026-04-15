@@ -287,6 +287,8 @@
 
 | [OneRec: Unifying Retrieve and Rank with Generative Recommender](wiki/sources/2502_paper_25021896_OneRec_Unifying_Retrieve_and_Rank_with_Generative_Recommend.md) | --- title: "OneRec: Unifying Retrieve and Rank with Generati... | "source", "2026-04-09", "generative-retrieval", "unified-model", "kuaishou", "preference-alignment" |
 
+| [2205 Paper 22050450 Pinnerformer Sequence Modeling For User Representation At P](wiki/sources/2205_paper_22050450_PinnerFormer_Sequence_Modeling_for_User_Representation_at_P.md) | --- title: "2205 Paper 22050450 Pinnerformer Sequence Modeli... | "source", "2026-04-15" |
+
 | [2510 Paper 25101163 Onerec-Think In-Text Reasoning For Generative Recommendatio](wiki/sources/2510_paper_25101163_OneRec-Think_In-Text_Reasoning_for_Generative_Recommendatio.md) | --- title: "2510 Paper 25101163 Onerec-Think In-Text Reasoni... | "source", "2026-04-08" |
 
 | [2512 Paper 25122476 Openonerec Technical Report](wiki/sources/2512_paper_25122476_OpenOneRec_Technical_Report.md) | --- title: "2512 Paper 25122476 Openonerec Technical Report"... | "source", "2026-04-08" |
@@ -349,15 +351,13 @@
 
 | [Paper C33D89 Farewell To Item Ids Unlocking The Scaling Potential Of Lar](wiki/sources/paper_c33d89_Farewell_to_Item_IDs_Unlocking_the_Scaling_Potential_of_Lar.md) | --- title: "Paper C33D89 Farewell To Item Ids Unlocking The... | "source", "2026-04-08" |
 
-| [2504 Paper 25041050 Pinrec Outcome-Conditioned, Multi-Token Generative Retrieva](wiki/sources/2504_paper_25041050_PinRec_Outcome-Conditioned,_Multi-Token_Generative_Retrieva.md) | --- title: "2504 Paper 25041050 Pinrec Outcome-Conditioned,... | "source", "2026-04-13" |
 
 
-
-- **50 个页面**
+- **51 个页面**
 
 
 ---
 
 **统计**：
 
-- 总页面数：142
+- 总页面数：143

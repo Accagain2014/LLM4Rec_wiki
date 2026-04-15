@@ -517,3 +517,35 @@
 - 已更新页面：3
 
 ---
+
+
+## [2026-04-13] ingest | 已处理源文件：2404_paper_24040057_A_Review_of_Modern_Recommender_Systems_Using_Generative_Mode.md
+- 源文件：2404_paper_24040057_A_Review_of_Modern_Recommender_Systems_Using_Generative_Mode.md
+- 已创建页面：0
+- 已更新页面：4
+
+---
+
+
+## [2026-04-14] ingest | 已处理源文件：2306_paper_23060812_Better_Generalization_with_Semantic_IDs_A_Case_Study_in_Ran.md
+- 源文件：2306_paper_23060812_Better_Generalization_with_Semantic_IDs_A_Case_Study_in_Ran.md
+- 已创建页面：0
+- 已更新页面：3
+
+---
+
+
+## [2026-04-14] ingest | 已处理源文件：2510_paper_25102127_Pctx_Tokenizing_Personalized_Context_for_Generative_Recomme.md
+- 源文件：2510_paper_25102127_Pctx_Tokenizing_Personalized_Context_for_Generative_Recomme.md
+- 已创建页面：0
+- 已更新页面：3
+
+---
+
+
+## [2026-04-14] ingest | 已处理源文件：2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md
+- 源文件：2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md
+- 已创建页面：1
+- 已更新页面：4
+
+---

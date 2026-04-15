@@ -3,7 +3,7 @@
 
 > 知识库内容目录。由 LLM 自动维护。
 
-> 最后更新：2026-04-13
+> 最后更新：2026-04-14
 
 
 ## Concepts
@@ -109,6 +109,8 @@
 
 | [从关联章节中检测到的页面](wiki/methods/human_llm_collaborative_evaluation.md) | --- title: "从关联章节中检测到的页面" category: "methods" tags: ["new",... | "new", "2026-04-09" |
 
+| [从关联章节中检测到的页面](wiki/methods/actionpiece_tokenization.md) | --- title: "从关联章节中检测到的页面" category: "methods" tags: ["new",... | "new", "2026-04-14" |
+
 | [懒自回归解码器方法页面说明层间依赖放松机制](wiki/methods/lazy_ar.md) | --- title: "懒自回归解码器方法页面说明层间依赖放松机制" category: "methods" tags:... | "new", "2026-04-09" |
 
 | [Sparse Attention for Sequential Recommendation — Efficient Long-Sequence Modeling](wiki/methods/sparse_attention_seq_rec.md) | --- title: "Sparse Attention for Sequential Recommendation —... | sparse attention, sequential recommendation, long sequence, efficiency, ULTRA-HSTU, LONGER |
@@ -119,7 +121,7 @@
 
 
 
-- **20 个页面**
+- **21 个页面**
 
 
 ## Models
@@ -299,6 +301,8 @@
 
 | [Test Generative Rec](wiki/sources/test_generative_rec.md) | --- title: "Test Generative Rec" category: "sources" tags: [... | "source", "2026-04-09" |
 
+| [2502 Paper 25021358 Actionpiece Contextually Tokenizing Action Sequences For Ge](wiki/sources/2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md) | --- title: "2502 Paper 25021358 Actionpiece Contextually Tok... | "source", "2026-04-14" |
+
 | [2402 Paper 24021715 Actions Speak Louder Than Words Trillion-Parameter Sequenti](wiki/sources/2402_paper_24021715_Actions_Speak_Louder_than_Words_Trillion-Parameter_Sequenti.md) | --- title: "2402 Paper 24021715 Actions Speak Louder Than Wo... | "source", "2026-04-10" |
 
 | [2203 Paper 22031101 Dhen A Deep And Hierarchical Ensemble Network For Large-Sca](wiki/sources/2203_paper_22031101_DHEN_A_Deep_and_Hierarchical_Ensemble_Network_for_Large-Sca.md) | --- title: "2203 Paper 22031101 Dhen A Deep And Hierarchical... | "source", "2026-04-09" |
@@ -311,6 +315,10 @@
 
 | [Paper 1B102D Qarm V2 Quantitative Alignment Multi-Modal Recommendation F](wiki/sources/paper_1b102d_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation_f.md) | --- title: "Paper 1B102D Qarm V2 Quantitative Alignment Mult... | "source", "2026-04-08" |
 
+| [2306 Paper 23060812 Better Generalization With Semantic Ids A Case Study In Ran](wiki/sources/2306_paper_23060812_Better_Generalization_with_Semantic_IDs_A_Case_Study_in_Ran.md) | --- title: "2306 Paper 23060812 Better Generalization With S... | "source", "2026-04-14" |
+
+| [2510 Paper 25102127 Pctx Tokenizing Personalized Context For Generative Recomme](wiki/sources/2510_paper_25102127_Pctx_Tokenizing_Personalized_Context_for_Generative_Recomme.md) | --- title: "2510 Paper 25102127 Pctx Tokenizing Personalized... | "source", "2026-04-14" |
+
 | [Rankmixer To Oneranker](wiki/sources/rankmixer_to_oneranker.md) | --- title: "Rankmixer To Oneranker" category: "sources" tags... | "source", "2026-04-09" |
 
 | [2511 Paper 25110607 Make It Long, Keep It Fast End-To-End 10K-Sequence Modeling](wiki/sources/2511_paper_25110607_Make_It_Long,_Keep_It_Fast_End-to-End_10k-Sequence_Modeling.md) | --- title: "2511 Paper 25110607 Make It Long, Keep It Fast E... | "source", "2026-04-09" |
@@ -318,6 +326,8 @@
 | [2602 Paper 26021698 Bending The Scaling Law Curve In Large-Scale Recommendation](wiki/sources/2602_paper_26021698_Bending_the_Scaling_Law_Curve_in_Large-Scale_Recommendation.md) | --- title: "2602 Paper 26021698 Bending The Scaling Law Curv... | "source", "2026-04-09" |
 
 | [Paper 81Ec38 Plum Adapting Pre-Trained Language Models For Industrial-Sc](wiki/sources/paper_81ec38_PLUM_Adapting_Pre-trained_Language_Models_for_Industrial-sc.md) | --- title: "Paper 81Ec38 Plum Adapting Pre-Trained Language... | "source", "2026-04-08" |
+
+| [2404 Paper 24040057 A Review Of Modern Recommender Systems Using Generative Mode](wiki/sources/2404_paper_24040057_A_Review_of_Modern_Recommender_Systems_Using_Generative_Mode.md) | --- title: "2404 Paper 24040057 A Review Of Modern Recommend... | "source", "2026-04-13" |
 
 | [2511 Paper 25111013 Gpr Towards A Generative Pre-Trained One-Model Paradigm For](wiki/sources/2511_paper_25111013_GPR_Towards_a_Generative_Pre-trained_One-Model_Paradigm_for.md) | --- title: "2511 Paper 25111013 Gpr Towards A Generative Pre... | "source", "2026-04-09" |
 
@@ -335,11 +345,11 @@
 
 
 
-- **43 个页面**
+- **47 个页面**
 
 
 ---
 
 **统计**：
 
-- 总页面数：133
+- 总页面数：138

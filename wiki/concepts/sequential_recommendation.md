@@ -17,7 +17,7 @@ status: "stable"
 
 ## 摘要
 
-序列推荐对**用户交互的有序序列**进行建模以预测下一个物品。与静态协同过滤不同，它捕捉了**时序动态**——用户偏好如何演变、物品选择如何依赖于先前的选择，以及上下文如何随时间变化。从早期的马尔可夫链、循环神经网络，到以 **SASRec** 为代表的自注意力机制，序列建模范式不断演进，其架构思想与因果掩码设计直接奠定了现代大语言模型（LLM）在推荐系统中落地的理论基础。凭借**自回归**架构、超长上下文窗口与语义推理能力，LLM 已成为处理复杂序列依赖与开放域推荐任务的核心引擎。
+序列推荐对**用户交互的有序序列**进行建模以预测下一个物品。与静态协同过滤不同，它捕捉了**时序动态**——用户偏好如何演变、物品选择如何依赖于先前的选择，以及上下文如何随时间变化。从早期的马尔可夫链、循环神经网络，到以 **SASRec** 为代表的自注意力机制，序列建模范式不断演进，其架构思想与因果掩码设计直接奠定了现代大语言模型（LLM）在推荐系统中落地的理论基础。凭借**自回归**架构、超长上下文窗口与语义推理能力，LLM 已成为处理复杂序列依赖与开放域推荐任务的核心引擎。近年来，**上下文感知分词**与**特征共现建模**的引入，进一步弥合了离散行为序列与大模型语义空间之间的鸿沟，推动序列推荐向生成式、可解释化方向深度演进。
 
 ## 要点
 
@@ -27,6 +27,7 @@ status: "stable"
 - 关键任务：**下一物品预测**、**基于会话的推荐**、**轨迹预测**、**生成式检索**
 - LLM 可以推理用户**为什么**在物品间转换（语义/主题关联），而不仅仅是**什么**是他们下一个点击
 - **SASRec** 作为关键过渡节点，验证了因果自注意力在平衡稀疏/稠密数据与计算效率上的优势，其机制与 LLM Decoder 架构高度同源
+- **上下文感知分词**（如 ActionPiece）通过特征共现与集合正则化，将无序物品属性转化为语义连贯的 Token，显著增强长序列动态意图捕捉能力
 
 ## 详情
 
@@ -55,6 +56,19 @@ status: "stable"
 4. **多模态序列融合**：LLM 可无缝处理混合文本（评论/描述）、物品 ID、上下文（时间戳/地理位置）的异构序列，实现跨模态对齐。
 5. **指令引导与开放域生成**：通过指令微调（Instruction Tuning），LLM 可遵循“推荐一些与他们平时不同的东西”等复杂约束，实现从“预测下一个 ID”到“生成个性化推荐理由与列表”的范式跃迁。
 
+### 输入表示与特征工程
+
+传统序列模型通常将物品映射为独立的 ID Embedding，割裂了物品属性间的内在关联与序列上下文。**无序特征集合的上下文共现建模**正成为突破该瓶颈的关键路径。通过将用户交互动作解构为物品元数据特征集合（如品类、品牌、价格段、属性标签等），并统计特征在局部集合内及跨序列相邻集合中的共现频率，模型能够显式捕获跨动作的语义关联（如“运动鞋+跑步”在相邻序列中高频共现）。这种基于共现的动态词表构建，使相同动作在不同交互语境下获得差异化、语义更丰富的 Token 表征，显著增强了长序列推荐中对**动态意图漂移**与**细粒度偏好**的捕捉能力。结合集合排列正则化（Set Permutation Regularization）消除无序特征线性化带来的人为归纳偏置，输入表示的鲁棒性与语义连贯性得到大幅提升，为下游自回归生成与 LLM 推理提供了高质量的前置表征。[来源：[2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md](../sources/2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md)]
+
+### 生成式序列推荐与上下文感知分词
+
+随着 LLM 在推荐领域的渗透，**生成式推荐（Generative Recommendation, GR）** 正逐步取代传统的召回-排序两阶段范式。然而，现有 GR 模型在序列分词时普遍缺乏上下文感知能力，导致离散 ID 难以对齐大模型的语义空间。**ActionPiece** 框架针对此痛点提出了一套可插拔的上下文感知分词方案：
+- **上下文共现词表构建**：借鉴 BPE 思想并扩展至特征集合层面。算法遍历动作序列语料库，依据特征在集合内部及相邻序列间的共现频次进行迭代合并，生成兼顾局部属性与全局序列模式的复合 Token 词表。
+- **集合排列正则化**：针对物品特征本质为无序集合的特性，在训练阶段对特征集合进行多次随机排列，生成多条语义等价但分割路径不同的序列视图。通过一致性损失约束模型输出分布，迫使模型学习对排列不变的鲁棒表征，有效缓解分词歧义。
+- **自回归联合优化**：切分后的变长 Token 序列直接送入 Transformer 解码器进行端到端训练，推理阶段无需额外计算开销，保持与基线 GR 模型相同的生成效率。
+
+在 Amazon Beauty、Sports、Toys 数据集上的实验表明，ActionPiece 在 Recall@10 与 NDCG@10 指标上均取得稳定提升（如 Beauty 数据集 Recall@10 达 18.72%，较最优基线 TIGER 提升 +2.41%）。消融实验验证了上下文共现词表与排列正则化的核心贡献。该工作为 LLM4Rec 提供了从“浅层 ID 映射”向“深度上下文语义理解”演进的关键数据预处理范式。[来源：[2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md](../sources/2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md)]
+
 ### 序列推荐的提示词设计
 
 ```
@@ -62,7 +76,7 @@ status: "stable"
 任务：预测用户将观看的下一部电影。
 考虑：类型模式、导演偏好、主题演变、近因效应。
 ```
-*设计注记*：提示词可借鉴 SASRec 的动态聚焦机制，显式引导模型区分“近期强信号”与“长程兴趣主题”，模拟注意力权重的自适应分配过程。
+*设计注记*：提示词可借鉴 SASRec 的动态聚焦机制与 ActionPiece 的上下文共现思想，显式引导模型区分“近期强信号”与“长程兴趣主题”，模拟注意力权重的自适应分配过程，同时注入特征共现线索以辅助意图推理。
 
 ### 挑战与工业架构演进
 
@@ -72,6 +86,7 @@ status: "stable"
 - **时间粒度与位置编码**：真实时间戳需精细编码。可学习位置编码虽灵活，但难以捕捉绝对/相对时间间隔，需结合现代旋转位置编码（RoPE）或时间感知注意力模块。
 - **负采样与优化目标**：传统 Point-wise BCE 与均匀负采样限制了细粒度排序上限。LLM4Rec 正探索对比学习、难负样本挖掘，并与**生成式检索**范式结合，直接预测下一个物品的语义 ID 或文本描述，绕过传统两阶段召回-排序流程。
 - **效率与部署**：处理长历史在计算上代价高昂，需依赖 KV Cache、推测解码（Speculative Decoding）与模型蒸馏等推理加速技术。
+- **分词质量与冷启动适应**：上下文感知分词高度依赖物品元数据的完整性。在特征稀疏或长尾场景下，共现统计易失真。未来需结合自监督预训练与动态词表自适应机制，提升分词器在开放域与冷启动场景下的泛化鲁棒性。
 
 ## 关联
 
@@ -79,6 +94,7 @@ status: "stable"
 - [P5 模型](../models/P5.md) 通过统一提示词模板处理序列预测、评分预测与解释生成任务
 - [协同过滤](./collaborative_filtering.md) 是非序列基线方法，常与序列模型进行特征融合
 - [生成式检索](../methods/generative_retrieval.md) 将序列推荐转化为自回归语义 ID 生成任务，代表下一代范式
+- [ActionPiece](../models/ActionPiece.md) 面向生成式推荐的上下文感知动作序列分词框架，解决离散序列语义对齐瓶颈
 
 ## 开放问题
 
@@ -86,23 +102,25 @@ status: "stable"
 2. 在超长序列（>100K 交互）下，如何平衡信息压缩率与关键兴趣信号的保留？分层记忆与动态检索机制的最佳实践是什么？
 3. 如何将 SASRec 验证的“动态稀疏适配”与 LLM 的指令微调结合，实现无需重新训练即可按需切换“探索/利用”策略的零样本序列推荐？
 4. 生成式序列推荐中，如何保证语义 ID 生成的稳定性、可解释性，并与传统 ID-based 排序指标（NDCG/HR）对齐？
+5. 如何构建自适应、低依赖的上下文分词机制，以在物品元数据缺失或长尾分布下，仍能保持序列表征的语义连贯性与动态意图捕捉能力？
 
 ## 参考文献
 
 - Kang, W. C., & McAuley, J. (2018). Self-attentive sequential recommendation. *ICDM 2018*.
 - Sun, F., et al. (2019). BERT4Rec: Sequential recommendation with bidirectional encoder representations. *CIKM 2019*.
 - Hidasi, B., et al. (2016). Session-based recommendations with recurrent neural networks. *ICLR 2016*.
+- Hou, Y., et al. (2025). ActionPiece: Contextually Tokenizing Action Sequences for Generative Recommendation. *ICML 2025 (Spotlight)*.
 - 相关工业架构与长序列建模进展：HSTU/ULTRAHSTU, OneTrans, LONGER 等（参见对应技术报告与会议论文）
 
-## 更新于 2026-04-13
+## 更新于 2026-04-14
 
-**来源**: [1808_paper_18080978_Self-Attentive_Sequential_Recommendation.md](../sources/1808_paper_18080978_Self-Attentive_Sequential_Recommendation.md)
-：在“传统序列模型”中深度扩展 SASRec 的架构细节、动态稀疏适配机制、实验数据与局限性；强化其与 LLM Decoder 架构、CoT 推理及长上下文优化的理论关联；同步更新挑战与开放问题章节。
+**来源**: [2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md](../sources/2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md)
+：新增“输入表示与特征工程”与“生成式序列推荐与上下文感知分词”小节，深度整合 ActionPiece 的上下文共现词表构建、集合排列正则化机制及实验结论；阐明无序特征集合建模对长序列动态意图捕捉的增强作用；同步更新要点、挑战、关联页面与开放问题。
 
 ---
 
-## 更新完成：1808_paper_18080978_Self-Attentive_Sequential_Recommendation.md
-**更新时间**: 2026-04-13 06:54
-**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 1808_paper_18080978_Self-Attentive_Sequential_Recommendation.md
+## 更新完成：2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md
+**更新时间**: 2026-04-14 16:02
+**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 2502_paper_25021358_ActionPiece_Contextually_Tokenizing_Action_Sequences_for_Ge.md
 
 *该页面的此次更新已完成。下次 ingest 其他源文档时将跳过此页面。*

@@ -26,6 +26,7 @@ status: "stable"
 - **生成式推荐（Gen-RecSys）**已形成三大核心范式：交互序列生成、LLM文本推理与多模态内容生成，并在冷启动与长尾场景展现显著增益
 - **生成式检索范式**（如 PinRec）已证明可在超大规模工业场景中替代传统双塔架构，实现端到端候选生成与多目标对齐
 - **传统序列建模范式**（如 PinnerFormer）通过“长期行为预测+批处理架构”成功弥合离线与实时表征差距，为 LLM 长序列批处理、KV Cache 优化与 Embedding 蒸馏提供关键工程基线
+- **生成式架构已突破排序层边界**：GRAB 等最新工业实践证明，序列优先的生成式范式可在 CTR 预测任务中直接替代传统多塔 DLRM，并首次验证了推荐系统的“缩放定律”（Scaling Law），长序列输入带来单调性能增益
 - **混合方法**结合两种范式在实际生产中最具实用性
 - 选择取决于**用例需求**：延迟、可解释性、数据可用性、多目标策略灵活性、安全与合规要求
 - 在大多数场景中，LLM 是对传统方法的补充而非替代，但在检索与重排序层正逐步实现架构融合；推理延迟优化（KV Cache、量化、投机解码）与幻觉控制是工业落地的关键瓶颈
@@ -110,6 +111,26 @@ status: "stable"
 [来源：[2504_paper_25041050_PinRec_Outcome-Conditioned,_Multi-Token_Generative_Retrieva.md](../sources/2504_paper_25041050_PinRec_Outcome-Conditioned,_Multi-Token_Generative_Retrieva.md)]
 [来源：[2205_paper_22050450_PinnerFormer_Sequence_Modeling_for_User_Representation_at_P.md](../sources/2205_paper_22050450_PinnerFormer_Sequence_Modeling_for_User_Representation_at_P.md)]
 
+### 判别式 vs 生成式范式对比与迁移边界
+
+传统推荐系统长期依赖“特征工程+多塔判别架构”（如 DLRM、DeepFM），而 LLM 的崛起推动了“序列优先+端到端生成”范式的快速演进。GRAB 作为最新工业级里程碑，首次系统性地验证了生成式架构在核心 CTR 排序任务中对传统判别式模型的替代可行性，并明确了范式迁移的边界条件：
+
+| 维度 | 传统判别式范式（DLRM 等） | 生成式序列优先范式（GRAB 等） |
+|------|--------------------------|-----------------------------|
+| **建模范式** | 多塔独立编码 + 显式特征交叉 + 判别式分类头 | 统一序列 Token 化 + 因果自注意力 + 端到端概率生成 |
+| **核心机制** | 依赖人工设计的交叉特征与独立排序塔 | 因果动作感知多通道注意力（CamA），解耦时间衰减与动作特异性 |
+| **数据依赖** | 强依赖高质量特征工程与稠密交互 | 依赖长程行为序列，序列长度与性能呈单调缩放关系 |
+| **性能边界** | 长序列下易出现表征饱和与梯度消失 | 验证推荐系统 Scaling Law：序列长度翻倍，AUC/GAUC 稳定线性增长 |
+| **工业收益** | 成熟稳定，但增量优化空间收窄 | 百度广告全量部署：总收入 **+3.05%**，整体 CTR **+3.49%** |
+| **迁移边界条件** | 适用于：严格低延迟 SLA（<5ms）、特征体系成熟、行为稀疏场景 | 适用于：具备长序列日志积累、可接受推理优化成本、追求统一多任务建模与跨域泛化 |
+
+**范式迁移关键启示**：
+1. **缩放定律（Scaling Law）的普适性**：GRAB 证明推荐模型性能不再受限于传统特征工程的天花板，而是随序列长度与模型容量呈现可预测的单调增长，为 LLM4Rec 的算力投入提供了明确 ROI 预期。
+2. **架构统一化趋势**：生成式范式将召回、粗排、精排的多阶段任务收敛为统一的序列到概率分布映射，大幅降低多模型协同维护成本，但需配套知识蒸馏、并行解码与显存优化技术以适配高并发 SLA。
+3. **冷启动与稀疏性仍是挑战**：生成式架构对连续高质量行为序列依赖较强，在新用户或极端稀疏场景下仍需结合传统判别式先验或跨域迁移策略进行混合部署。
+
+[来源：[2602_paper_26020186_GRAB_An_LLM-Inspired_Sequence-First_Click-Through_Rate_Pred.md](../sources/2602_paper_26020186_GRAB_An_LLM-Inspired_Sequence-First_Click-Through_Rate_Pred.md)]
+
 ### 序列上下文处理与工程范式对比
 
 为明确传统 Transformer 序列模型与 LLM 在上下文处理上的工程差异，以下对比聚焦于长序列建模、批处理适配与推理优化路径，PinnerFormer 作为传统范式的高效落地基线，为 LLM4Rec 的工程化提供了重要参考：
@@ -130,65 +151,29 @@ status: "stable"
 ### 何时使用哪种方法
 
 **选择传统推荐系统的场景：**
-- 拥有百万级别的交互数据
-- 低延迟至关重要（<10ms）
-- 需要服务百万级用户
-- 预算有限
-- 任务定义明确且稳定，对幻觉零容忍
+- 拥有百万级别的交互数据，且特征工程体系成熟稳定
+- 低延迟至关重要（<10ms），高并发场景下对推理 SLA 要求严格
+- 需要服务千万/亿级用户，基础设施预算有限
+- 任务定义明确且稳定，对幻觉与事实性错误零容忍
+- 行为序列较短或稀疏，缺乏长程上下文积累
 
-**选择基于 LLM 的推荐系统的场景：**
-- 交互数据有限（冷启动问题）
-- 需要可解释性与自然语言交互
-- 拥有多样化/长尾物品，需提升覆盖率与多样性
-- 需要灵活性和适应性，支持动态多目标对齐与策略快速迭代
-- 具备多模态内容理解与生成需求
+**选择基于 LLM / 生成式推荐系统的场景：**
+- 交互数据有限（冷启动问题）或需跨域知识迁移
+- 需要可解释性、自然语言交互与动态策略对齐
+- 拥有多样化/长尾物品库，需提升覆盖率与多样性
+- **具备长序列行为日志积累**，且业务可接受通过 KV Cache、量化、投机解码等工程手段优化推理延迟
+- 追求架构统一化，希望将召回、排序、多目标优化收敛至单一生成式框架（如 GRAB 范式）
+- 需快速响应业务策略变化，支持条件化生成与 Prompt/Adapter 灵活调优
 
-**选择混合方法的场景：**
-- 希望兼得两者优势（大多数生产环境）
-- 传统方法用于候选生成，LLM 用于排序/解释/冷启动补偿
-- LLM 用于理解与策略生成，传统方法用于高效服务与兜底
-- 生成式架构用于检索/重排序，结合 KV Cache/量化优化延迟，传统双塔/ANN 用于高并发保障
-
-### 演进轨迹
-
-```
-Phase 1 (2020-2022): Exploration
-└── "Can LLMs do recommendation?"
-    └── Zero-shot experiments, proof of concept
-
-Phase 2 (2023-2024): Integration
-└── "How do we combine LLMs with RecSys?"
-    └── Hybrid architectures, fine-tuning methods, Gen-RecSys taxonomy established
-
-Phase 3 (2025-2026): Optimization
-└── "How do we make LLM4Rec production-ready?"
-    └── Efficiency improvements (KV Cache, quantization, speculative decoding), distillation, specialized models, generative retrieval (e.g., PinRec), safety & hallucination evaluation frameworks
-
-Phase 4 (2027+): Convergence
-└── "The distinction disappears"
-    └── Unified models, seamless integration, standardized responsible AI evaluation in RecSys
-```
-
-### 实践建议
-
-对于生产环境推荐系统团队：
-
-1. **保留传统推荐管线**作为核心 backbone，但在检索层可逐步试点生成式架构以替代双塔模型。
-2. **将 LLM 作为附加层**（解释、重排序、冷启动补偿），并利用其条件化生成能力实现业务多目标的动态对齐。
-3. **在特定用例中尝试纯 LLM/生成式方案**（长尾物品、新用户、多模态/复杂策略场景），重点关注扩散模型与 VLM 的覆盖率增益。
-4. **持续监控成本与质量的权衡**，强制引入延迟优化策略（KV Cache、INT4/INT8 量化、投机解码），将推理延迟控制在可接受范围内。
-5. **建立幻觉与安全评估机制**：部署事实一致性校验、公平性监控与隐私过滤模块，采用 Gen-RecSys 标准化评估框架替代单一离线准确率指标。
-6. **规划蒸馏与批处理优化方案** — 借鉴 PinnerFormer 的“长期预测+批处理”范式，在 LLM/生成式模型输出上训练小型高效模型，兼顾性能与延迟；利用离线批处理生成高质量用户表征，通过 Embedding 蒸馏注入轻量级在线服务模型，大幅降低实时推理开销。
-7. **长序列工程适配** — 针对 LLM 上下文窗口限制，采用滑动窗口注意力、KV Cache 压缩与分层采样策略，结合时间衰减机制捕捉用户兴趣演化，避免超长序列带来的显存溢出与计算瓶颈。
-
-[来源：[2504_paper_25041050_PinRec_Outcome-Conditioned,_Multi-Token_Generative_Retrieva.md](../sources/2504_paper_25041050_PinRec_Outcome-Conditioned,_Multi-Token_Generative_Retrieva.md)]
-[来源：[2404_paper_24040057_A_Review_of_Modern_Recommender_Systems_Using_Generative_Mode.md](../sources/2404_paper_24040057_A_Review_of_Modern_Recommender_Systems_Using_Generative_Mode.md)]
-[来源：[2205_paper_22050450_PinnerFormer_Sequence_Modeling_for_User_Representation_at_P.md](../sources/2205_paper_22050450_PinnerFormer_Sequence_Modeling_for_User_Representation_at_P.md)]
+## 相关页面与延伸阅读
+- [生成式推荐系统（Gen-RecSys）架构演进](./Gen_RecSys_Architecture.md)
+- [LLM 在推荐系统中的推理延迟优化技术](./LLM_Inference_Optimization_for_RecSys.md)
+- [推荐系统缩放定律（Scaling Law）实证研究](./Scaling_Laws_in_Recommender_Systems.md)
 
 ---
 
-## 更新完成：2205_paper_22050450_PinnerFormer_Sequence_Modeling_for_User_Representation_at_P.md
-**更新时间**: 2026-04-15 05:30
-**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 2205_paper_22050450_PinnerFormer_Sequence_Modeling_for_User_Representation_at_P.md
+## 更新完成：2602_paper_26020186_GRAB_An_LLM-Inspired_Sequence-First_Click-Through_Rate_Pred.md
+**更新时间**: 2026-04-15 08:32
+**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 2602_paper_26020186_GRAB_An_LLM-Inspired_Sequence-First_Click-Through_Rate_Pred.md
 
 *该页面的此次更新已完成。下次 ingest 其他源文档时将跳过此页面。*

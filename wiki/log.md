@@ -581,3 +581,51 @@
 - 已更新页面：3
 
 ---
+
+
+## [2026-04-15] ingest | 已处理源文件：2407_paper_24072148_Breaking_the_Hourglass_Phenomenon_of_Residual_Quantization.md
+- 源文件：2407_paper_24072148_Breaking_the_Hourglass_Phenomenon_of_Residual_Quantization.md
+- 已创建页面：0
+- 已更新页面：3
+
+---
+
+
+## [2026-04-15] ingest | 已处理源文件：2411_paper_24111881_Unifying_Generative_and_Dense_Retrieval_for_Sequential_Recom.md
+- 源文件：2411_paper_24111881_Unifying_Generative_and_Dense_Retrieval_for_Sequential_Recom.md
+- 已创建页面：1
+- 已更新页面：3
+
+---
+
+
+## [2026-04-15] ingest | 已处理源文件：2602_paper_26020186_GRAB_An_LLM-Inspired_Sequence-First_Click-Through_Rate_Pred.md
+- 源文件：2602_paper_26020186_GRAB_An_LLM-Inspired_Sequence-First_Click-Through_Rate_Pred.md
+- 已创建页面：2
+- 已更新页面：3
+
+---
+
+
+## [2026-04-15] ingest | 已处理源文件：2502_paper_25021647_Unified_Semantic_and_ID_Representation_Learning_for_Deep_Rec.md
+- 源文件：2502_paper_25021647_Unified_Semantic_and_ID_Representation_Learning_for_Deep_Rec.md
+- 已创建页面：0
+- 已更新页面：4
+
+---
+
+
+## [2026-04-16] ingest | 已处理源文件：2509_paper_25091809_OnePiece_Bringing_Context_Engineering_and_Reasoning_to_Indu.md
+- 源文件：2509_paper_25091809_OnePiece_Bringing_Context_Engineering_and_Reasoning_to_Indu.md
+- 已创建页面：3
+- 已更新页面：4
+
+---
+
+
+## [2026-04-17] ingest | 已处理源文件：2601_paper_26011268_HyFormer_Revisiting_the_Roles_of_Sequence_Modeling_and_Feat.md
+- 源文件：2601_paper_26011268_HyFormer_Revisiting_the_Roles_of_Sequence_Modeling_and_Feat.md
+- 已创建页面：0
+- 已更新页面：4
+
+---

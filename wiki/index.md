@@ -3,7 +3,7 @@
 
 > 知识库内容目录。由 LLM 自动维护。
 
-> 最后更新：2026-04-15
+> 最后更新：2026-04-17
 
 
 ## Concepts
@@ -19,6 +19,8 @@
 | [全模态生成式推荐概念页面解释多模态内容如何映射到离散](wiki/concepts/all_modality_gr.md) | --- title: "全模态生成式推荐概念页面解释多模态内容如何映射到离散" category: "concepts"... | "new", "2026-04-09" |
 
 | [Hierarchical Planning in Recommendation — 层次化规划](wiki/concepts/hierarchical_planning_rec.md) | --- title: "Hierarchical Planning in Recommendation — 层次化规划"... | hierarchical planning, two-stage generation, slate-level intent, HiGR, structured generation |
+
+| [从关联章节中检测到的页面](wiki/concepts/context_engineering_rec.md) | --- title: "从关联章节中检测到的页面" category: "concepts" tags: ["new",... | "new", "2026-04-16" |
 
 | [用于推荐系统的大语言模型 — 概述](wiki/concepts/llm4rec_overview.md) | --- title: "用于推荐系统的大语言模型 — 概述" category: "concepts" tags: [L... | LLM, RecSys, paradigm, overview |
 
@@ -68,7 +70,7 @@
 
 
 
-- **27 个页面**
+- **28 个页面**
 
 
 ## Methods
@@ -113,7 +115,11 @@
 
 | [懒自回归解码器方法页面说明层间依赖放松机制](wiki/methods/lazy_ar.md) | --- title: "懒自回归解码器方法页面说明层间依赖放松机制" category: "methods" tags:... | "new", "2026-04-09" |
 
+| [Hybrid Generative Recommendation](wiki/methods/hybrid_generative_recommendation.md) | --- title: "Hybrid Generative Recommendation" category: meth... |  |
+
 | [Sparse Attention for Sequential Recommendation — Efficient Long-Sequence Modeling](wiki/methods/sparse_attention_seq_rec.md) | --- title: "Sparse Attention for Sequential Recommendation —... | sparse attention, sequential recommendation, long sequence, efficiency, ULTRA-HSTU, LONGER |
+
+| [从关联章节中检测到的页面](wiki/methods/cama_attention.md) | --- title: "从关联章节中检测到的页面" category: "methods" tags: ["new",... | "new", "2026-04-15" |
 
 | [LLM-as-Ranker](wiki/methods/llm_as_ranker.md) | --- title: "LLM-as-Ranker" category: "方法" tags: [排序, LLM, 评分... | 排序, LLM, 评分, listwise, pointwise, pairwise |
 
@@ -121,7 +127,7 @@
 
 
 
-- **21 个页面**
+- **23 个页面**
 
 
 ## Models
@@ -168,6 +174,8 @@
 
 | [PLUM — Adapting Pre-trained LLMs for Industrial Generative Recommendations](wiki/models/PLUM.md) | --- title: "PLUM — Adapting Pre-trained LLMs for Industrial... | PLUM, semantic ID, continued pre-training, generative retrieval, YouTube, Google, industrial deployment |
 
+| [从关联章节中检测到的页面](wiki/models/OnePiece.md) | --- title: "从关联章节中检测到的页面" category: "models" tags: ["new", "... | "new", "2026-04-16" |
+
 | [Qwen 系列](wiki/models/qwen_series.md) | --- title: "Qwen 系列" category: "models" tags: [Qwen, Bailian... | Qwen, Bailian, Alibaba, model-family, cloud |
 
 | [GRID — Generative Recommendation with Semantic IDs Framework](wiki/models/GRID.md) | --- title: "GRID — Generative Recommendation with Semantic I... | GRID, semantic ID, generative recommendation, open-source, benchmarking, modular framework, Snap Research |
@@ -188,7 +196,7 @@
 
 
 
-- **28 个页面**
+- **29 个页面**
 
 
 ## Entities
@@ -201,7 +209,11 @@
 
 | [腾讯公司推荐系统团队和工业实践包括](wiki/entities/tencent.md) | --- title: "腾讯公司推荐系统团队和工业实践包括" category: "entities" tags: ["... | "new", "2026-04-08" |
 
+| [Baidu](wiki/entities/baidu.md) | --- title: Baidu category: entities status: "draft" confiden... |  |
+
 | [Guorui Zhou](wiki/entities/guorui_zhou.md) | --- title: "Guorui Zhou" category: "entities" tags: ["new",... | "new", "2026-04-08" |
+
+| [从关联章节中检测到的页面](wiki/entities/shopee.md) | --- title: "从关联章节中检测到的页面" category: "entities" tags: ["new",... | "new", "2026-04-16" |
 
 | [GoogleYouTube](wiki/entities/google_youtube.md) | --- title: "GoogleYouTube" category: "entities" tags: ["new"... | "new", "2026-04-08" |
 
@@ -225,7 +237,7 @@
 
 
 
-- **13 个页面**
+- **15 个页面**
 
 
 ## Synthesis
@@ -267,7 +279,11 @@
 
 | [Paper C4A451 Forge Forming Semantic Identifiers For Generative Retrieval](wiki/sources/paper_c4a451_FORGE_Forming_Semantic_Identifiers_for_Generative_Retrieval.md) | --- title: "Paper C4A451 Forge Forming Semantic Identifiers... | "source", "2026-04-08" |
 
+| [2601 Paper 26011268 Hyformer Revisiting The Roles Of Sequence Modeling And Feat](wiki/sources/2601_paper_26011268_HyFormer_Revisiting_the_Roles_of_Sequence_Modeling_and_Feat.md) | --- title: "2601 Paper 26011268 Hyformer Revisiting The Role... | "source", "2026-04-17" |
+
 | [2411 Paper 24111173 Qarm Quantitative Alignment Multi-Modal Recommendation At K](wiki/sources/2411_paper_24111173_QARM_Quantitative_Alignment_Multi-Modal_Recommendation_at_K.md) | --- title: "2411 Paper 24111173 Qarm Quantitative Alignment... | "source", "2026-04-10" |
+
+| [2407 Paper 24072148 Breaking The Hourglass Phenomenon Of Residual Quantization](wiki/sources/2407_paper_24072148_Breaking_the_Hourglass_Phenomenon_of_Residual_Quantization.md) | --- title: "2407 Paper 24072148 Breaking The Hourglass Pheno... | "source", "2026-04-15" |
 
 | [2307 Paper 23070643 A Comprehensive Overview Of Large Language Models](wiki/sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md) | --- title: "2307 Paper 23070643 A Comprehensive Overview Of... | "source", "2026-04-10" |
 
@@ -287,6 +303,8 @@
 
 | [OneRec: Unifying Retrieve and Rank with Generative Recommender](wiki/sources/2502_paper_25021896_OneRec_Unifying_Retrieve_and_Rank_with_Generative_Recommend.md) | --- title: "OneRec: Unifying Retrieve and Rank with Generati... | "source", "2026-04-09", "generative-retrieval", "unified-model", "kuaishou", "preference-alignment" |
 
+| [2509 Paper 25091809 Onepiece Bringing Context Engineering And Reasoning To Indu](wiki/sources/2509_paper_25091809_OnePiece_Bringing_Context_Engineering_and_Reasoning_to_Indu.md) | --- title: "2509 Paper 25091809 Onepiece Bringing Context En... | "source", "2026-04-16" |
+
 | [2205 Paper 22050450 Pinnerformer Sequence Modeling For User Representation At P](wiki/sources/2205_paper_22050450_PinnerFormer_Sequence_Modeling_for_User_Representation_at_P.md) | --- title: "2205 Paper 22050450 Pinnerformer Sequence Modeli... | "source", "2026-04-15" |
 
 | [2510 Paper 25101163 Onerec-Think In-Text Reasoning For Generative Recommendatio](wiki/sources/2510_paper_25101163_OneRec-Think_In-Text_Reasoning_for_Generative_Recommendatio.md) | --- title: "2510 Paper 25101163 Onerec-Think In-Text Reasoni... | "source", "2026-04-08" |
@@ -304,6 +322,8 @@
 | [2602 Paper 26021001 Kunlun Establishing Scaling Laws For Massive-Scale Recommen](wiki/sources/2602_paper_26021001_Kunlun_Establishing_Scaling_Laws_for_Massive-Scale_Recommen.md) | --- title: "2602 Paper 26021001 Kunlun Establishing Scaling... | "source", "2026-04-09" |
 
 | [Paper 8Edbf8 Higr Efficient Generative Slate Recommendation Via Hierarch](wiki/sources/paper_8edbf8_HiGR_Efficient_Generative_Slate_Recommendation_via_Hierarch.md) | --- title: "Paper 8Edbf8 Higr Efficient Generative Slate Rec... | "source", "2026-04-08" |
+
+| [2602 Paper 26020186 Grab An Llm-Inspired Sequence-First Click-Through Rate Pred](wiki/sources/2602_paper_26020186_GRAB_An_LLM-Inspired_Sequence-First_Click-Through_Rate_Pred.md) | --- title: "2602 Paper 26020186 Grab An Llm-Inspired Sequenc... | "source", "2026-04-15" |
 
 | [2604 Paper 26040497 Tencent Advertising Algorithm Challenge 2025 All-Modality G](wiki/sources/2604_paper_26040497_Tencent_Advertising_Algorithm_Challenge_2025_All-Modality_G.md) | --- title: "2604 Paper 26040497 Tencent Advertising Algorith... | "source", "2026-04-09" |
 
@@ -335,29 +355,21 @@
 
 | [2602 Paper 26021698 Bending The Scaling Law Curve In Large-Scale Recommendation](wiki/sources/2602_paper_26021698_Bending_the_Scaling_Law_Curve_in_Large-Scale_Recommendation.md) | --- title: "2602 Paper 26021698 Bending The Scaling Law Curv... | "source", "2026-04-09" |
 
+| [2411 Paper 24111881 Unifying Generative And Dense Retrieval For Sequential Recom](wiki/sources/2411_paper_24111881_Unifying_Generative_and_Dense_Retrieval_for_Sequential_Recom.md) | --- title: "2411 Paper 24111881 Unifying Generative And Dens... | "source", "2026-04-15" |
+
 | [Paper 81Ec38 Plum Adapting Pre-Trained Language Models For Industrial-Sc](wiki/sources/paper_81ec38_PLUM_Adapting_Pre-trained_Language_Models_for_Industrial-sc.md) | --- title: "Paper 81Ec38 Plum Adapting Pre-Trained Language... | "source", "2026-04-08" |
 
 | [2404 Paper 24040057 A Review Of Modern Recommender Systems Using Generative Mode](wiki/sources/2404_paper_24040057_A_Review_of_Modern_Recommender_Systems_Using_Generative_Mode.md) | --- title: "2404 Paper 24040057 A Review Of Modern Recommend... | "source", "2026-04-13" |
 
 | [2511 Paper 25111013 Gpr Towards A Generative Pre-Trained One-Model Paradigm For](wiki/sources/2511_paper_25111013_GPR_Towards_a_Generative_Pre-trained_One-Model_Paradigm_for.md) | --- title: "2511 Paper 25111013 Gpr Towards A Generative Pre... | "source", "2026-04-09" |
 
-| [2505 Paper 25050442 Longer Scaling Up Long Sequence Modeling In Industrial Reco](wiki/sources/2505_paper_25050442_LONGER_Scaling_Up_Long_Sequence_Modeling_in_Industrial_Reco.md) | --- title: "2505 Paper 25050442 Longer Scaling Up Long Seque... | "source", "2026-04-09" |
-
-| [2507 Paper 25071555 Rankmixer Scaling Up Ranking Models In Industrial Recommend](wiki/sources/2507_paper_25071555_RankMixer_Scaling_Up_Ranking_Models_in_Industrial_Recommend.md) | --- title: "2507 Paper 25071555 Rankmixer Scaling Up Ranking... | "source", "2026-04-09" |
-
-| [Recommender Systems with Generative Retrieval (NeurIPS 2023)](wiki/sources/paper_2305_05065_Generative_Retrieval_RecSys.md) | --- title: "Recommender Systems with Generative Retrieval (N... | generative retrieval, semantic ID, DSI, TIGER, neural retrieval, Google, NeurIPS 2023 |
-
-| [2602 Paper 26020855 Qarm V2 Quantitative Alignment Multi-Modal Recommendation F](wiki/sources/2602_paper_26020855_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation_f.md) | --- title: "2602 Paper 26020855 Qarm V2 Quantitative Alignme... | "source", "2026-04-10" |
-
-| [Paper C33D89 Farewell To Item Ids Unlocking The Scaling Potential Of Lar](wiki/sources/paper_c33d89_Farewell_to_Item_IDs_Unlocking_the_Scaling_Potential_of_Lar.md) | --- title: "Paper C33D89 Farewell To Item Ids Unlocking The... | "source", "2026-04-08" |
 
 
-
-- **51 个页面**
+- **57 个页面**
 
 
 ---
 
 **统计**：
 
-- 总页面数：143
+- 总页面数：155

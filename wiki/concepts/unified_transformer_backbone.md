@@ -20,7 +20,7 @@ status: "stable"
 
 统一 Transformer 主干是推荐系统中的一种核心设计范式，其中**单一 Transformer 架构**同时承担**特征交互**（建模用户、物品和上下文特征之间的关系）、**序列建模**（捕捉用户行为历史中的时间模式），并逐步扩展至**多场景分布与多任务目标**的统一建模。传统推荐架构通常将上述任务拆分为独立模块（如 Wukong/RankMixer 用于特征交互，LONGER 用于序列建模，多场景/多任务依赖浅层条件拼接），这种碎片化设计阻碍了深层双向信息交换，限制了全局优化与模型扩展能力。
 
-以 **OneTrans** 为起点，工业界逐步验证了统一范式的可行性。随后，**MixFormer**、**MDL**、**MTFM** 等工作进一步将统一对象从“特征结构”推向“分布与目标结构”，通过协同扩展（Co-scaling）、分布级 Token 化（Domain Tokens）与免对齐骨干（Alignment-free Backbone）等机制，使单一主干能够承载更复杂的工业推荐需求。近期，**OnePiece** 进一步将统一范式延伸至**召回与精排的级联流水线**，并首次将 LLM 的上下文工程与隐式推理机制引入工业排序。最新进展中，**HyFormer** 通过交替优化机制彻底打破了传统的“序列压缩+特征融合”解耦范式，将长序列建模与异构特征交互深度耦合于单一骨干，成为该架构方向的最新 SOTA。该范式不仅提升了模型表达能力，还通过跨请求 KV 缓存、用户-物品解耦等系统级优化，保障了在线服务的低延迟与高吞吐。
+以 **OneTrans** 为起点，工业界逐步验证了统一范式的可行性。随后，**MixFormer**、**MDL**、**MTFM** 等工作进一步将统一对象从“特征结构”推向“分布与目标结构”，通过协同扩展（Co-scaling）、分布级 Token 化（Domain Tokens）与免对齐骨干（Alignment-free Backbone）等机制，使单一主干能够承载更复杂的工业推荐需求。近期，**OnePiece** 进一步将统一范式延伸至**召回与精排的级联流水线**，并首次将 LLM 的上下文工程与隐式推理机制引入工业排序。最新进展中，**HyFormer** 通过交替优化机制彻底打破了传统的“序列压缩+特征融合”解耦范式，将长序列建模与异构特征交互深度耦合于单一骨干。然而，工业实践也揭示出简单统一可能引发**序列崩溃传播（SCP）**等稳定性挑战，促使 **TokenFormer** 等工作提出 BFTS 注意力调度与 NLIR 非线性交互等解耦设计模式，为统一骨干的鲁棒性扩展提供了关键路径。该范式不仅提升了模型表达能力，还通过跨请求 KV 缓存、用户-物品解耦等系统级优化，保障了在线服务的低延迟与高吞吐。
 
 ## 要点
 
@@ -30,9 +30,10 @@ status: "stable"
 - **分布级统一**：MDL 将场景与任务 Token 化，以 Prompt 式条件注入主干深层
 - **级联统一与隐式推理**：OnePiece 打破召回/精排割裂，共享隐空间实现端到端优化；引入分块隐式推理模拟多步思维链
 - **交替优化与深度耦合**：HyFormer 摒弃两阶段流水线，通过 Query 解码与增强机制在 Transformer 层间交替执行，实现序列与特征的逐层精炼与高效 Scaling
+- **核心挑战与解耦设计**：简单统一易引发“序列崩溃传播（SCP）”；TokenFormer 提出 BFTS 注意力调度与 NLIR 非线性表征，有效解耦全局交互与局部时序
 - **跨请求 KV 缓存与服务优化**：支持预计算缓存、用户侧复用与推理期扩展（Inference-time Scaling）
-- **代表模型**：OneTrans、MixFormer、MDL、MTFM、OnePiece、HyFormer
-- **业务收益**：OneTrans 在线 A/B 测试实现每用户 GMV +5.68%；OnePiece 在 Shopee 主搜实现 GMV/UU +2%、广告收入 +2.90%；HyFormer 在十亿级数据集与线上 A/B 中验证显著 CTR/GAUC 提升；统一架构显著降低多场景/多任务及级联系统维护成本
+- **代表模型**：OneTrans、MixFormer、MDL、MTFM、OnePiece、HyFormer、TokenFormer
+- **业务收益**：OneTrans 在线 A/B 测试实现每用户 GMV +5.68%；OnePiece 在 Shopee 主搜实现 GMV/UU +2%、广告收入 +2.90%；HyFormer 在十亿级数据集与线上 A/B 中验证显著 CTR/GAUC 提升；TokenFormer 在腾讯广告业务流实现 AUC/GAUC 显著提升；统一架构显著降低多场景/多任务及级联系统维护成本
 
 ## 详情
 
@@ -95,6 +96,12 @@ Unified representation for prediction / generation
 - **分块隐式推理 (Block-wise Latent Reasoning)**：将 Transformer 隐藏层划分为多个独立推理块，每个块执行一次局部表示精炼与全局信息聚合。通过动态调整分块大小（Block Size）灵活扩展推理带宽，使模型具备类似 LLM“思维链”的中间态推理路径，显著提升复杂意图理解与多步逻辑推演能力。
 - **渐进式多任务训练**：利用真实用户反馈链（曝光-点击-加购-转化）构建分层监督信号，对推理过程中的中间步骤进行渐进式约束。该策略有效缓解多任务梯度冲突，确保模型在工业复杂场景下的稳定收敛，避免过拟合与梯度震荡。
 
+#### 核心挑战与解耦设计模式 (TokenFormer)
+随着统一架构的深入应用，工业界发现**简单拼接多字段与序列特征会引发“序列崩溃传播（Sequence Collapse Propagation, SCP）”现象**。即维度不良或噪声较大的非序列字段（如稀疏画像、长尾商品属性）在底层全量交互时，其表征坍缩会通过共享注意力机制向序列分支传导，导致序列表征维度崩溃、时序动态被结构化噪声淹没。为应对该挑战，**TokenFormer** 提出以下解耦设计模式：
+- **BFTS 注意力调度 (Bottom-Full-Top-Sliding)**：打破传统单一注意力模式，采用分层调度策略。底层使用 **Full Self-Attention** 充分捕获多字段全局共现关系与高阶交互；顶层引入 **Shrinking-Window Sliding Attention**，随网络深度增加逐步收缩注意力窗口，强制模型聚焦近期行为序列的局部时序动态。该机制有效隔离非序列字段噪声，阻断 SCP 现象的传播路径，实现全局交互与局部演化的解耦协同。
+- **NLIR 非线性交互表征 (Non-Linear Interaction Representation)**：在隐藏层引入单侧非线性乘法变换 $h' = h \odot \sigma(W h + b)$，突破传统线性加和交互的表达能力瓶颈。该门控式非线性缩放在不显著增加参数量的前提下，增强了特征融合的非线性边界，提升了对稀疏长尾字段的敏感度与表征空间的几何可分性，显著改善统一架构下的维度鲁棒性。
+- **工业验证**：在公开基准（Criteo、Avazu）及腾讯广告真实业务流中，TokenFormer 通过 BFTS 与 NLIR 的协同，使序列特征维度崩溃率显著下降，AUC/GAUC 等核心排序指标达到 SOTA，验证了该解耦范式在工业级统一骨干中的有效性。[来源：[2604_paper_26041373_TokenFormer_Unify_the_Multi-Field_and_Sequential_Recommenda.md](../sources/2604_paper_26041373_TokenFormer_Unify_the_Multi-Field_and_Sequential_Recommenda.md)]
+
 #### 因果注意力 + 跨请求 KV 缓存与服务优化
 - **因果注意力**：严格防止未来行为 Token 的信息泄漏，保障序列建模的时序正确性
 - **跨请求 KV 缓存**：预计算并缓存高频/静态特征的中间表示
@@ -112,6 +119,7 @@ Unified representation for prediction / generation
 | **分布级统一** | 场景/任务 Token 化实现 Prompt 式条件注入，充分调用大模型参数潜力 |
 | **级联端到端优化** | 共享隐空间打通召回与精排，消除信息孤岛与延迟累积 |
 | **交替迭代精炼** | HyFormer 验证层间交替优化可最大化信息流动效率，实现表征质量逐层跃升 |
+| **解耦与鲁棒性增强** | BFTS 与 NLIR 机制有效阻断 SCP 传播，保障统一骨干在异构稀疏场景下的稳定性 |
 | **KV 缓存与复用** | 预计算减少冗余计算，显著降低在线延迟与存储成本 |
 | **工程简化** | 单一架构替代多模块拼接，降低训练、部署与维护复杂度 |
 | **生成式兼容** | 统一 Token 接口天然适配 Semantic ID 与端到端生成式 One-Model 演进 |
@@ -126,6 +134,7 @@ Unified representation for prediction / generation
 | **MTFM** | Alignment-free Backbone；直接吸收异构场景数据；免严格输入对齐的多场景 Foundation Model | 跨业务线数据统一与快速迁移 |
 | **OnePiece** (arXiv 2025) | 首次统一召回与精排级联流水线；引入上下文工程与分块隐式推理；渐进式多任务训练；GMV/UU +2% | 级联统一与 LLM 机制借鉴的工业标杆 |
 | **HyFormer** (arXiv 2026) | 提出交替优化机制打破“序列压缩+特征融合”范式；Query Decoding/Boosting 双组件；十亿级数据验证显著 Scaling Law 与线上 CTR/GAUC 提升 | 序列-特征深度耦合的最新 SOTA，验证统一骨干的高效扩展路径 |
+| **TokenFormer** (arXiv 2026) | 揭示序列崩溃传播（SCP）现象；提出 BFTS 注意力调度与 NLIR 非线性交互；在腾讯广告业务流实现 AUC/GAUC 显著提升 | 统一骨干稳定性与解耦设计的工业级标杆 |
 
 ### 与分离架构对比
 
@@ -135,38 +144,15 @@ Unified representation for prediction / generation
 | **信息流** | 单向或晚期融合，缺乏深层交互 | 共享注意力实现全向双向交换 |
 | **优化目标** | 逐模块独立优化，易陷入局部最优 | 端到端联合优化，支持多目标协同 |
 | **扩展能力** | 模块独立扩展，存在容量压制 | Co-scaling 与交替优化机制支持参数/数据同步扩展 |
-| **场景/任务处理** | 浅层条件拼接或独立 Head | Domain Tokens 深层注入，Prompt 式条件建模 |
-| **级联流水线** | 召回与精排独立建模，信息单向传递，延迟累积 | 共享隐空间端到端优化，支持跨阶段特征无缝流转与推理带宽动态扩展 |
-| **KV 缓存/复用** | 有限，跨模块状态难以共享 | 原生支持跨请求缓存与用户侧复用 |
-| **维护与部署** | 多代码库、多流水线、高运维成本 | 单一架构、统一 Serving、工程简化 |
-
-### 工业实践与演进
-
-随着统一 Transformer 主干在工业界的持续迭代，架构设计正从“模块拼接”向“层间深度协同”演进。**HyFormer** 作为该方向的最新代表性工作，通过重构序列建模与特征交互的底层范式，为工业级 CTR 预测提供了高效统一的解决方案。
-
-- **打破传统解耦瓶颈**：工业推荐长期依赖“先序列压缩（如 LONGER）+ 后特征融合（如 RankMixer）”的两阶段流水线。这种设计虽便于工程拆分，但导致序列信息在压缩阶段发生不可逆损耗，且后续特征交互无法动态回溯原始行为细节。HyFormer 彻底摒弃该范式，将长行为序列与异构非序列特征置于同一高维表征空间，构建端到端的混合 Transformer 骨干。
-- **Query 解码与增强双机制**：
-  - **Query Decoding（Query 解码）**：将非序列稠密特征动态扩展为全局 Token（Global Tokens），利用长行为序列的逐层 Key-Value 表示进行交叉注意力解码。该机制以 Query 为锚点高效检索历史关键信号，规避传统序列池化带来的信息瓶颈。
-  - **Query Boosting（Query 增强）**：引入轻量级 Token Mixing 模块，专门强化跨 Query 与跨序列的异构特征交互。通过低开销的混合操作捕获高阶组合特征，弥补标准注意力在稠密特征交互上的计算冗余。
-- **交替优化策略 (Alternating Optimization)**：上述两种互补机制在 Transformer 的每一层中严格交替执行，形成“解码-增强-精炼”的迭代闭环。该策略在严格控制前向 FLOPs 的同时，最大化信息流动效率，使模型以极低的额外算力代价实现表征质量的逐层跃升。
-- **十亿级数据验证与 Scaling Law**：在 Billion-scale 工业私有数据集上，HyFormer 在参数量与 FLOPs 预算完全对齐的设定下持续优于强基线。实验表明，随着算力投入增加，HyFormer 展现出更陡峭的性能提升曲线，验证了统一架构在推荐场景中的显著 Scaling 行为。线上大规模 A/B 测试进一步证实其在低延迟约束下带来 CTR 与 GAUC 的实质性正向增长，为构建更大规模的推荐基础模型（RecFoundation Models）提供了轻量化、高效率的架构参考。
-
-### 与先前工作的关系
-
-- **RankMixer**：验证了推荐排序主干可围绕统一 Token 交互进行 Scaling，但未包含序列建模
-- **LONGER / STCA**：专注长序列工业化与目标感知建模，未与特征交互主干融合
-- **OneTrans**：首次将序列与非序列特征统一至单一 Transformer，奠定统一范式基础
-- **MixFormer**：在 OneTrans 基础上解决序列与稠密模块的容量压制问题，引入 Co-scaling 与 User-Item Decoupling
-- **MDL / MTFM**：将统一对象从特征结构扩展至分布与任务结构，实现 Prompt 式条件注入与免对齐多场景学习
-- **OnePiece**：突破级联流水线割裂，引入 LLM 上下文工程与隐式推理机制，实现召回-精排端到端统一
-- **HyFormer**：在统一主干基础上彻底重构序列与特征的交互范式，通过交替优化与 Query 双机制实现层间深度协同，成为当前工业 CTR 预测中序列-特征统一建模的最新 SOTA，并为推荐大模型的 Scaling Law 验证提供关键架构支撑
-
-[来源：[2601_paper_26011268_HyFormer_Revisiting_the_Roles_of_Sequence_Modeling_and_Feat.md](../sources/2601_paper_26011268_HyFormer_Revisiting_the_Roles_of_Sequence_Modeling_and_Feat.md)]
+| **场景/任务处理** | 浅层条件拼接或独立 Head | Domain Tokens 深层 Prompt 注入，动态参与计算 |
+| **级联流水线** | 召回/精排割裂，特征表示跨阶段损耗 | 共享隐空间端到端流转，支持隐式推理与渐进监督 |
+| **稳定性挑战** | 天然隔离，无跨模态干扰风险 | 需防范 SCP 等维度崩溃传播，依赖 BFTS/NLIR 等解耦设计 |
+| **工程维护** | 多套代码库、独立部署、高运维成本 | 单一架构、统一训练/推理管线、显著降本增效 |
 
 ---
 
-## 更新完成：2601_paper_26011268_HyFormer_Revisiting_the_Roles_of_Sequence_Modeling_and_Feat.md
-**更新时间**: 2026-04-17 06:36
-**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 2601_paper_26011268_HyFormer_Revisiting_the_Roles_of_Sequence_Modeling_and_Feat.md
+## 更新完成：2604_paper_26041373_TokenFormer_Unify_the_Multi-Field_and_Sequential_Recommenda.md
+**更新时间**: 2026-04-17 10:10
+**更新摘要**: 已使用 LLM 对页面进行内容充实，基于 2604_paper_26041373_TokenFormer_Unify_the_Multi-Field_and_Sequential_Recommenda.md
 
 *该页面的此次更新已完成。下次 ingest 其他源文档时将跳过此页面。*

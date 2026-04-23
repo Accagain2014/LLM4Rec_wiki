@@ -3,7 +3,7 @@
 
 > 知识库内容目录。由 LLM 自动维护。
 
-> 最后更新：2026-04-17
+> 最后更新：2026-04-23
 
 
 ## Concepts
@@ -79,6 +79,8 @@
 
 |------|------|------|
 
+| [详细记录](wiki/methods/orthogonal_constrained_projection.md) | --- title: "详细记录" category: "methods" tags: ["new", "2026-04... | "new", "2026-04-23" |
+
 | [定量对齐方法涵盖表示匹配和可训练表示技术](wiki/methods/quantitative_alignment.md) | --- title: "定量对齐方法涵盖表示匹配和可训练表示技术" category: "methods" tags:... | "new", "2026-04-08" |
 
 | [Representation Alignment](wiki/methods/representation_alignment.md) | --- title: "Representation Alignment" category: "methods" ta... | "new", "2026-04-09" |
@@ -127,7 +129,7 @@
 
 
 
-- **23 个页面**
+- **24 个页面**
 
 
 ## Models
@@ -217,6 +219,8 @@
 
 | [GoogleYouTube](wiki/entities/google_youtube.md) | --- title: "GoogleYouTube" category: "entities" tags: ["new"... | "new", "2026-04-08" |
 
+| [记录京东在工业商品推荐中的技术实践特别是](wiki/entities/jd.md) | --- title: "记录京东在工业商品推荐中的技术实践特别是" category: "entities" tags:... | "new", "2026-04-23" |
+
 | [Amazon 评论数据集](wiki/entities/amazon_reviews.md) | --- title: "Amazon 评论数据集" category: "entities" tags: [datase... | dataset, amazon, e-commerce, reviews, benchmark |
 
 | [从关联章节中检测到的页面](wiki/entities/pinterest.md) | --- title: "从关联章节中检测到的页面" category: "entities" tags: ["new",... | "new", "2026-04-13" |
@@ -237,7 +241,7 @@
 
 
 
-- **15 个页面**
+- **16 个页面**
 
 
 ## Synthesis
@@ -283,6 +287,8 @@
 
 | [2411 Paper 24111173 Qarm Quantitative Alignment Multi-Modal Recommendation At K](wiki/sources/2411_paper_24111173_QARM_Quantitative_Alignment_Multi-Modal_Recommendation_at_K.md) | --- title: "2411 Paper 24111173 Qarm Quantitative Alignment... | "source", "2026-04-10" |
 
+| [2603 Paper 26031869 Ocp Orthogonal Constrained Projection For Sparse Scaling In](wiki/sources/2603_paper_26031869_OCP_Orthogonal_Constrained_Projection_for_Sparse_Scaling_in.md) | --- title: "2603 Paper 26031869 Ocp Orthogonal Constrained P... | "source", "2026-04-23" |
+
 | [2407 Paper 24072148 Breaking The Hourglass Phenomenon Of Residual Quantization](wiki/sources/2407_paper_24072148_Breaking_the_Hourglass_Phenomenon_of_Residual_Quantization.md) | --- title: "2407 Paper 24072148 Breaking The Hourglass Pheno... | "source", "2026-04-15" |
 
 | [2307 Paper 23070643 A Comprehensive Overview Of Large Language Models](wiki/sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md) | --- title: "2307 Paper 23070643 A Comprehensive Overview Of... | "source", "2026-04-10" |
@@ -296,6 +302,8 @@
 | [QARM — Quantitative Alignment Multi-Modal Recommendation at Kuaishou](wiki/sources/paper_ad0dff_QARM_Quantitative_Alignment_Multi-Modal_Recommendation_at_K.md) | --- title: "QARM — Quantitative Alignment Multi-Modal Recomm... | QARM, multi-modal, quantitative alignment, Kuaishou, representation matching, industrial |
 
 | [2602 Paper 26022273 Generative Recommendation For Large-Scale Advertising](wiki/sources/2602_paper_26022273_Generative_Recommendation_for_Large-Scale_Advertising.md) | --- title: "2602 Paper 26022273 Generative Recommendation Fo... | "source", "2026-04-09" |
+
+| [2512 Paper 25122238 Oxygenrec An Instruction-Following Generative Framework For](wiki/sources/2512_paper_25122238_OxygenREC_An_Instruction-Following_Generative_Framework_for.md) | --- title: "2512 Paper 25122238 Oxygenrec An Instruction-Fol... | "source", "2026-04-23" |
 
 | [2511 Paper 25111096 Lemur Large Scale End-To-End Multimodal Recommendation](wiki/sources/2511_paper_25111096_LEMUR_Large_scale_End-to-end_MUltimodal_Recommendation.md) | --- title: "2511 Paper 25111096 Lemur Large Scale End-To-End... | "source", "2026-04-09" |
 
@@ -359,17 +367,13 @@
 
 | [Paper 81Ec38 Plum Adapting Pre-Trained Language Models For Industrial-Sc](wiki/sources/paper_81ec38_PLUM_Adapting_Pre-trained_Language_Models_for_Industrial-sc.md) | --- title: "Paper 81Ec38 Plum Adapting Pre-Trained Language... | "source", "2026-04-08" |
 
-| [2404 Paper 24040057 A Review Of Modern Recommender Systems Using Generative Mode](wiki/sources/2404_paper_24040057_A_Review_of_Modern_Recommender_Systems_Using_Generative_Mode.md) | --- title: "2404 Paper 24040057 A Review Of Modern Recommend... | "source", "2026-04-13" |
-
-| [2511 Paper 25111013 Gpr Towards A Generative Pre-Trained One-Model Paradigm For](wiki/sources/2511_paper_25111013_GPR_Towards_a_Generative_Pre-trained_One-Model_Paradigm_for.md) | --- title: "2511 Paper 25111013 Gpr Towards A Generative Pre... | "source", "2026-04-09" |
 
 
-
-- **58 个页面**
+- **60 个页面**
 
 
 ---
 
 **统计**：
 
-- 总页面数：156
+- 总页面数：160

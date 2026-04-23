@@ -637,3 +637,19 @@
 - 已更新页面：3
 
 ---
+
+
+## [2026-04-23] ingest | 已处理源文件：2603_paper_26031869_OCP_Orthogonal_Constrained_Projection_for_Sparse_Scaling_in.md
+- 源文件：2603_paper_26031869_OCP_Orthogonal_Constrained_Projection_for_Sparse_Scaling_in.md
+- 已创建页面：2
+- 已更新页面：3
+
+---
+
+
+## [2026-04-23] ingest | 已处理源文件：2512_paper_25122238_OxygenREC_An_Instruction-Following_Generative_Framework_for.md
+- 源文件：2512_paper_25122238_OxygenREC_An_Instruction-Following_Generative_Framework_for.md
+- 已创建页面：0
+- 已更新页面：4
+
+---

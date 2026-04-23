@@ -10,40 +10,39 @@
 ## Summary
 
 ### 知识库统计
-- 总页面数：162
-- 各类别页面数量分布：entities (15), summary (6), models (29), sources (58), concepts (28), methods (23), synthesis (3)
+- 总页面数：166
+- 各类别页面数量分布：entities (16), summary (6), models (29), sources (60), concepts (28), methods (24), synthesis (3)
 
 ### 核心覆盖领域
-- **生成式推荐与语义ID（Semantic ID）**：系统梳理从“双塔嵌入+ANN检索”向“自回归生成物品标识符”的范式迁移，涵盖SID构建、残差量化分词与码本优化策略。
-- **统一架构与端到端建模**：聚焦打破传统“召回-排序-重排”多阶段流水线，探索将特征交互、序列建模与多任务预测融合至单一Transformer骨干网络。
-- **缩放定律（Scaling Law）与长序列优化**：实证推荐系统中算力、数据规模与性能的幂律关系，并记录针对万级/十万级用户行为序列的线性注意力与系统协同设计。
-- **多模态对齐与意图驱动推理**：探索通用多模态表征与推荐任务空间的定量映射，以及引入动态提示、显式思维链与约束强化学习的意图理解机制。
-- **工业级系统优化与部署**：涵盖硬件感知架构设计、稀疏MoE扩展、推理延迟控制、KV缓存优化及大规模在线A/B测试验证。
+- **生成式推荐与语义标识符（Semantic ID）**：系统梳理从传统双塔+ANN检索向自回归生成离散物品标识符的范式转变，涵盖码本构建、残差量化与免训练代理评估。
+- **统一架构与端到端建模**：聚焦打破“召回-粗排-精排”多阶段流水线割裂，探索基于单一Transformer骨干的检索排序统一、特征交互与序列建模深度融合。
+- **推荐系统缩放定律与高效计算**：深入记录模型规模、序列长度与算力投入对推荐性能的幂律影响，以及线性注意力、硬件感知调度与系统协同设计技术。
+- **多模态对齐与偏好优化**：覆盖多模态特征定量映射、指令微调、DPO/RLHF偏好对齐及多目标业务价值协同优化，推动推荐系统向意图驱动演进。
 
 ### 关键方法与模型
-- **TIGER / PLUM / GRID**：奠定基于Semantic ID的生成式检索基础，提供开源模块化框架与工业级预训练LLM适配方案，验证长尾泛化优势。
-- **OneRec 系列 / OnePiece**：首创端到端统一检索与排序的生成式架构，演进至惰性纯解码器与分块隐式推理，大幅降低编码开销并提升多任务对齐能力。
-- **ULTRA-HSTU / HSTU / Wukong**：通过摒弃全局Softmax、采用相对位置偏置与纯FM堆叠，首次实证推荐领域的Scaling Law并实现接近 $O(L)$ 的计算复杂度。
-- **RecGPT / QARM / LEMUR**：聚焦多模态定量对齐与意图驱动范式，解决表征与业务目标不匹配问题，支持端到端联合优化与记忆库增量累积。
-- **HiGR / MBGR**：针对列表推荐与超级App多业务场景，提出层次化规划生成与业务感知语义ID（BID），实现跨域解耦、多目标对齐与动态路由。
-- **TALLRec / P5 / InstructRec**：探索参数高效微调（LoRA）与指令提示学习，赋予推荐模型零样本/少样本泛化、多任务统一处理与对话交互能力。
+- **TIGER / PLUM**：开创基于Semantic ID的生成式检索范式，结合持续预训练与领域适配，在YouTube等工业场景验证了长尾泛化与系统扩展性。
+- **OneRec 系列（V1/V2/Think/Open）**：快手主导的端到端生成式推荐架构，演进至纯解码器惰性生成、显式文本推理与开源基座模型，实现检索排序统一。
+- **FORGE / R3-VAE**：针对语义ID构建中的码本崩溃问题，提出参考向量锚定、残差量化与双指标正则化，提供高效的免训练质量评估代理指标。
+- **HSTU / ULTRA-HSTU / Wukong**：通过相对位置偏置、线性复杂度注意力与纯FM堆叠架构，实证并“弯曲”了推荐领域的Scaling Law，实现算力效率跃升。
+- **QARM / LEMUR**：多模态推荐对齐框架，引入定量适配层与记忆库机制，解决通用隐空间与推荐任务分布不匹配及长序列计算瓶颈。
+- **OnePiece / OneTrans**：引入上下文工程与分块隐式推理，实现特征交互与序列建模的统一，显著降低工业部署延迟并提升长程依赖建模能力。
+- **HiGR / MBGR / GR4AD**：面向列表推荐、超级App多业务场景与广告系统的生成式模型，通过层次规划、业务感知SID与动态路由实现多目标解耦。
 
 ### 工业实践与案例
-- **头部平台全量部署**：深度收录Google/YouTube（PLUM）、Meta（ULTRA-HSTU）、字节跳动（RankMixer/LONGER）、快手（OneRec/QARM）、阿里/淘宝（RecGPT/FORGE）、腾讯（HiGR/GRAB）、美团（MBGR）及Shopee、Pinterest等公司的落地实践。
-- **业务指标显著突破**：在严格延迟与QPS约束下，各模型在线上A/B测试中实现CTR、CVR、GMV、广告总收入及用户停留时长等核心指标的稳步提升（如百度广告收入+3.05%，淘宝交易额+0.35%）。
-- **架构范式工业化验证**：工业实践证实生成式推荐与统一骨干网络可替代传统多阶段流水线，且序列长度增加与模型规模扩展能带来性能单调线性增长，打破传统饱和瓶颈。
+- 知识库深度收录了全球头部互联网企业的落地经验，涵盖快手（OneRec/QARM全量上线）、淘宝（RecGPT/FORGE十亿级商品目录）、腾讯（HiGR/GRAB广告与内容推荐）、美团（MBGR外卖多业务解耦）、京东（OCP嵌入优化）、字节跳动（LONGER/RankMixer/LEMUR长序列与多模态）、Google/YouTube（TIGER/PLUM/Hiformer）及Pinterest/Shopee等。
+- 实践聚焦真实业务指标提升（CTR/CVR/GMV显著增长）、毫秒级推理延迟控制、长序列/冷启动场景突破，以及生成式范式在召回、排序、重排全链路的规模化部署验证，标志着LLM4Rec从“架构移植”向“底层机制借鉴”的范式成熟。
 
 ### 研究前沿与开放问题
-- **语义ID的码本崩溃与质量评估**：热门物品易垄断码字导致长尾分配不均，如何设计免训练代理指标以低成本、高保真量化SID质量仍是核心工程痛点。
-- **生成式推荐的泛化与记忆边界**：当前GR模型在底层易退化为Token级模式记忆，如何平衡实例记忆与真实语义泛化、有效抑制幻觉尚未形成统一解法。
-- **显式推理与可控生成机制**：将LLM的思维链（CoT）与推荐决策深度融合，实现可解释、多目标约束下的动态生成与偏好对齐仍需算法突破。
-- **系统-算法协同设计的极限**：在超长序列与万亿参数规模下，如何进一步优化KV缓存、动态算力分配与硬件利用率（MFU）以突破线上毫秒级推理SLA。
+- **语义ID的泛化与记忆边界**：生成式模型在物品级泛化表象下易退化为Token级模式记忆，如何量化并融合GR与ID模型的互补优势仍是核心难点。
+- **可解释推理与幻觉控制**：将LLM的显式思维链引入推荐决策虽提升可解释性，但面临推理延迟高、幻觉风险及与业务指标对齐的工程挑战。
+- **多业务/多目标冲突解耦**：在超级App与广告场景中，全局统一词表易导致表征混淆，跨域语义隔离与动态价值路由机制仍需深化。
+- **标准化评估与开源生态**：当前GR/SID研究在建模协议、超参配置上差异显著，缺乏统一的开源基准平台与免训练评估体系，制约研究迭代效率。
 
 ### 未来建议的知识摄入方向
-- **标准化评估基准与鲁棒性测试**：优先补充涵盖幻觉检测、公平性、隐私保护、跨域零样本能力及线上长期收益的统一评测框架与开源数据集。
-- **高效推理与部署技术细节**：深入摄入针对推荐场景的投机解码、动态束搜索、请求级批处理（RLB）、KV Cache优化及分布式训练调优的工程实践报告。
-- **多智能体与强化学习对齐**：增加RLHF/RLAIF在推荐偏好对齐中的最新进展，以及Agent-as-a-Judge、多目标动态权重调节与价值感知监督学习的算法研究。
-- **开源框架与可复现管线**：追踪更多类似GRID、OpenOneRec的完整开源项目，补充数据清洗、联合预训练、后训练对齐到线上灰度发布的端到端技术文档。
+- **标准化基准与评测协议**：优先摄入涵盖多场景、多模态、长序列的统一评测数据集（如扩展RecIF-Bench、TencentGR系列）及标准化消融实验报告，填补GRID指出的基准空白。
+- **安全、鲁棒性与幻觉缓解**：补充推荐大模型在对抗攻击、分布外泛化、事实一致性校验及幻觉抑制方面的最新理论与工程实践，回应综述中明确指出的鲁棒性瓶颈。
+- **交互式与Agent化推荐**：增加多轮对话推荐、用户意图主动挖掘、智能体规划（Agent Planning）及人机协同反馈机制的前沿研究，推动系统从“隐式匹配”向“智能交互助手”演进。
+- **高效推理与系统协同优化**：关注模型压缩、量化、端云协同推理及低功耗硬件适配技术，结合现有LONGER/RankMixer等硬件感知设计，支撑LLM4Rec在资源受限场景的普惠化落地。
 
 ## 快速开始
 ### 0. 创建独立环境
@@ -114,7 +113,7 @@ LLM4REC_wiki/
 
 ## 当前内容
 
-该 wiki 目前包含 **156 个页面**，涵盖：
+该 wiki 目前包含 **160 个页面**，涵盖：
 
 ### Concepts（28 页）
 - [concepts/model_flops_utilization_mfu.md](wiki/concepts/model_flops_utilization_mfu.md)
@@ -146,7 +145,8 @@ LLM4REC_wiki/
 - [concepts/explicit_reasoning_rec.md](wiki/concepts/explicit_reasoning_rec.md)
 - [concepts/end_to_end_multimodal_training.md](wiki/concepts/end_to_end_multimodal_training.md)
 
-### Methods（23 页）
+### Methods（24 页）
+- [methods/orthogonal_constrained_projection.md](wiki/methods/orthogonal_constrained_projection.md)
 - [methods/quantitative_alignment.md](wiki/methods/quantitative_alignment.md)
 - [methods/representation_alignment.md](wiki/methods/representation_alignment.md)
 - [methods/synergistic_upscaling.md](wiki/methods/synergistic_upscaling.md)
@@ -202,13 +202,14 @@ LLM4REC_wiki/
 - [models/test_generative_rec_model.md](wiki/models/test_generative_rec_model.md)
 - [models/QARM.md](wiki/models/QARM.md)
 
-### Entities（15 页）
+### Entities（16 页）
 - [entities/movielens.md](wiki/entities/movielens.md)
 - [entities/tencent.md](wiki/entities/tencent.md)
 - [entities/baidu.md](wiki/entities/baidu.md)
 - [entities/guorui_zhou.md](wiki/entities/guorui_zhou.md)
 - [entities/shopee.md](wiki/entities/shopee.md)
 - [entities/google_youtube.md](wiki/entities/google_youtube.md)
+- [entities/jd.md](wiki/entities/jd.md)
 - [entities/amazon_reviews.md](wiki/entities/amazon_reviews.md)
 - [entities/pinterest.md](wiki/entities/pinterest.md)
 - [entities/taac.md](wiki/entities/taac.md)
@@ -224,7 +225,7 @@ LLM4REC_wiki/
 - [synthesis/llm4rec_taxonomy.md](wiki/synthesis/llm4rec_taxonomy.md)
 - [synthesis/lint_report_2026-04-08.md](wiki/synthesis/lint_report_2026-04-08.md)
 
-### Sources（58 页）
+### Sources（60 页）
 - [sources/2603_paper_26031980_How_Well_Does_Generative_Recommendation_Generalize.md](wiki/sources/2603_paper_26031980_How_Well_Does_Generative_Recommendation_Generalize.md)
 - [sources/2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md](wiki/sources/2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md)
 - [sources/2507_paper_25072222_Generative_Recommendation_with_Semantic_IDs_A_Practitioner'.md](wiki/sources/2507_paper_25072222_Generative_Recommendation_with_Semantic_IDs_A_Practitioner'.md)
@@ -235,6 +236,7 @@ LLM4REC_wiki/
 - [sources/paper_c4a451_FORGE_Forming_Semantic_Identifiers_for_Generative_Retrieval.md](wiki/sources/paper_c4a451_FORGE_Forming_Semantic_Identifiers_for_Generative_Retrieval.md)
 - [sources/2601_paper_26011268_HyFormer_Revisiting_the_Roles_of_Sequence_Modeling_and_Feat.md](wiki/sources/2601_paper_26011268_HyFormer_Revisiting_the_Roles_of_Sequence_Modeling_and_Feat.md)
 - [sources/2411_paper_24111173_QARM_Quantitative_Alignment_Multi-Modal_Recommendation_at_K.md](wiki/sources/2411_paper_24111173_QARM_Quantitative_Alignment_Multi-Modal_Recommendation_at_K.md)
+- [sources/2603_paper_26031869_OCP_Orthogonal_Constrained_Projection_for_Sparse_Scaling_in.md](wiki/sources/2603_paper_26031869_OCP_Orthogonal_Constrained_Projection_for_Sparse_Scaling_in.md)
 - [sources/2407_paper_24072148_Breaking_the_Hourglass_Phenomenon_of_Residual_Quantization.md](wiki/sources/2407_paper_24072148_Breaking_the_Hourglass_Phenomenon_of_Residual_Quantization.md)
 - [sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md](wiki/sources/2307_paper_23070643_A_Comprehensive_Overview_of_Large_Language_Models.md)
 - [sources/paper_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation.md](wiki/sources/paper_QARM_V2_Quantitative_Alignment_Multi-Modal_Recommendation.md)
@@ -242,6 +244,7 @@ LLM4REC_wiki/
 - [sources/2604_paper_26040268_MBGR_Multi-Business_Prediction_for_Generative_Recommendatio.md](wiki/sources/2604_paper_26040268_MBGR_Multi-Business_Prediction_for_Generative_Recommendatio.md)
 - [sources/paper_ad0dff_QARM_Quantitative_Alignment_Multi-Modal_Recommendation_at_K.md](wiki/sources/paper_ad0dff_QARM_Quantitative_Alignment_Multi-Modal_Recommendation_at_K.md)
 - [sources/2602_paper_26022273_Generative_Recommendation_for_Large-Scale_Advertising.md](wiki/sources/2602_paper_26022273_Generative_Recommendation_for_Large-Scale_Advertising.md)
+- [sources/2512_paper_25122238_OxygenREC_An_Instruction-Following_Generative_Framework_for.md](wiki/sources/2512_paper_25122238_OxygenREC_An_Instruction-Following_Generative_Framework_for.md)
 - [sources/2511_paper_25111096_LEMUR_Large_scale_End-to-end_MUltimodal_Recommendation.md](wiki/sources/2511_paper_25111096_LEMUR_Large_scale_End-to-end_MUltimodal_Recommendation.md)
 - [sources/2512_paper_25121450_RecGPT-V2_Technical_Report.md](wiki/sources/2512_paper_25121450_RecGPT-V2_Technical_Report.md)
 - [sources/2502_paper_25021896_OneRec_Unifying_Retrieve_and_Rank_with_Generative_Recommend.md](wiki/sources/2502_paper_25021896_OneRec_Unifying_Retrieve_and_Rank_with_Generative_Recommend.md)

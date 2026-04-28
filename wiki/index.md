@@ -3,7 +3,7 @@
 
 > 知识库内容目录。由 LLM 自动维护。
 
-> 最后更新：2026-04-23
+> 最后更新：2026-04-28
 
 
 ## Concepts
@@ -107,6 +107,8 @@
 
 | [面向推荐系统的提示式微调](wiki/methods/prompt_finetuning.md) | --- title: "面向推荐系统的提示式微调" category: "方法" tags: [微调, PEFT, Lo... | 微调, PEFT, LoRA, 提示微调, 适配 |
 
+| [详细记录](wiki/methods/multi_epoch_learning.md) | --- title: "详细记录" category: "methods" tags: ["new", "2026-04... | "new", "2026-04-28" |
+
 | [LLM-as-Generator](wiki/methods/llm_as_generator.md) | --- title: "LLM-as-Generator" category: "方法" tags: [生成, 解释,... | 生成, 解释, 推荐文本, 创意 |
 
 | [详细说明](wiki/methods/memory_bank_sequential_rep.md) | --- title: "详细说明" category: "methods" tags: ["new", "2026-04... | "new", "2026-04-09" |
@@ -129,7 +131,7 @@
 
 
 
-- **24 个页面**
+- **25 个页面**
 
 
 ## Models
@@ -329,6 +331,8 @@
 
 | [2602 Paper 26021001 Kunlun Establishing Scaling Laws For Massive-Scale Recommen](wiki/sources/2602_paper_26021001_Kunlun_Establishing_Scaling_Laws_for_Massive-Scale_Recommen.md) | --- title: "2602 Paper 26021001 Kunlun Establishing Scaling... | "source", "2026-04-09" |
 
+| [2305 Paper 23051953 Multi-Epoch Learning For Deep Click-Through Rate Prediction](wiki/sources/2305_paper_23051953_Multi-Epoch_Learning_for_Deep_Click-Through_Rate_Prediction.md) | --- title: "2305 Paper 23051953 Multi-Epoch Learning For Dee... | "source", "2026-04-28" |
+
 | [Paper 8Edbf8 Higr Efficient Generative Slate Recommendation Via Hierarch](wiki/sources/paper_8edbf8_HiGR_Efficient_Generative_Slate_Recommendation_via_Hierarch.md) | --- title: "Paper 8Edbf8 Higr Efficient Generative Slate Rec... | "source", "2026-04-08" |
 
 | [2602 Paper 26020186 Grab An Llm-Inspired Sequence-First Click-Through Rate Pred](wiki/sources/2602_paper_26020186_GRAB_An_LLM-Inspired_Sequence-First_Click-Through_Rate_Pred.md) | --- title: "2602 Paper 26020186 Grab An Llm-Inspired Sequenc... | "source", "2026-04-15" |
@@ -365,15 +369,13 @@
 
 | [2411 Paper 24111881 Unifying Generative And Dense Retrieval For Sequential Recom](wiki/sources/2411_paper_24111881_Unifying_Generative_and_Dense_Retrieval_for_Sequential_Recom.md) | --- title: "2411 Paper 24111881 Unifying Generative And Dens... | "source", "2026-04-15" |
 
-| [Paper 81Ec38 Plum Adapting Pre-Trained Language Models For Industrial-Sc](wiki/sources/paper_81ec38_PLUM_Adapting_Pre-trained_Language_Models_for_Industrial-sc.md) | --- title: "Paper 81Ec38 Plum Adapting Pre-Trained Language... | "source", "2026-04-08" |
 
 
-
-- **60 个页面**
+- **61 个页面**
 
 
 ---
 
 **统计**：
 
-- 总页面数：160
+- 总页面数：162

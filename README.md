@@ -10,39 +10,38 @@
 ## Summary
 
 ### 知识库统计
-- 总页面数：166
-- 各类别页面数量分布：entities (16), summary (6), models (29), sources (60), concepts (28), methods (24), synthesis (3)
+- 总页面数：168
+- 各类别页面数量分布：entities (16), summary (6), models (29), sources (61), concepts (28), methods (25), synthesis (3)
 
 ### 核心覆盖领域
-- **生成式推荐与语义标识符（Semantic ID）**：系统梳理从传统双塔+ANN检索向自回归生成离散物品标识符的范式转变，涵盖码本构建、残差量化与免训练代理评估。
-- **统一架构与端到端建模**：聚焦打破“召回-粗排-精排”多阶段流水线割裂，探索基于单一Transformer骨干的检索排序统一、特征交互与序列建模深度融合。
-- **推荐系统缩放定律与高效计算**：深入记录模型规模、序列长度与算力投入对推荐性能的幂律影响，以及线性注意力、硬件感知调度与系统协同设计技术。
-- **多模态对齐与偏好优化**：覆盖多模态特征定量映射、指令微调、DPO/RLHF偏好对齐及多目标业务价值协同优化，推动推荐系统向意图驱动演进。
+1. **生成式推荐与语义ID（Semantic ID）**：系统记录从传统双塔+ANN检索向自回归生成离散标识符的范式转变，涵盖SID构建、码本优化与免训练代理评估。
+2. **缩放定律与长序列建模**：聚焦推荐系统中算力-性能的幂律关系实证，以及针对超长用户行为序列的线性注意力、稀疏化与硬件感知优化。
+3. **端到端统一架构**：打破传统“召回-排序-重排”多阶段流水线，探索检索与排序统一、多任务协同的单一Transformer骨干网络。
+4. **多模态对齐与指令微调**：涵盖多模态特征的定量映射、参数高效微调（LoRA）及基于指令/提示的个性化推荐与对话式交互。
+5. **工业系统协同设计**：强调模型架构与底层算力（GPU显存、KV缓存、算子融合、请求级批处理）的深度结合，以满足毫秒级延迟与高QPS的线上SLA。
 
 ### 关键方法与模型
-- **TIGER / PLUM**：开创基于Semantic ID的生成式检索范式，结合持续预训练与领域适配，在YouTube等工业场景验证了长尾泛化与系统扩展性。
-- **OneRec 系列（V1/V2/Think/Open）**：快手主导的端到端生成式推荐架构，演进至纯解码器惰性生成、显式文本推理与开源基座模型，实现检索排序统一。
-- **FORGE / R3-VAE**：针对语义ID构建中的码本崩溃问题，提出参考向量锚定、残差量化与双指标正则化，提供高效的免训练质量评估代理指标。
-- **HSTU / ULTRA-HSTU / Wukong**：通过相对位置偏置、线性复杂度注意力与纯FM堆叠架构，实证并“弯曲”了推荐领域的Scaling Law，实现算力效率跃升。
-- **QARM / LEMUR**：多模态推荐对齐框架，引入定量适配层与记忆库机制，解决通用隐空间与推荐任务分布不匹配及长序列计算瓶颈。
-- **OnePiece / OneTrans**：引入上下文工程与分块隐式推理，实现特征交互与序列建模的统一，显著降低工业部署延迟并提升长程依赖建模能力。
-- **HiGR / MBGR / GR4AD**：面向列表推荐、超级App多业务场景与广告系统的生成式模型，通过层次规划、业务感知SID与动态路由实现多目标解耦。
+1. **TIGER / PLUM / GRID**：奠定基于语义ID的生成式检索基础，提供开源模块化框架与工业级预训练LLM适配方案。
+2. **OneRec 系列（V1/V2/Think）**：快手提出的端到端统一架构，演进至惰性纯解码器与文内显式推理，显著降低计算开销并强化偏好对齐。
+3. **HSTU / ULTRA-HSTU / Wukong**：通过相对位置偏置、线性注意力与纯FM堆叠，实证并“弯曲”推荐缩放定律曲线，实现十亿级参数的高效扩展。
+4. **HiGR / MBGR / GR4AD**：面向列表推荐、多业务场景与广告商业化的分层规划与动态路由生成模型，有效解耦多目标冲突与跨域表征混淆。
+5. **QARM / LEMUR**：引入定量对齐适配层与增量记忆库机制，实现多模态特征与推荐任务空间的端到端联合优化与实时参数更新。
+6. **P5 / InstructRec / TALLRec**：探索提示学习、指令微调与LoRA适配，赋予模型零样本/少样本泛化能力与跨领域低成本迁移路径。
 
 ### 工业实践与案例
-- 知识库深度收录了全球头部互联网企业的落地经验，涵盖快手（OneRec/QARM全量上线）、淘宝（RecGPT/FORGE十亿级商品目录）、腾讯（HiGR/GRAB广告与内容推荐）、美团（MBGR外卖多业务解耦）、京东（OCP嵌入优化）、字节跳动（LONGER/RankMixer/LEMUR长序列与多模态）、Google/YouTube（TIGER/PLUM/Hiformer）及Pinterest/Shopee等。
-- 实践聚焦真实业务指标提升（CTR/CVR/GMV显著增长）、毫秒级推理延迟控制、长序列/冷启动场景突破，以及生成式范式在召回、排序、重排全链路的规模化部署验证，标志着LLM4Rec从“架构移植”向“底层机制借鉴”的范式成熟。
+知识库深度收录了头部互联网公司的全量部署经验：**快手**通过OneRec系列与QARM实现短视频主场景与广告系统的端到端生成与多模态对齐；**字节跳动**依托LONGER、RankMixer与LEMUR在十亿级数据上验证长序列扩展与硬件感知排序；**淘宝/阿里**利用FORGE与RecGPT解决十亿级商品目录的码本崩溃与意图驱动推荐；**腾讯、美团、百度、京东、Shopee及Google/YouTube/Meta**等均在各自核心业务中落地了生成式检索、缩放定律验证与统一架构，普遍实现CTR、CVR、GMV或用户停留时长的显著提升（如百度广告收入+3.05%，淘宝交易额+0.35%，美团外卖核心指标全面增长）。
 
 ### 研究前沿与开放问题
-- **语义ID的泛化与记忆边界**：生成式模型在物品级泛化表象下易退化为Token级模式记忆，如何量化并融合GR与ID模型的互补优势仍是核心难点。
-- **可解释推理与幻觉控制**：将LLM的显式思维链引入推荐决策虽提升可解释性，但面临推理延迟高、幻觉风险及与业务指标对齐的工程挑战。
-- **多业务/多目标冲突解耦**：在超级App与广告场景中，全局统一词表易导致表征混淆，跨域语义隔离与动态价值路由机制仍需深化。
-- **标准化评估与开源生态**：当前GR/SID研究在建模协议、超参配置上差异显著，缺乏统一的开源基准平台与免训练评估体系，制约研究迭代效率。
+1. **语义ID的码本均衡与质量评估**：如何避免热门物品主导的“码本崩溃”，并建立无需全量训练即可精准预测SID质量的标准化代理指标。
+2. **生成过程的显式推理与可控性**：当前模型多为隐式预测，如何引入思维链（CoT）与快慢思考架构，实现推荐逻辑的可解释与业务规则硬约束。
+3. **缩放定律的效率瓶颈与延迟优化**：模型规模与序列长度增加带来的推理延迟与显存压力，亟需更高效的稀疏化、动态计算分配与懒自回归解码方案。
+4. **多业务/广告场景的价值对齐**：生成式模型在复杂商业目标（出价、预算、转化）下的多目标优化冲突，以及长尾/冷启动物品的公平曝光与泛化机制。
 
 ### 未来建议的知识摄入方向
-- **标准化基准与评测协议**：优先摄入涵盖多场景、多模态、长序列的统一评测数据集（如扩展RecIF-Bench、TencentGR系列）及标准化消融实验报告，填补GRID指出的基准空白。
-- **安全、鲁棒性与幻觉缓解**：补充推荐大模型在对抗攻击、分布外泛化、事实一致性校验及幻觉抑制方面的最新理论与工程实践，回应综述中明确指出的鲁棒性瓶颈。
-- **交互式与Agent化推荐**：增加多轮对话推荐、用户意图主动挖掘、智能体规划（Agent Planning）及人机协同反馈机制的前沿研究，推动系统从“隐式匹配”向“智能交互助手”演进。
-- **高效推理与系统协同优化**：关注模型压缩、量化、端云协同推理及低功耗硬件适配技术，结合现有LONGER/RankMixer等硬件感知设计，支撑LLM4Rec在资源受限场景的普惠化落地。
+1. **标准化生成式推荐基准与评测体系**：补充涵盖幻觉控制、鲁棒性、跨域泛化与多目标权衡的统一开源Benchmark，弥补当前评估协议碎片化的问题。
+2. **底层推理加速与部署工程指南**：系统摄入针对LLM4Rec的KV缓存优化、动态量化、服务级批处理（RLB）与边缘端轻量化部署的最佳实践。
+3. **安全、公平与可解释性研究**：增加生成式推荐中的偏见消除、隐私保护、内容安全过滤及用户意图可追溯性的前沿论文与工业合规规范。
+4. **开源可复现管线与高质量数据集**：优先收录类似OpenOneRec、TencentGR、ActionPiece的完整训练代码、数据处理流程与多模态交互数据集，降低研究复现门槛。
 
 ## 快速开始
 ### 0. 创建独立环境
@@ -113,7 +112,7 @@ LLM4REC_wiki/
 
 ## 当前内容
 
-该 wiki 目前包含 **160 个页面**，涵盖：
+该 wiki 目前包含 **162 个页面**，涵盖：
 
 ### Concepts（28 页）
 - [concepts/model_flops_utilization_mfu.md](wiki/concepts/model_flops_utilization_mfu.md)
@@ -145,7 +144,7 @@ LLM4REC_wiki/
 - [concepts/explicit_reasoning_rec.md](wiki/concepts/explicit_reasoning_rec.md)
 - [concepts/end_to_end_multimodal_training.md](wiki/concepts/end_to_end_multimodal_training.md)
 
-### Methods（24 页）
+### Methods（25 页）
 - [methods/orthogonal_constrained_projection.md](wiki/methods/orthogonal_constrained_projection.md)
 - [methods/quantitative_alignment.md](wiki/methods/quantitative_alignment.md)
 - [methods/representation_alignment.md](wiki/methods/representation_alignment.md)
@@ -160,6 +159,7 @@ LLM4REC_wiki/
 - [methods/two_stage_training_rec.md](wiki/methods/two_stage_training_rec.md)
 - [methods/rag_for_recsys.md](wiki/methods/rag_for_recsys.md)
 - [methods/prompt_finetuning.md](wiki/methods/prompt_finetuning.md)
+- [methods/multi_epoch_learning.md](wiki/methods/multi_epoch_learning.md)
 - [methods/llm_as_generator.md](wiki/methods/llm_as_generator.md)
 - [methods/memory_bank_sequential_rep.md](wiki/methods/memory_bank_sequential_rep.md)
 - [methods/human_llm_collaborative_evaluation.md](wiki/methods/human_llm_collaborative_evaluation.md)
@@ -225,7 +225,7 @@ LLM4REC_wiki/
 - [synthesis/llm4rec_taxonomy.md](wiki/synthesis/llm4rec_taxonomy.md)
 - [synthesis/lint_report_2026-04-08.md](wiki/synthesis/lint_report_2026-04-08.md)
 
-### Sources（60 页）
+### Sources（61 页）
 - [sources/2603_paper_26031980_How_Well_Does_Generative_Recommendation_Generalize.md](wiki/sources/2603_paper_26031980_How_Well_Does_Generative_Recommendation_Generalize.md)
 - [sources/2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md](wiki/sources/2510_paper_25102610_OneTrans_Unified_Feature_Interaction_and_Sequence_Modeling.md)
 - [sources/2507_paper_25072222_Generative_Recommendation_with_Semantic_IDs_A_Practitioner'.md](wiki/sources/2507_paper_25072222_Generative_Recommendation_with_Semantic_IDs_A_Practitioner'.md)
@@ -257,6 +257,7 @@ LLM4REC_wiki/
 - [sources/2408_paper_24080458_FORGE_Force-Guided_Exploration_for_Robust_Contact-Rich_Mani.md](wiki/sources/2408_paper_24080458_FORGE_Force-Guided_Exploration_for_Robust_Contact-Rich_Mani.md)
 - [sources/2311_paper_23110588_Hiformer_Heterogeneous_Feature_Interactions_Learning_with_T.md](wiki/sources/2311_paper_23110588_Hiformer_Heterogeneous_Feature_Interactions_Learning_with_T.md)
 - [sources/2602_paper_26021001_Kunlun_Establishing_Scaling_Laws_for_Massive-Scale_Recommen.md](wiki/sources/2602_paper_26021001_Kunlun_Establishing_Scaling_Laws_for_Massive-Scale_Recommen.md)
+- [sources/2305_paper_23051953_Multi-Epoch_Learning_for_Deep_Click-Through_Rate_Prediction.md](wiki/sources/2305_paper_23051953_Multi-Epoch_Learning_for_Deep_Click-Through_Rate_Prediction.md)
 - [sources/paper_8edbf8_HiGR_Efficient_Generative_Slate_Recommendation_via_Hierarch.md](wiki/sources/paper_8edbf8_HiGR_Efficient_Generative_Slate_Recommendation_via_Hierarch.md)
 - [sources/2602_paper_26020186_GRAB_An_LLM-Inspired_Sequence-First_Click-Through_Rate_Pred.md](wiki/sources/2602_paper_26020186_GRAB_An_LLM-Inspired_Sequence-First_Click-Through_Rate_Pred.md)
 - [sources/2604_paper_26040497_Tencent_Advertising_Algorithm_Challenge_2025_All-Modality_G.md](wiki/sources/2604_paper_26040497_Tencent_Advertising_Algorithm_Challenge_2025_All-Modality_G.md)
